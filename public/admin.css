@@ -1,0 +1,11 @@
+@CHARSET "UTF-8";
+
+.group--images-inject-thumbnails > .control-group
+{
+	display: inline-block;
+	vertical-align: top;
+}
+
+.group--images-inject-toggler:not(.enabled) ~ .group--images-inject-thumbnails {
+	display: none;
+}
