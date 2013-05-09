@@ -17,6 +17,8 @@ namespace Icybee\Modules\Images;
  * @property-read int $surface The surface of the image, computed from the {@link $width} and
  * {@link $height} properties.
  *
+ * @property-read \Icybee\Modules\Nodes\Node $consumer The node to which the image is associated.
+ *
  * @method \ICanBoogie\Modules\Thumbnailer\Thumbnail thumbnail()
  */
 class Image extends \Icybee\Modules\Files\File

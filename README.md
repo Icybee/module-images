@@ -3,8 +3,24 @@
 The Images module (`images`) manages the images uploaded by the users of the
 CMS [Icybee](http://icybee.org/).
 
-The module provides the ability to attach an image to `Content` instances. For instance,
-an image can be attached the a news in order to illustrate it.
+The module provides the ability to attach images to `Content` instances. For instance,
+an image can be attached to a news to illustrate it. The [Thumbnailer](https://github.com/Icybee/module-thumbnailer)
+module is used to provide thumbnails through a fluent API.
+
+```php
+<?php
+
+echo $core->models['images']->one->thumbnail;
+echo $core->models['images']->one->thumbnail('news-list');
+
+echo $core->models['news']->one->image->thumbnail('news-list');
+# or
+echo $core->models['news']->one->image->thumbnail(':list');
+
+echo $core->models['news']->one->image->thumbnail('news-view');
+# or
+echo $core->models['news']->one->image->thumbnail;
+```
 
 
 
@@ -33,7 +49,7 @@ Create a `composer.json` file and run `php composer.phar install` command to ins
 }
 ```
 
-Note: The module is part of the modules required by Icybee.
+Note: This module is part of the modules required by Icybee.
 
 
 
@@ -76,29 +92,37 @@ cleaned with the `make clean` command.
 
 
 
+## License
+
+The package is licensed under the New BSD License - See the LICENSE file for details.
+
+
+
+
+
 ## Associating images
 
-Images can be associated with content records—such as a news—to illustrate it. An option to enable
-the association is injected in all the modules extending the Contents module (`contents`). When the
-option is enabled the user can specify the following things:
+Images can be associated to content records—such as news—to illustrate them. An option to enable
+the association is injected in all the modules extending the [Contents](https://github.com/Icybee/module-contents) module.
+When the option is enabled the user can specify the following things:
 
 - That the association is required.
 - The image to use by default if the association is not required.
 - The title and description of the injected image control.
 
-Additionnal controls allow the user to specify the thumbnail options to use for the different views
+Additional controls allow the user to specify the thumbnail options to use for the different views
 of the record, usually `home`, `list` and `view`.
 
 These settings are store in the registry :
 
-- `images.inject.<flat_target_module_id>`: (bool|null) `true` if enabled, undefined otherwise.
-- `images.inject.<flat_target_module_id>.required`: (bool) `true` if the association is required,
+- `images.inject.<flat_module_id>`: (bool|null) `true` if enabled, undefined otherwise.
+- `images.inject.<flat_module_id>.required`: (bool) `true` if the association is required,
 false otherwise.
-- `images.inject.<flat_target_module_id>.default`: (int) Identifier of a default image to use
+- `images.inject.<flat_module_id>.default`: (int) Identifier of a default image to use
 when no image is associated to a record. This only apply when the association is not required.
-- `images.inject.<flat_target_module_id>.title`: (string) The label of the image control injected
+- `images.inject.<flat_module_id>.title`: (string) The label of the image control injected
 in the edit form of the record.
-- `images.inject.<flat_target_module_id>.description`: (string) The description of the image
+- `images.inject.<flat_module_id>.description`: (string) The description of the image
 control injected in the edit form of the record.
 
 
@@ -126,10 +150,26 @@ The image associated with a record is obtained through the `image` magic propert
 $core->models['articles']->one->image;
 ```
 
+Note that it's not an `Image` instance that is obtained but a `NodeRelation` instance. Because
+all calls are forwarded, the `NodeRelation` instance can be used just like an `Image` instance,
+although _set_ throws a [PropertyNotWritable](http://icanboogie.org/docs/class-ICanBoogie.PropertyNotWritable.html)
+exception.
 
+The `NodeRelation` instance makes it possible to use short thumbnail versions. For instance, one can
+use ":list" instead of "article-list" to obtain the _list_ thumbnail of an article:
 
+```php
+<?php 
 
+$core->models['articles']->one->image->thumbnail(':list');
+```
 
-## License
+The magic property `thumbnail` returns the _view_ thumbnail:
 
-The package is licensed under the New BSD License - See the LICENSE file for details.
+```php
+<?php 
+
+$core->models['articles']->one->image->thumbnail(':view');
+// or
+$core->models['articles']->one->image->thumbnail;
+```

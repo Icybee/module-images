@@ -29,21 +29,9 @@ use Icybee\Modules\Views\ActiveRecordProvider\AlterResultEvent;
 
 class Hooks
 {
-	/**
-	 * Getter for the mixin magic property `image`
-	 *
-	 * @param Node $ar
-	 *
-	 * @return Image|null
+	/*
+	 * Events
 	 */
-	static public function get_image(Node $ar)
-	{
-		global $core;
-
-		$imageid = $ar->metas['image_id'];
-
-		return $imageid ? $core->models['images'][$imageid] : null;
-	}
 
 	/**
 	 * Finds the images associated with the records provided to the view.
@@ -65,22 +53,22 @@ class Hooks
 
 		$result = $event->result;
 
-		if (!is_array($result) || count($result) < 4 || !(current($result) instanceof \Icybee\Modules\Contents\Content)
+		if (!is_array($result) || count($result) < 3 || !(current($result) instanceof \Icybee\Modules\Contents\Content)
 		|| !$core->registry['images.inject.' . $event->module->flat_id])
 		{
 			return;
 		}
 
-		$record_keys = array();
+		$node_keys = array();
 
-		foreach ($result as $record)
+		foreach ($result as $node)
 		{
-			$record_keys[] = $record->nid;
+			$node_keys[] = $node->nid;
 		}
 
 		$image_keys = $core->models['registry/node']
 		->select('targetid, value')
-		->where(array('targetid' => $record_keys, 'name' => 'image_id'))
+		->where(array('targetid' => $node_keys, 'name' => 'image_id'))
 		->where('value + 0 != 0')
 		->pairs;
 
@@ -91,9 +79,9 @@ class Hooks
 
 		$images = $core->models['images']->find($image_keys);
 
-		foreach ($result as $record)
+		foreach ($result as $node)
 		{
-			$nid = $record->nid;
+			$nid = $node->nid;
 
 			if (empty($image_keys[$nid]))
 			{
@@ -101,7 +89,9 @@ class Hooks
 			}
 
 			$imageid = $image_keys[$nid];
-			$record->image = $images[$imageid];
+			$image = $images[$imageid];
+
+			$node->image = new NodeRelation($node, $image);
 		}
 	}
 
@@ -440,5 +430,32 @@ class Hooks
 		}
 
 		$event->names['has-image'] = true;
+	}
+
+	/*
+	 * Prototype methods
+	 */
+
+	/**
+	 * Returns the image associated with the node.
+	 *
+	 * @param Node $node
+	 *
+	 * @return Image|null
+	 */
+	static public function prototype_get_image(\Icybee\Modules\Nodes\Node $node)
+	{
+		global $core;
+
+		$id = $node->metas['image_id'];
+
+		if (!$id)
+		{
+			return;
+		}
+
+		$image = $core->models['images'][$id];
+
+		return new NodeRelation($node, $image);
 	}
 }
