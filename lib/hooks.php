@@ -12,6 +12,7 @@
 namespace Icybee\Modules\Images;
 
 use ICanBoogie\Debug;
+use ICanBoogie\I18n;
 use ICanBoogie\Event;
 use ICanBoogie\Events;
 use ICanBoogie\Modules;
@@ -95,6 +96,12 @@ class Hooks
 		}
 	}
 
+	/**
+	 * Adds control for the image associated with the content.
+	 *
+	 * @param Event $event
+	 * @param \Icybee\Modules\Nodes\EditBlock $block
+	 */
 	static public function on_contents_editblock_alter_children(Event $event, \Icybee\Modules\Nodes\EditBlock $block)
 	{
 		global $core;
@@ -121,7 +128,7 @@ class Hooks
 			$imageid = $block->record->metas['image_id'];
 		}
 
-		$event->children['image_id'] = new PopImage
+		$event->children['image_id'] = new PopOrUploadImage
 		(
 			array
 			(
@@ -153,17 +160,17 @@ class Hooks
 		(
 			$module_id . '/home' => array
 			(
-				'title' => 'Accueil des enregistrements'
+				'title' => I18n\t("Records home", array(), array('scope' => $module_id))
 			),
 
 			$module_id . '/list' => array
 			(
-				'title' => 'Liste des enregistrements'
+				'title' => I18n\t("Records list", array(), array('scope' => $module_id))
 			),
 
 			$module_id . '/view' => array
 			(
-				'title' => "Detail d'un enregistrement"
+				'title' => I18n\t("Record detail", array(), array('scope' => $module_id))
 			)
 		);
 

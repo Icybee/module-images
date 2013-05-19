@@ -25,8 +25,8 @@ class ImageUpload extends \Icybee\Modules\Files\FileUpload
 	{
 		parent::add_assets($document);
 
-		$document->js->add('../../public/slimbox.js');
-		$document->css->add('../../public/slimbox.css');
+		$document->js->add(DIR . 'public/slimbox.js');
+		$document->css->add(DIR . 'public/slimbox.css');
 		$document->css->add('image-upload.css');
 	}
 

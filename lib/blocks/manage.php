@@ -33,7 +33,7 @@ class ManageBlock extends \Icybee\Modules\Files\ManageBlock
 			(
 				self::T_COLUMNS_ORDER => array
 				(
-					'title', 'is_online', 'uid', 'surface', 'size', 'modified'
+					'title', 'size', 'download', 'is_online', 'uid', 'surface', 'modified'
 				)
 			)
 		);

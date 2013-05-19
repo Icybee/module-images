@@ -28,7 +28,7 @@ return array
 			'image_inject_default_image' => "Image par défaut",
 			'image_inject_control_title' => "Titre du champ",
 			'image_inject_control_description' => "Description du champ",
-			'image_inject_required' => "L'association est obligatoire"
+			'image_inject_required' => "L'association est requise"
 		)
 	),
 
