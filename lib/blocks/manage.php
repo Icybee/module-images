@@ -149,7 +149,7 @@ class ManageBlock extends \Icybee\Modules\Files\ManageBlock
 			array
 			(
 				'class' => 'icon',
-				'data-popover-image' => $record->thumbnail('$popup')->url
+				'data-popover-image' => $record->thumbnail('$popover')->url
 			)
 		);
 

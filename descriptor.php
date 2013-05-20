@@ -8,7 +8,7 @@ use ICanBoogie\Module;
 return array
 (
 	Module::T_CATEGORY => 'resources',
-	Module::T_DESCRIPTION => 'Images management',
+	Module::T_DESCRIPTION => 'Manages the images uploaded by the users of Icybee.',
 	Module::T_EXTENDS => 'files',
 	Module::T_MODELS => array
 	(

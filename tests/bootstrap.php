@@ -20,11 +20,6 @@ require __DIR__ . '/../vendor/autoload.php';
 #
 # Thumbnailer setup
 #
-
-$versions = Versions::get();
-$versions['articles-list'] = new Version('w:120;h:100');
-$versions['articles-view'] = new Version('w:420;h:340');
-
 $prototype = Prototype::get(__NAMESPACE__ . '\Image');
 $prototype['thumbnail'] = 'ICanBoogie\Modules\Thumbnailer\Hooks::method_thumbnail';
 
@@ -48,6 +43,15 @@ $core = (object) array
 			1 => Image::from(array('nid' => 1)),
 			2 => Image::from(array('nid' => 2)),
 			3 => Image::from(array('nid' => 3))
+		)
+	),
+
+	'thumbnailer_versions' => new Versions
+	(
+		array
+		(
+			'articles-list' => new Version('w:120;h:100'),
+			'articles-view' => new Version('w:420;h:340')
 		)
 	)
 );

@@ -1,4 +1,4 @@
-# Images
+# Images [![Build Status](https://travis-ci.org/Icybee/module-images.png?branch=master)](https://travis-ci.org/Icybee/module-images)
 
 The Images module (`images`) manages the images uploaded by the users of the
 CMS [Icybee](http://icybee.org/).
@@ -26,75 +26,18 @@ echo $core->models['news']->one->image->thumbnail;
 
 
 
-## Requirement
+## Thumbnail versions
 
-The package requires PHP 5.3 or later.
+When the module is installed it creates three thumbnailer versions:
 
+- `$icon` is used to represent an image or the image associated to a record. It's a 64×64 image,
+usually used in the `manage` view (the index of a module in the admin).
 
+- `$popover` is used to represent a preview of an image that appears as a popover when the cursor
+hovers an `$icon` image.
 
+- `$gallery` is used to represent images when they are displayed in a gallery.
 
-
-## Installation
-
-The recommended way to install this package is through [Composer](http://getcomposer.org/).
-Create a `composer.json` file and run `php composer.phar install` command to install it:
-
-```json
-{
-	"minimum-stability": "dev",
-	"require":
-	{
-		"icybee/module-images": "*"
-	}
-}
-```
-
-Note: This module is part of the modules required by Icybee.
-
-
-
-
-
-### Cloning the repository
-
-The package is [available on GitHub](https://github.com/Icybee/module-images), its repository can be
-cloned with the following command line:
-
-	$ git clone git://github.com/Icybee/module-images.git images
-
-
-
-
-
-## Testing
-
-The test suite is ran with the `make test` command. [Composer](http://getcomposer.org/) is
-automatically installed as well as all the dependencies required to run the suite. The package
-directory can later be cleaned with the `make clean` command.
-
-The package is continuously tested by [Travis CI](http://about.travis-ci.org/).
-
-[![Build Status](https://travis-ci.org/Icybee/module-images.png?branch=master)](https://travis-ci.org/Icybee/module-images)
-
-
-
-
-
-## Documentation
-
-The package is documented as part of the [Icybee](http://icybee.org/) CMS
-[documentation](http://icybee.org/docs/). The documentation for the package and its
-dependencies can be generated with the `make doc` command. The documentation is generated in
-the `docs` directory using [ApiGen](http://apigen.org/). The package directory can later by
-cleaned with the `make clean` command.
-
-
-
-
-
-## License
-
-The package is licensed under the New BSD License - See the LICENSE file for details.
 
 
 
@@ -173,3 +116,77 @@ $core->models['articles']->one->image->thumbnail(':view');
 // or
 $core->models['articles']->one->image->thumbnail;
 ```
+
+
+
+
+
+## Requirement
+
+The package requires PHP 5.3 or later.
+
+
+
+
+
+## Installation
+
+The recommended way to install this package is through [Composer](http://getcomposer.org/).
+Create a `composer.json` file and run `php composer.phar install` command to install it:
+
+```json
+{
+	"minimum-stability": "dev",
+	"require":
+	{
+		"icybee/module-images": "*"
+	}
+}
+```
+
+Note: This module is part of the modules required by [Icybee](http://icybee.org/).
+
+
+
+
+
+### Cloning the repository
+
+The package is [available on GitHub](https://github.com/Icybee/module-images), its repository can be
+cloned with the following command line:
+
+	$ git clone git://github.com/Icybee/module-images.git images
+
+
+
+
+
+## Testing
+
+The test suite is ran with the `make test` command. [Composer](http://getcomposer.org/) is
+automatically installed as well as all the dependencies required to run the suite. The package
+directory can later be cleaned with the `make clean` command.
+
+The package is continuously tested by [Travis CI](http://about.travis-ci.org/).
+
+[![Build Status](https://travis-ci.org/Icybee/module-images.png?branch=master)](https://travis-ci.org/Icybee/module-images)
+
+
+
+
+
+## Documentation
+
+The package is documented as part of the [Icybee](http://icybee.org/) CMS
+[documentation](http://icybee.org/docs/). The documentation for the package and its
+dependencies can be generated with the `make doc` command. The documentation is generated in
+the `docs` directory using [ApiGen](http://apigen.org/). The package directory can later by
+cleaned with the `make clean` command.
+
+
+
+
+
+## License
+
+The package is licensed under the New BSD License - See the LICENSE file for details.
