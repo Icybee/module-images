@@ -51,7 +51,7 @@ class AdjustImage extends \Brickrouge\Widget\AdjustNode
 			(
 				Element::CHILDREN => array
 				(
-					$record->thumbnail('w:64;h:64')->to_element
+					$record->thumbnail('$icon-m')->to_element
 					(
 						array
 						(

@@ -32,6 +32,19 @@ class Module extends \Icybee\Modules\Files\Module
 			'format' => 'png'
 		),
 
+		'$icon-m' => array
+		(
+			'w' => 64,
+			'h' => 64
+		),
+
+		'$popimage' => array
+		(
+			'w' => 96,
+			'h' => 96,
+			'method' => 'surface'
+		),
+
 		'$popover' => array
 		(
 			'w' => self::THUMBNAIL_WIDTH,

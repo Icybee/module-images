@@ -15,8 +15,7 @@ use Brickrouge\Element;
 
 class PopImage extends \Icybee\Modules\Nodes\PopNode
 {
-	const T_PREVIEW_WIDTH = '#preview-width';
-	const T_PREVIEW_HEIGHT = '#preview-height';
+	const THUMBNAIL_VERSION = '#popimage-thumbnail-version';
 
 	static protected function add_assets(\Brickrouge\Document $document)
 	{
@@ -32,9 +31,8 @@ class PopImage extends \Icybee\Modules\Nodes\PopNode
 		(
 			$attributes + array
 			(
-				self::T_PREVIEW_WIDTH => 64,
-				self::T_PREVIEW_HEIGHT => 64,
 				self::T_CONSTRUCTOR => 'images',
+				self::THUMBNAIL_VERSION => '$popimage',
 
 				'placeholder' => 'Sélectionner une image',
 
@@ -49,20 +47,11 @@ class PopImage extends \Icybee\Modules\Nodes\PopNode
 		(
 			$dataset + array
 			(
-				'preview-width' => $this[self::T_PREVIEW_WIDTH],
-				'preview-height' => $this[self::T_PREVIEW_HEIGHT],
-				'widget-constructor' => 'PopImage'
+				'widget-constructor' => 'PopImage',
+				'thumbnail-version' => $this[self::THUMBNAIL_VERSION]
 			)
 		);
 	}
-	/*
-	protected function decorate($html)
-	{
-		$addon = '+ <input type="file" />';
-
-		return '<div class="input-append">' . $html . '<span class="add-on">' . $addon . '</span></div>';
-	}
-	*/
 
 	protected function getEntry($model, $value)
 	{
@@ -71,14 +60,11 @@ class PopImage extends \Icybee\Modules\Nodes\PopNode
 
 	protected function getPreview($record)
 	{
-		$w = $this[self::T_PREVIEW_WIDTH] ?: 64;
-		$h = $this[self::T_PREVIEW_HEIGHT] ?: 64;
-
 		return new Element
 		(
 			'img', array
 			(
-				'src' => $record ? $record->thumbnail("w:$w;h:$h;m:surface")->url : null,
+				'src' => $record ? $record->thumbnail($this[self::THUMBNAIL_VERSION])->url : null,
 				'alt' => ''
 			)
 		);

@@ -30,14 +30,17 @@ echo $core->models['news']->one->image->thumbnail;
 
 When the module is installed it creates three thumbnailer versions:
 
-- `$icon` is used to represent an image or the image associated to a record. It's a 64×64 image,
+- `$icon` is used to represent an image or the image associated to a record. It's a 24×24 image,
 usually used in the `manage` view (the index of a module in the admin).
+
+- `$icon-m` a bigger icon used in the AdjustImage element.
+
+- `$popimage` is used to represent a preview of an image in a PopImage element.
 
 - `$popover` is used to represent a preview of an image that appears as a popover when the cursor
 hovers an `$icon` image.
 
 - `$gallery` is used to represent images when they are displayed in a gallery.
-
 
 
 
