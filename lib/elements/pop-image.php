@@ -21,8 +21,8 @@ class PopImage extends \Icybee\Modules\Nodes\PopNode
 	{
 		parent::add_assets($document);
 
-		$document->css->add('pop-image.css');
-		$document->js->add('pop-image.js');
+		$document->js->add(DIR . 'public/module.js');
+		$document->css->add(DIR . 'public/module.css');
 	}
 
 	public function __construct($attributes=array())
@@ -60,13 +60,16 @@ class PopImage extends \Icybee\Modules\Nodes\PopNode
 
 	protected function getPreview($record)
 	{
-		return new Element
-		(
-			'img', array
-			(
-				'src' => $record ? $record->thumbnail($this[self::THUMBNAIL_VERSION])->url : null,
-				'alt' => ''
-			)
-		);
+		if (!$record)
+		{
+			return new Element('img');
+		}
+
+		return $record->thumbnail($this[self::THUMBNAIL_VERSION])->to_element(array(
+
+			'data-nid' => $record->nid,
+			'data-path' => $record->url('get')
+
+		));
 	}
 }

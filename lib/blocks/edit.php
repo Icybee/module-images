@@ -11,8 +11,7 @@
 
 namespace Icybee\Modules\Images;
 
-use Brickrouge\Element;
-use Brickrouge\Form;
+use Brickrouge\Group;
 use Brickrouge\Text;
 
 class EditBlock extends \Icybee\Modules\Files\EditBlock
@@ -34,7 +33,7 @@ class EditBlock extends \Icybee\Modules\Files\EditBlock
 				(
 					array
 					(
-						Form::LABEL => 'alt'
+						Group::LABEL => 'alt'
 					)
 				)
 			)

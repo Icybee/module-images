@@ -1,4 +1,8 @@
-Brickrouge.Widget.AdjustThumbnail = new Class({
+Brickrouge.Widget.AdjustImage = new Class({
+
+	Extends: Brickrouge.Widget.AdjustNode
+
+});Brickrouge.Widget.AdjustThumbnail = new Class({
 
 	Implements: [ Events ],
 
@@ -118,6 +122,92 @@ Brickrouge.Widget.AdjustThumbnail = new Class({
 			selected: selected,
 			options: this.thumbnailOptions.getValue()
 
+		})
+	}
+});Brickrouge.Widget.PopImage = (function() {
+
+	return new Class({
+
+		Extends: Brickrouge.Widget.PopNode,
+
+		options: {
+
+			thumbnailVersion: '$popimage'
+
+		},
+
+		initialize: function(el, options)
+		{
+			this.parent(el, options)
+
+			var img = this.element.getElement('img')
+
+			img.addEvent('load', function(ev) {
+
+				var img = ev.target
+
+				img.set('width', img.naturalWidth)
+				img.set('height', img.naturalHeight)
+
+				if (this.popover)
+				{
+					this.popover.reposition()
+				}
+
+			}.bind(this))
+
+			this.img = img
+		},
+
+		change: function(ev)
+		{
+			this.setValue(ev.selected.get('data-nid'))
+		},
+
+		formatValue: function(value)
+		{
+			var img = this.img
+
+			if (!value) return ''
+
+			img.src = Request.API.encode('images/' + value + '/thumbnails/' + this.options.thumbnailVersion + '?_r=' + Date.now())
+
+			return img
+		}
+	})
+
+}) ();Brickrouge.Widget.PopOrUploadImage = new Class({
+
+	initialize: function(el, options) {
+
+		this.element = el = document.id(el)
+
+		var pop = el.getElement('.widget-pop-image').get('widget')
+		, upload = el.getElement('.widget-file').get('widget')
+		, nid = null
+
+		upload.addEvents({
+
+			prepare: function(ev) {
+
+				var data = ev.data
+
+				data.append('title', ev.file.name)
+				data.append('is_online', true)
+
+				if (nid)
+				{
+					data.append(ICanBoogie.Operation.KEY, nid)
+				}
+			},
+
+			success: function(response) {
+
+				nid = response.rc.key
+
+				pop.setValue(response.rc.key)
+
+			}
 		})
 	}
 });

@@ -136,7 +136,14 @@ var Slimbox = (function() {
 					maxh = 600;
 				}
 
-				activeURL = '/api/thumbnailer/get?src=' + encodeURI(activeURL) + '&w=' + maxw + '&h=' + maxh + '&method=constrained&no-upscale=1&quality=90';
+				if (activeURL.match('/api/images/'))
+				{
+					activeURL += '/' + maxw + 'x' + maxh + '/constrained?no-upscale=1';
+				}
+				else
+				{
+					activeURL = '/api/thumbnailer/get?src=' + encodeURI(activeURL) + '&w=' + maxw + '&h=' + maxh + '&method=constrained&no-upscale=1';
+				}
 			}
 
 			preload = new Image();

@@ -16,6 +16,8 @@ use ICanBoogie\Operation;
 
 use Brickrouge\Element;
 
+// @todo-20130521: use Thumbnail and version $icon-m
+
 class ImageUpload extends \Icybee\Modules\Files\FileUpload
 {
 	const THUMBNAIL_WIDTH = 64;
@@ -27,7 +29,8 @@ class ImageUpload extends \Icybee\Modules\Files\FileUpload
 
 		$document->js->add(DIR . 'public/slimbox.js');
 		$document->css->add(DIR . 'public/slimbox.css');
-		$document->css->add('image-upload.css');
+		$document->js->add(DIR . 'public/module.js');
+		$document->css->add(DIR . 'public/module.css');
 	}
 
 	protected function preview($path)
@@ -107,8 +110,8 @@ class ImageUpload extends \Icybee\Modules\Files\FileUpload
 
 		$details = array
 		(
-			'<span title="Path: ' . $path . '">' . basename($path) . '</span>',
-			I18n\t('Image size: {0}&times;{1}px', array($entry_width, $entry_height))
+// 			'<span title="' . $path . '">' . basename($path) . '</span>',
+			I18n\t('Image size: {0}×{1}px', array($entry_width, $entry_height))
 		);
 
 		if (($entry_width != $w) || ($entry_height != $h))

@@ -67,8 +67,6 @@ class GalleryBlock extends ManageBlock
 		foreach ($this->entries as $entry)
 		{
 			$title = $entry->title;
-			$path = $entry->path;
-
 			$key = null;
 
 			$label = new Element
@@ -110,25 +108,14 @@ class GalleryBlock extends ManageBlock
 				}
 			}
 
-			$img = new Element
-			(
-				'img', array
-				(
-					'src' => Operation::encode
-					(
-						$entry->constructor . '/' . $entry->nid . '/thumbnail', array
-						(
-							'w' => $size,
-							'h' => $size,
-							'method' => 'constrained',
-							'quality' => 90
-						)
-					),
+			$img = $entry->thumbnail('$gallery')->to_element(array(
 
-					'title' => $title,
-					'alt' => $title
-				)
-			);
+				'title' => $title,
+				'alt' => $title
+
+			));
+
+			$path = $entry->path;
 
 			$rc .= <<<EOT
 <div class="thumbnailer-wrapper" style="width: {$size}px;">

@@ -1,0 +1,131 @@
+/* .widget-adjust-image extends .widget-adjust-node */
+
+.widget-adjust-image input[type="text"].search {
+	width: 244px;
+	width: calc(100% - 14px);
+}
+
+.widget-adjust-image .records {
+	list-style: none;
+	overflow: hidden;
+	padding: 0;
+	width: 256px;
+}
+
+.widget-adjust-image .records a[href] {
+	padding: 0;
+}
+
+.widget-adjust-image .records li {
+	float: left;
+	height: 64px;
+	width: 64px;
+	position: relative;
+}
+
+.widget-adjust-image .records img {
+	cursor: pointer;
+	display: block;
+	margin: 0;
+	padding: 0;
+	vertical-align: inherit;
+}
+
+.widget-adjust-image .records li.selected img,
+.widget-adjust-image .records li:not(.empty):hover img {
+	opacity: .5;
+}
+.widget-adjust-image .records li.selected {
+	background-color: hsla(214, 100%, 85%, .4);
+	box-shadow: inset 0px 0px 10px 2px hsl(214, 100%, 85%);
+}
+
+.widget-adjust-image .records li:not(.empty):hover {
+	background-color: hsla(60, 25%, 73%, .4);
+	box-shadow: inset 0px 0px 10px 2px hsl(60, 25%, 73%);
+}
+
+.widget-adjust-image .records li.selected::after {
+	color: white;
+	content: '\f14a';
+	font-family: FontAwesome;
+	font-size: 16px;
+	position: absolute;
+	bottom: 0;
+	right: 4px;
+	text-shadow: 0 0 4px hsl(214, 100%, 45%);
+	cursor: pointer;
+}
+
+.widget-adjust-image .records li:hover:not(.empty) {
+	background-color: #ffc;
+}.widget-adjust-thumbnail {
+	position: relative;
+}
+
+.widget-adjust-thumbnail.widget-bordered {
+	display: inline-block;
+}
+
+.widget-adjust-thumbnail .widget-adjust-image,
+.widget-adjust-thumbnail .widget-adjust-thumbnail-options {
+	float: left;
+}
+
+.widget-adjust-thumbnail .widget-adjust-thumbnail-options {
+	padding-left: 1em;
+}
+
+.widget-adjust-thumbnail:not(.unfold-thumbnail) .widget-adjust-thumbnail-options {
+	display: none;
+}
+
+.widget-adjust-thumbnail > .more {
+	background: white;
+	border: 1px solid #ccc;
+	border-left: 0;
+	padding: 5px;
+	position: absolute;
+	top: 10px;
+	left: 100%;
+	border-radius: 0 4px 4px 0;
+	cursor: e-resize;
+	font-size: 16px;
+}
+
+.contrast .widget-adjust-thumbnail > .more {
+	background: black;
+	border: 3px solid rgba(0, 0, 0, 0.8);
+	top: 0;
+	margin-left: 10px;
+}
+
+.widget-adjust-thumbnail.unfold-thumbnail > .more {
+	cursor: w-resize;
+}form.edit div.file-upload-element div.details {
+	display: inline-block;
+	text-align: right;
+	margin-right: 1ex;
+	vertical-align: top;
+}
+
+form.edit div.file-upload-element div.preview small {
+	display: block;
+	margin-top: 0.5em;
+}.widget-pop-image img {
+	border-radius: 3px;
+	display: block;
+}
+
+.widget-pop-image:not(.placeholder) span.title,
+.widget-pop-image.placeholder img {
+	display: none;
+}.widget-pop-or-upload-image .widget-pop-image,
+.widget-pop-or-upload-image .widget-file {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.widget-pop-or-upload-image .widget-file {
+	margin-left: 10px;
+}

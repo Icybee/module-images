@@ -58,7 +58,7 @@ class Module extends \Icybee\Modules\Files\Module
 		(
 			'w' => 128,
 			'h' => 128,
-			'method' => 'fit',
+			'method' => 'constrained',
 			'quality' => 90
 		)
 	);

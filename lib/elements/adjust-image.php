@@ -15,6 +15,14 @@ use Brickrouge\Element;
 
 class AdjustImage extends \Brickrouge\Widget\AdjustNode
 {
+	static protected function add_assets(\Brickrouge\Document $document)
+	{
+		parent::add_assets($document);
+
+		$document->css->add(DIR . 'public/module.css');
+		$document->js->add(DIR . 'public/module.js');
+	}
+
 	public function __construct(array $attributes=array())
 	{
 		parent::__construct
@@ -22,20 +30,27 @@ class AdjustImage extends \Brickrouge\Widget\AdjustNode
 			$attributes + array
 			(
 				self::T_CONSTRUCTOR => 'images',
+				self::WIDGET_CONSTRUCTOR => 'AdjustImage',
 
 				'data-adjust' => 'adjust-image'
 			)
 		);
 	}
 
-	static protected function add_assets(\Brickrouge\Document $document)
+	/**
+	 * Adds the `widget-adjust-image` class name.
+	 */
+	protected function alter_class_names(array $class_names)
 	{
-		parent::add_assets($document);
-
-		$document->css->add('adjust-image.css');
-		$document->js->add('adjust-image.js');
+		return parent::alter_class_names($class_names) + array
+		(
+			'widget-adjust-image' => true
+		);
 	}
 
+	/**
+	 * Because a 4x4 grid is used, `$limit` defaults to 16.
+	 */
 	protected function get_records($constructor, array $options, $limit=16)
 	{
 		return parent::get_records($constructor, $options, $limit);
@@ -43,37 +58,27 @@ class AdjustImage extends \Brickrouge\Widget\AdjustNode
 
 	protected function render_record(\Icybee\Modules\Nodes\Node $record, $selected, array $range, array $options)
 	{
-		$recordid = $record->nid;
+		$nid = $record->nid;
 
-		return new Element
+		return $record->thumbnail('$icon-m')->to_element
 		(
-			'a', array
+			array
 			(
-				Element::CHILDREN => array
-				(
-					$record->thumbnail('$icon-m')->to_element
-					(
-						array
-						(
-							'alt' => $record->alt,
-							'title' => $record->title,
+				'alt' => $record->alt,
+				'title' => $record->title,
 
-							'data-nid' => $recordid,
-							'data-popover-image' => $record->thumbnail('$popover')->url,
-							'data-popover-target' => '.widget-adjust-image'
-						)
-					)
-				),
-
-				'href' => '#',
-
-				'data-nid' => $recordid,
+				'data-nid' => $nid,
+				'data-popover-image' => $record->thumbnail('$popover')->url,
+				'data-popover-target' => '.widget-adjust-image',
 				'data-title' => $record->title,
 				'data-path' => $record->path
 			)
 		);
 	}
 
+	/**
+	 * Defaults constructor to `images`.
+	 */
 	public function get_results(array $options=array(), $constructor='images')
 	{
 		return parent::get_results($options, $constructor);

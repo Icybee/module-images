@@ -23,8 +23,8 @@ class PopOrUploadImage extends Element
 	{
 		parent::add_assets($document);
 
-		$document->css->add('widget-pop-or-upload-image.css');
-		$document->js->add('widget-pop-or-upload-image.js');
+		$document->js->add(DIR . 'public/module.js');
+		$document->css->add(DIR . 'public/module.css');
 	}
 
 	public function __construct(array $attributes=array())
