@@ -31,8 +31,6 @@ class UploadOperation extends \Icybee\Modules\Files\UploadOperation
 
 		if ($this->response['infos'])
 		{
-			$path = $this->file->location;
-
 			// TODO-20110106: compute surface w & h and use them for img in order to avoid poping
 
 			$this->response['infos'] = '<div class="preview">'
@@ -41,7 +39,7 @@ class UploadOperation extends \Icybee\Modules\Files\UploadOperation
 
 			new Thumbnail
 			(
-				$path, array
+				\ICanBoogie\strip_root($this->file->location), array
 				(
 					'w' => 64,
 					'h' => 64,

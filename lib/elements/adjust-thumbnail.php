@@ -56,9 +56,9 @@ class AdjustThumbnail extends \Brickrouge\Widget
 	{
 		if ($attribute == 'value')
 		{
-			if (preg_match('/\/api\/images\/(\d+)(\/(\d*)x(\d*)(\/([a-z\-]+))?)?/', $value, $matches))
+			if (preg_match('/\/api\/images\/([0-9a-z]{8})-([0-9a-z]{48})(\/(\d*)x(\d*)(\/([a-z\-]+))?)?/', $value, $matches))
 			{
-				list($path, $nid, , $width, $height, , $method) = $matches + array(3 => null, 4 => null, 6 => null);
+				list($path, $hexdec, , , $width, $height, , $method) = $matches + array(4 => null, 5 => null, 7 => null);
 
 				$options = array();
 
@@ -77,7 +77,7 @@ class AdjustThumbnail extends \Brickrouge\Widget
 					$options['method'] = $method;
 				}
 
-				$this->adjust_image['value'] = $nid;
+				$this->adjust_image['value'] = hexdec($hexdec);
 				$this->adjust_thumbnail_options['value'] = $options;
 			}
 		}

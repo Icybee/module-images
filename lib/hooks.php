@@ -16,6 +16,7 @@ use ICanBoogie\I18n;
 use ICanBoogie\Event;
 use ICanBoogie\Events;
 use ICanBoogie\Modules;
+use ICanBoogie\Modules\Thumbnailer\PopThumbnailVersion;
 use ICanBoogie\Operation;
 
 use Brickrouge\Element;
@@ -180,7 +181,7 @@ class Hooks
 		{
 			$id = \ICanBoogie\normalize($view_id);
 
-			$thumbnails["global[thumbnailer.versions][$id]"] = new \Brickrouge\Widget\PopThumbnailVersion
+			$thumbnails["global[thumbnailer.versions][$id]"] = new PopThumbnailVersion
 			(
 				array
 				(

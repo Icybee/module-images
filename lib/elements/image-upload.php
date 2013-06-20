@@ -44,7 +44,7 @@ class ImageUpload extends \Icybee\Modules\Files\FileUpload
 		(
 			'thumbnailer/get', array
 			(
-				'src' => $path,
+				'src' => \ICanBoogie\strip_root($path),
 				'w' => $w,
 				'h' => $h,
 				'format' => 'jpeg',
@@ -72,14 +72,14 @@ class ImageUpload extends \Icybee\Modules\Files\FileUpload
 			return $img;
 		}
 
-		return '<a href="' . $path . '&amp;uniqid=' . uniqid() . '" rel="lightbox">' . $img . '</a>';
+		return '<a href="' . \ICanBoogie\strip_root($path) . '" rel="lightbox">' . $img . '</a>';
 	}
 
 	protected function details($path)
 	{
 		$path = $this['value'];
 
-		list($entry_width, $entry_height) = getimagesize($_SERVER['DOCUMENT_ROOT'] . $path);
+		list($entry_width, $entry_height) = getimagesize($path);
 
 		$w = $entry_width;
 		$h = $entry_height;
@@ -123,7 +123,7 @@ class ImageUpload extends \Icybee\Modules\Files\FileUpload
 			$details[] = I18n\t('Displayed as is');
 		}
 
-		$details[] = I18n\format_size(filesize($_SERVER['DOCUMENT_ROOT'] . $path));
+		$details[] = I18n\format_size(filesize($path));
 
 		return $details;
 	}
