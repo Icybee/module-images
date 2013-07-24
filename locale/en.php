@@ -19,6 +19,8 @@ return array
 		)
 	),
 
+	'images.manage.column.surface' => "Surface",
+
 	'label' => array
 	(
 		'alt' => 'Alternative text',

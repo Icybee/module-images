@@ -39,14 +39,6 @@ return array
 	),
 
 	#
-	# resume
-	#
-
-	'Size' => 'Taille',
-	'Category' => 'Catégorie',
-	'User' => 'Utilisateur',
-
-	#
 	# manage
 	#
 

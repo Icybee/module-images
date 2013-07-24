@@ -11,8 +11,6 @@
 
 namespace Icybee\Modules\Images;
 
-use ICanBoogie\ActiveRecord\Query;
-
 class ManageBlock extends \Icybee\Modules\Files\ManageBlock
 {
 	static protected function add_assets(\Brickrouge\Document $document)
@@ -22,7 +20,6 @@ class ManageBlock extends \Icybee\Modules\Files\ManageBlock
 		$document->js->add(DIR . 'public/slimbox.js');
 		$document->css->add(DIR . 'public/slimbox.css');
 		$document->js->add('manage.js');
-		$document->css->add('manage.css');
 	}
 
 	public function __construct(Module $module, array $attributes)
@@ -39,54 +36,79 @@ class ManageBlock extends \Icybee\Modules\Files\ManageBlock
 		);
 	}
 
-	protected function columns()
+	/**
+	 * Adds the following columns:
+	 *
+	 * - `title`: An instance of {@link ManageBlock\TitleColumn}.
+	 * - `surface`: An instance of {@link ManageBlock\SurfaceColumn}.
+	 */
+	protected function get_available_columns()
 	{
-		$columns = parent::columns() + array
+		return array_merge(parent::get_available_columns(), array
 		(
-			'surface' => array
-			(
-				'label' => 'Dimensions',
-				'class' => 'size pull-right'
-			)
-		);
-
-		$columns['title']['class'] = 'thumbnail';
-
-		return $columns;
+			'title' => __CLASS__ . '\TitleColumn',
+			'surface' => __CLASS__ . '\SurfaceColumn'
+		));
 	}
+}
 
-	protected function extend_column_surface(array $column, $id, array $fields)
+namespace Icybee\Modules\Images\ManageBlock;
+
+use ICanBoogie\ActiveRecord\Query;
+
+use Icybee\Modules\Images\ThumbnailDecorator;
+
+/**
+ * Class for the `title` column.
+ */
+class TitleColumn extends \Icybee\Modules\Nodes\ManageBlock\TitleColumn
+{
+	public function render_cell($record)
 	{
-		if ($this->count < 10 && !$this->options['filters'])
-		{
-			return parent::extend_column($column, $id, $fields);
-		}
+		return new ThumbnailDecorator(parent::render_cell($record), $record);
+	}
+}
 
-		return array
+/**
+ * Class for the `surface` column.
+ *
+ * @todo-20130624: disable options, when count < 10
+ */
+class SurfaceColumn extends \Icybee\ManageBlock\Column
+{
+	public function __construct(\Icybee\ManageBlock $manager, $id, array $options=array())
+	{
+		parent::__construct
 		(
-			'filters' => array
+			$manager, $id, $options + array
 			(
-				'options' => array
+				'class' => 'pull-right measure',
+				'orderable' => true,
+				'filters' => array
 				(
-					'=b' => 'Big',
-					'=m' => 'Medium',
-					'=s' => 'Small'
+					'options' => array
+					(
+						'=l' => 'Large',
+						'=m' => 'Medium',
+						'=s' => 'Small'
+					)
 				)
 			)
-		)
-
-		+ parent::extend_column($column, $id, $fields);
+		);
 	}
 
-	protected function update_filters(array $filters, array $modifiers)
+	/**
+	 * Adds support for the `surface` filter.
+	 */
+	public function alter_filters(array $filters, array $modifiers)
 	{
-		$filters = parent::update_filters($filters, $modifiers);
+		$filters = parent::alter_filters($filters, $modifiers);
 
 		if (isset($modifiers['surface']))
 		{
 			$value = $modifiers['surface'];
 
-			if (in_array($value, array('b', 'm', 's')))
+			if (in_array($value, array('l', 'm', 's')))
 			{
 				$filters['surface'] = $value;
 			}
@@ -99,13 +121,14 @@ class ManageBlock extends \Icybee\Modules\Files\ManageBlock
 		return $filters;
 	}
 
-	protected function alter_query(Query $query, array $filters)
+	/**
+	 * Adds support for the `surface` filter.
+	 */
+	public function alter_query_with_filter(Query $query, $filter_value)
 	{
-		$query = parent::alter_query($query, $filters);
-
-		if (isset($filters['surface']))
+		if ($filter_value)
 		{
-			list($avg, $max, $min) = $this->model->select('AVG(width * height), MAX(width * height), MIN(width * height)')->similar_site->one(\PDO::FETCH_NUM);
+			list($avg, $max, $min) = $query->model->select('AVG(width * height), MAX(width * height), MIN(width * height)')->similar_site->one(\PDO::FETCH_NUM);
 
 			$bounds = array
 			(
@@ -116,9 +139,9 @@ class ManageBlock extends \Icybee\Modules\Files\ManageBlock
 				$max
 			);
 
-			switch ($filters['surface'])
+			switch ($filter_value)
 			{
-				case 'b': $query->where('width * height >= ?', $bounds[3]); break;
+				case 'l': $query->where('width * height >= ?', $bounds[3]); break;
 				case 'm': $query->where('width * height >= ? AND width * height < ?', $bounds[2], $bounds[3]); break;
 				case 's': $query->where('width * height < ?', $bounds[2]); break;
 			}
@@ -128,37 +151,15 @@ class ManageBlock extends \Icybee\Modules\Files\ManageBlock
 	}
 
 	/**
-	 * Alters the range query to support the "surface" virtual property.
+	 * Alters the order of the query with the surface of the image.
 	 */
-	protected function alter_range_query(Query $query, array $options)
+	public function alter_query_with_order(Query $query, $order_direction)
 	{
-		if (isset($options['order']['surface']))
-		{
-			$query->order('(width * height) ' . ($options['order']['surface'] < 0 ? 'DESC' : ''));
-
-			$options['order'] = array();
-		}
-
-		return parent::alter_range_query($query, $options);
+		return $query->order('(width * height) ' . ($order_direction < 0 ? 'DESC' : 'ASC'));
 	}
 
-	protected function render_cell_title($record, $property)
+	public function render_cell($record)
 	{
-		$icon = $record->thumbnail('$icon')->to_element
-		(
-			array
-			(
-				'class' => 'icon',
-				'data-popover-image' => $record->thumbnail('$popover')->url
-			)
-		);
-
-		return '<a href="' . \ICanBoogie\escape($record->path) . '" rel="lightbox[]">' . $icon . '</a>'
-		. parent::render_cell_title($record, $property);
-	}
-
-	protected function render_cell_surface($record)
-	{
-		return $record->width . '&times;' . $record->height . '&nbsp;px';
+		return "{$record->width}&times;{$record->height}&nbsp;px";
 	}
 }

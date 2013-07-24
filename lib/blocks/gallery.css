@@ -12,12 +12,12 @@
 	position: relative;
 }
 
-table.manage tbody tr:hover a
+.listview tbody tr:hover a
 {
 	color: inherit;
 }
 
-table.manage tbody tr:hover a:hover
+.listview tbody tr:hover a:hover
 {
 	color: #4B8BB3;
 }

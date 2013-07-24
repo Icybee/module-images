@@ -439,6 +439,44 @@ class Hooks
 		$event->names['has-image'] = true;
 	}
 
+	/**
+	 * Decorates `title` cell of the record with an associated image with an icon.
+	 *
+	 * @param \Icybee\ManageBlock\AlterRenderedCellsEvent $event
+	 * @param \Icybee\Modules\Contents\ManageBlock $target
+	 */
+	static public function on_manageblock_alter_rendered_cells(\Icybee\ManageBlock\AlterRenderedCellsEvent $event, \Icybee\Modules\Contents\ManageBlock $target)
+	{
+		global $core;
+
+		if (!($core->registry["images.inject.{$target->module->flat_id}"]))
+		{
+			return;
+		}
+
+		$rendered_cells = &$event->rendered_cells;
+		$records = $core->models['images']->including_assigned_image($event->records);
+
+		foreach ($rendered_cells['title'] as $i => &$cell)
+		{
+			try
+			{
+				$image = $records[$i]->image;
+
+				if (!$image)
+				{
+					continue;
+				}
+
+				$cell = new ThumbnailDecorator($cell, $image);
+			}
+			catch (\Exception $e) {}
+		}
+
+		$core->document->css->add(DIR . 'public/slimbox.css');
+		$core->document->js->add(DIR . 'public/slimbox.js');
+	}
+
 	/*
 	 * Prototype methods
 	 */
