@@ -12,24 +12,32 @@
 namespace Icybee\Modules\Images;
 
 use Brickrouge\A;
+use Brickrouge\Decorator;
 
 /**
- * Decorates the provided component with a thumbnail.
+ * Decorates a component with a thumbnail.
  */
-class ThumbnailDecorator
+class ThumbnailDecorator extends Decorator
 {
-	protected $component;
 	protected $record;
 	protected $options = array
 	(
 		'version' => '$icon'
 	);
 
+	/**
+	 * Initializes the {@link $record} and {@link $options} properties.
+	 *
+	 * @param mixed $component The component to decorate.
+	 * @param Image $record The source of the thumbnail.
+	 * @param array $options Options.
+	 */
 	public function __construct($component, Image $record, array $options=array())
 	{
-		$this->component = $component;
 		$this->record = $record;
 		$this->options = $options + $this->options;
+
+		parent::__construct($component);
 	}
 
 	public function render()
@@ -43,18 +51,6 @@ class ThumbnailDecorator
 			)
 		);
 
-		return new A($icon, $record->path, array('rel' => "lightbox[thumbnail-decorator]")) . $this->component;
-	}
-
-	public function __toString()
-	{
-		try
-		{
-			return $this->render();
-		}
-		catch (\Exception $e)
-		{
-			return \Brickrouge\render_exception($e);
-		}
+		return new A($icon, $record->path, array('rel' => "lightbox[thumbnail-decorator]")) . parent::render();
 	}
 }
