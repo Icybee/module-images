@@ -46,6 +46,28 @@ hovers an `$icon` image.
 
 
 
+## Thumbnail decorator
+
+Components can be easily decorated with a thumbnail using a `ThumbnailDecorator` instance:
+
+```php
+<?php
+
+use Icybee\Modules\Images\ThumbnailDecorator;
+
+echo new ThumbnailDecorator($record->title, $record->image);
+```
+
+The previous code will produce something like:
+
+```html
+<a href="/repository/files/image/140-porte-verre-blanc.jpeg" rel="lightbox[thumbnail-decorator]"><img width="24" height="24" data-popover-image="/api/images/140/thumbnails/$popover" class="thumbnail thumbnail--icon" alt="" src="/api/images/140/thumbnails/$icon"></a> My record title
+```
+
+
+
+
+
 ## Associating images
 
 Images can be associated to content records—such as news—to illustrate them. An option to enable
@@ -76,7 +98,7 @@ control injected in the edit form of the record.
 
 
 ### Edit control
-	
+
 The edit block of the target modules is altered to provide a control allowing the user to select
 the image to associate with the record being edited.
 
