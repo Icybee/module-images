@@ -19,10 +19,22 @@ use Brickrouge\Decorator;
  */
 class ThumbnailDecorator extends Decorator
 {
+	/**
+	 * The source of the thumbnail.
+	 *
+	 * @var Image
+	 */
 	protected $record;
+
+	/**
+	 * The rendering options.
+	 *
+	 * @var array
+	 */
 	protected $options = array
 	(
-		'version' => '$icon'
+		'version' => '$icon',
+		'no-lightbox' => false
 	);
 
 	/**
@@ -43,7 +55,7 @@ class ThumbnailDecorator extends Decorator
 	public function render()
 	{
 		$record = $this->record;
-		$icon = $record->thumbnail($this->options['version'])->to_element
+		$thumbnail = $record->thumbnail($this->options['version'])->to_element
 		(
 			array
 			(
@@ -51,6 +63,11 @@ class ThumbnailDecorator extends Decorator
 			)
 		);
 
-		return new A($icon, $record->path, array('rel' => "lightbox[thumbnail-decorator]")) . parent::render();
+		if (!$this->options['no-lightbox'])
+		{
+			$thumbnail = new A($thumbnail, $record->path, array('rel' => "lightbox[thumbnail-decorator]"));
+		}
+
+		return $thumbnail . parent::render();
 	}
 }
