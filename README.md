@@ -3,8 +3,55 @@
 The Images module (`images`) manages the images uploaded by the users of the
 CMS [Icybee](http://icybee.org/).
 
-The module provides the ability to attach images to `Content` instances. For instance,
-an image can be attached to a news to illustrate it. The [Thumbnailer](https://github.com/Icybee/module-thumbnailer)
+
+
+
+
+## Rendering Image records
+
+Image active records render as string:
+
+```php
+<?php
+
+echo $core->models['images']->one;
+```
+
+Will produce something like:
+
+```html
+<img src="/repository/files/image/140-porte-verre-blanc.jpeg" alt="Porte verre" width="484" height="518" data-nid="140" />
+```
+
+
+
+
+
+## Thumbnail versions
+
+The following thumbnail versions are created when the module is installed:
+
+- `$icon`: Represents an image or the image assigned to a record. It's a 24×24 image,
+usually used in the `manage` view (the index of a module in the admin).
+
+- `$icon-m`: A bigger icon usually used by the AdjustImage element to display available images
+in a grid.
+
+- `$popimage`: Represents a preview of an image in a PopImage element.
+
+- `$popover`: Represents a preview of an image that appears as a popover when the cursor
+hovers an `$icon` image.
+
+- `$gallery`: Represents images when they are displayed in a gallery.
+
+
+
+
+
+## Assigning images to content records
+
+The module provides to ability to assign images to content records—such as news or articles—to
+illustrate them. The [Thumbnailer](https://github.com/Icybee/module-thumbnailer)
 module is used to provide thumbnails through a fluent API.
 
 ```php
@@ -26,21 +73,81 @@ echo $core->models['news']->one->image->thumbnail;
 
 
 
-## Thumbnail versions
+### Configuring the assigning
 
-When the module is installed it creates three thumbnailer versions:
+An option to enable the association is injected in all the modules extending the [Contents](https://github.com/Icybee/module-contents) module.
+When the option is enabled the following things can be specified:
 
-- `$icon` is used to represent an image or the image associated to a record. It's a 24×24 image,
-usually used in the `manage` view (the index of a module in the admin).
+- Whether or not the assigning is required.
+- The image to use by default if the association is not required.
+- The title and description of the injected image control.
 
-- `$icon-m` a bigger icon used in the AdjustImage element.
+These settings are stored in the global registry:
 
-- `$popimage` is used to represent a preview of an image in a PopImage element.
+- `images.inject.<flat_module_id>`: (bool|null) `true` if enabled, undefined otherwise.
+- `images.inject.<flat_module_id>.required`: (bool) `true` if the association is required,
+false otherwise.
+- `images.inject.<flat_module_id>.default`: (int) Identifier of a default image to use
+when no image is associated to a record. This only apply when the association is not required.
+- `images.inject.<flat_module_id>.title`: (string) The label of the image control injected
+in the edit form of the record.
+- `images.inject.<flat_module_id>.description`: (string) The description of the image
+control injected in the edit form of the record.
 
-- `$popover` is used to represent a preview of an image that appears as a popover when the cursor
-hovers an `$icon` image.
+Additional controls specify the thumbnail options to use for the different views of the record,
+usually `home`, `list` and `view`. The thumbnail version name is created according to the following
+pattern: `<module>-<view>`, where `<module>` is the normalized identifier of the module, and
+`<view>` is the normalized identifier of the view.
 
-- `$gallery` is used to represent images when they are displayed in a gallery.
+
+
+
+
+### Edit control
+
+The edit block of the target modules is altered to provide a control allowing the user to select
+the image to associate with the record being edited.
+
+The identifier of the selected image is recorded in the `image_id` meta property of the record.
+
+
+
+
+
+### Obtaining the image associated with a record
+
+The image associated with a record is obtained through the `image` magic property:
+
+```php
+<?php
+
+$core->models['articles']->one->image;
+```
+
+Note that it's not an `Image` instance that is obtained but a `NodeRelation` instance. Because
+all calls are forwarded, the `NodeRelation` instance can be used just like an `Image` instance,
+although _set_ throws a [PropertyNotWritable](http://icanboogie.org/docs/class-ICanBoogie.PropertyNotWritable.html)
+exception.
+
+The `NodeRelation` instance makes it possible to use short thumbnail versions. For instance, one
+can use ":list" instead of "article-list" to obtain the thumbnail to use in a _list_ view of
+articles:
+
+```php
+<?php 
+
+$core->models['articles']->one->image->thumbnail(':list');
+```
+
+The magic property `thumbnail` returns the _view_ thumbnail:
+
+```php
+<?php 
+
+$core->models['articles']->one->image->thumbnail(':view');
+// or
+$core->models['articles']->one->image->thumbnail;
+```
 
 
 
@@ -62,84 +169,6 @@ The previous code will produce something like:
 
 ```html
 <a href="/repository/files/image/140-porte-verre-blanc.jpeg" rel="lightbox[thumbnail-decorator]"><img width="24" height="24" data-popover-image="/api/images/140/thumbnails/$popover" class="thumbnail thumbnail--icon" alt="" src="/api/images/140/thumbnails/$icon"></a> My record title
-```
-
-
-
-
-
-## Associating images
-
-Images can be associated to content records—such as news—to illustrate them. An option to enable
-the association is injected in all the modules extending the [Contents](https://github.com/Icybee/module-contents) module.
-When the option is enabled the user can specify the following things:
-
-- That the association is required.
-- The image to use by default if the association is not required.
-- The title and description of the injected image control.
-
-Additional controls allow the user to specify the thumbnail options to use for the different views
-of the record, usually `home`, `list` and `view`.
-
-These settings are store in the registry :
-
-- `images.inject.<flat_module_id>`: (bool|null) `true` if enabled, undefined otherwise.
-- `images.inject.<flat_module_id>.required`: (bool) `true` if the association is required,
-false otherwise.
-- `images.inject.<flat_module_id>.default`: (int) Identifier of a default image to use
-when no image is associated to a record. This only apply when the association is not required.
-- `images.inject.<flat_module_id>.title`: (string) The label of the image control injected
-in the edit form of the record.
-- `images.inject.<flat_module_id>.description`: (string) The description of the image
-control injected in the edit form of the record.
-
-
-
-
-
-### Edit control
-
-The edit block of the target modules is altered to provide a control allowing the user to select
-the image to associate with the record being edited.
-
-The identifier of the selected image is recorded in the `image_id` meta property of the record.
-
-
-
-
-
-### Obtaining the image associated with a record
-
-The image associated with a record is obtained through the `image` magic property.
-
-```php
-<?php
-
-$core->models['articles']->one->image;
-```
-
-Note that it's not an `Image` instance that is obtained but a `NodeRelation` instance. Because
-all calls are forwarded, the `NodeRelation` instance can be used just like an `Image` instance,
-although _set_ throws a [PropertyNotWritable](http://icanboogie.org/docs/class-ICanBoogie.PropertyNotWritable.html)
-exception.
-
-The `NodeRelation` instance makes it possible to use short thumbnail versions. For instance, one can
-use ":list" instead of "article-list" to obtain the _list_ thumbnail of an article:
-
-```php
-<?php 
-
-$core->models['articles']->one->image->thumbnail(':list');
-```
-
-The magic property `thumbnail` returns the _view_ thumbnail:
-
-```php
-<?php 
-
-$core->models['articles']->one->image->thumbnail(':view');
-// or
-$core->models['articles']->one->image->thumbnail;
 ```
 
 
