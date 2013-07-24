@@ -21,8 +21,7 @@
 		"php": ">=5.3.0",
 		"icanboogie/module-installer": "*",
 		"icybee/module-files": "*",
-		"icybee/module-thumbnailer": "*",
-		"icybee/module-registry": "*"
+		"icybee/module-thumbnailer": "*"
 	},
 	"autoload": {
 		"classmap": [ "lib" ]
