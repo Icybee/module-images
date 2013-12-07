@@ -28,7 +28,7 @@ $prototype['thumbnail'] = 'ICanBoogie\Modules\Thumbnailer\Hooks::method_thumbnai
 #
 
 $prototype = Prototype::get('Icybee\Modules\Nodes\Node');
-$prototype['get_image'] = __NAMESPACE__ . '\Hooks::prototype_get_image';
+$prototype['lazy_get_image'] = __NAMESPACE__ . '\Hooks::prototype_get_image';
 
 #
 # Mocking core

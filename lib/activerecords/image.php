@@ -79,7 +79,7 @@ EOT;
 	 *
 	 * @return int
 	 */
-	protected function volatile_get_surface()
+	protected function get_surface()
 	{
 		return $this->width * $this->height;
 	}

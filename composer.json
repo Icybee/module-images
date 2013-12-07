@@ -20,8 +20,8 @@
 	"require": {
 		"php": ">=5.3.0",
 		"icanboogie/module-installer": "*",
-		"icybee/module-files": "*",
-		"icybee/module-thumbnailer": "*"
+		"icybee/module-files": "2.x",
+		"icybee/module-thumbnailer": "2.x"
 	},
 	"autoload": {
 		"classmap": [ "lib" ]

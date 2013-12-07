@@ -20,7 +20,7 @@ return array
 
 	'prototypes' => array
 	(
-		'Icybee\Modules\Nodes\Node::get_image' => $hooks . 'prototype_get_image'
+		'Icybee\Modules\Nodes\Node::lazy_get_image' => $hooks . 'prototype_get_image'
 	),
 
 	'textmark' => array
