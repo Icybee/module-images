@@ -334,7 +334,7 @@ class Hooks
 			$id = $alt;
 		}
 
-		$record = $model->where('nid = ? OR slug = ? OR title = ?', (int) $id, $id, $id)->order('created DESC')->one;
+		$record = $model->where('nid = ? OR slug = ? OR title = ?', (int) $id, $id, $id)->order('created_at DESC')->one;
 
 		if (!$record)
 		{

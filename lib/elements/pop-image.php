@@ -55,7 +55,7 @@ class PopImage extends \Icybee\Modules\Nodes\PopNode
 
 	protected function getEntry($model, $value)
 	{
-		return $model->where('path = ? OR title = ? OR slug = ?', $value, $value, $value)->order('created DESC')->one;
+		return $model->where('path = ? OR title = ? OR slug = ?', $value, $value, $value)->order('created_at DESC')->one;
 	}
 
 	protected function getPreview($record)

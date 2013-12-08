@@ -68,7 +68,7 @@ class GalleryBlock extends ManageBlock
 				)
 			);
 
-			$label .= $row['surface'] . '<br />' . $row['modified'];
+			$label .= $row['surface'] . '<br />' . $row['updated_at'];
 
 			$img = $record->thumbnail('$gallery')->to_element(array(
 
@@ -152,9 +152,9 @@ EOT;
 					);
 				}
 
-				if (isset($order['modified']))
+				if (isset($order['updated_at']))
 				{
-					$label .= ' <span class="small">(' . $this->render_cell_datetime($entry, 'modified') . ')</span>';
+					$label .= ' <span class="small">(' . $this->render_cell_datetime($entry, 'updated_at') . ')</span>';
 				}
 				else if (isset($order['size']))
 				{
