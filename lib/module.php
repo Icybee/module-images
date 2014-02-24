@@ -101,6 +101,8 @@ class Module extends \Icybee\Modules\Files\Module
 
 		$versions->save();
 
+		var_dump($versions);
+
 		return parent::install($errors);
 	}
 }

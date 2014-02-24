@@ -177,7 +177,7 @@ The previous code will produce something like:
 
 ## Requirement
 
-The package requires PHP 5.3 or later.
+The package requires PHP 5.4 or later.
 
 
 
@@ -193,7 +193,7 @@ Create a `composer.json` file and run `php composer.phar install` command to ins
 	"minimum-stability": "dev",
 	"require":
 	{
-		"icybee/module-images": "*"
+		"icybee/module-images": "2.x"
 	}
 }
 ```

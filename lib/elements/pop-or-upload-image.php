@@ -17,6 +17,9 @@ use Brickrouge\Element;
 
 class PopOrUploadImage extends Element
 {
+	const POP_OPTIONS = '#poporuploadimage-pop-options';
+	const UPLOAD_OPTIONS = '#poporuploadimage-upload-options';
+
 	private $pop_image;
 
 	static protected function add_assets(\Brickrouge\Document $document)
@@ -29,23 +32,27 @@ class PopOrUploadImage extends Element
 
 	public function __construct(array $attributes=array())
 	{
+		$attributes += [
+
+			self::POP_OPTIONS => [],
+			self::UPLOAD_OPTIONS => []
+
+		];
+
 		parent::__construct
 		(
 			'div', $attributes + array
 			(
 				Element::CHILDREN => array
 				(
-					$this->pop_image = new PopImage,
-					$this->upload_image = new UploadImage
-					(
-						array
-						(
-							UploadImage::FILE_WITH_LIMIT => true,
+					$this->pop_image = new PopImage($attributes[self::POP_OPTIONS]),
+					$this->upload_image = new UploadImage($attributes[self::UPLOAD_OPTIONS] + [
 
-							'data-name' => Image::PATH,
-							'data-upload-url' => Operation::encode('images/save')
-						)
-					)
+						UploadImage::FILE_WITH_LIMIT => true,
+
+						'data-name' => Image::PATH,
+						'data-upload-url' => Operation::encode('images/save')
+					])
 				),
 
 				Element::WIDGET_CONSTRUCTOR => 'PopOrUploadImage'
@@ -108,5 +115,16 @@ class PopOrUploadImage extends Element
 
 class UploadImage extends \Brickrouge\File
 {
+	const UPLOAD_MODE = '#uploadimage-upload-mode';
+	const UPLOAD_MODE_CREATE = 'create';
+	const UPLOAD_MODE_UPDATE = 'update';
 
+	protected function alter_dataset(array $dataset)
+	{
+		return parent::alter_dataset($dataset) + [
+
+			'upload-mode' => $this[self::UPLOAD_MODE] ?: self::UPLOAD_MODE_CREATE
+
+		];
+	}
 }

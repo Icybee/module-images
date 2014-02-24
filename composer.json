@@ -18,10 +18,16 @@
 	},
 	"minimum-stability": "dev",
 	"require": {
-		"php": ">=5.3.0",
+		"php": ">=5.4.0",
 		"icanboogie/module-installer": "*",
 		"icybee/module-files": "2.x",
 		"icybee/module-thumbnailer": "2.x"
+	},
+	"require-dev": {
+		"icanboogie/icanboogie": "2.x",
+		"icanboogie/operation": "2.x",
+		"icanboogie/i18n": "2.x",
+		"icybee/core": "2.x"
 	},
 	"autoload": {
 		"classmap": [ "lib" ]
