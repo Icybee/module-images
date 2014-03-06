@@ -20,14 +20,14 @@ require __DIR__ . '/../vendor/autoload.php';
 #
 # Thumbnailer setup
 #
-$prototype = Prototype::get(__NAMESPACE__ . '\Image');
+$prototype = Prototype::from(__NAMESPACE__ . '\Image');
 $prototype['thumbnail'] = 'ICanBoogie\Modules\Thumbnailer\Hooks::method_thumbnail';
 
 #
 # Image setup
 #
 
-$prototype = Prototype::get('Icybee\Modules\Nodes\Node');
+$prototype = Prototype::from('Icybee\Modules\Nodes\Node');
 $prototype['lazy_get_image'] = __NAMESPACE__ . '\Hooks::prototype_get_image';
 
 #
