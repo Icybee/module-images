@@ -18,6 +18,7 @@ CSS_FILES = \
 	lib/elements/pop-or-upload-image.css
 
 JS_COMPRESSOR = curl -X POST -s --data-urlencode 'js_code@$^' --data-urlencode 'utf8=1' http://marijnhaverbeke.nl/uglifyjs
+#JS_COMPRESSOR = cat $^ # activate for debug
 JS_COMPRESSED = public/module.js
 JS_UNCOMPRESSED = public/module-uncompressed.js
 

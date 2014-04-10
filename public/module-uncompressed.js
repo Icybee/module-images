@@ -59,7 +59,7 @@ Brickrouge.Widget.AdjustImage = new Class({
 		if (typeOf(value) == 'element')
 		{
 			el = value
-			value = el.get('src')
+			value = el.get('data-nid') || el.get('src')
 		}
 
 		if (typeOf(value) == 'string' && value.indexOf('/api/') !== -1)
