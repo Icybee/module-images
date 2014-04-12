@@ -1,4 +1,4 @@
-# Images [![Build Status](https://travis-ci.org/Icybee/module-images.png?branch=master)](https://travis-ci.org/Icybee/module-images)
+# Images [![Build Status](https://travis-ci.org/Icybee/module-images.png?branch=2.0)](https://travis-ci.org/Icybee/module-images)
 
 The Images module (`images`) manages the images uploaded by the users of the
 CMS [Icybee](http://icybee.org/).
@@ -175,6 +175,12 @@ The previous code will produce something like:
 
 
 
+----------
+
+
+
+
+
 ## Requirement
 
 The package requires PHP 5.4 or later.
@@ -223,7 +229,7 @@ directory can later be cleaned with the `make clean` command.
 
 The package is continuously tested by [Travis CI](http://about.travis-ci.org/).
 
-[![Build Status](https://travis-ci.org/Icybee/module-images.png?branch=master)](https://travis-ci.org/Icybee/module-images)
+[![Build Status](https://travis-ci.org/Icybee/module-images.png?branch=2.0)](https://travis-ci.org/Icybee/module-images)
 
 
 
@@ -243,4 +249,4 @@ cleaned with the `make clean` command.
 
 ## License
 
-The package is licensed under the New BSD License - See the LICENSE file for details.
+The package is licensed under the New BSD License - See the (LICENSE)[LICENSE] file for details.
