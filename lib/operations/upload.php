@@ -18,12 +18,7 @@ use ICanBoogie\Modules\Thumbnailer\Thumbnail;
  */
 class UploadOperation extends \Icybee\Modules\Files\UploadOperation
 {
-	protected $accept = array
-	(
-		'gif' => 'image/gif',
-		'png' => 'image/png',
-		'jpg' => 'image/jpeg'
-	);
+	protected $accept = [ '.gif', '.png', '.jpg', '.jpeg' ];
 
 	protected function process()
 	{
@@ -31,7 +26,7 @@ class UploadOperation extends \Icybee\Modules\Files\UploadOperation
 
 		if ($this->response['infos'])
 		{
-			$path = $this->file->location;
+			$path = \ICanBoogie\strip_root($this->file->pathname);
 
 			// TODO-20110106: compute surface w & h and use them for img in order to avoid poping
 
@@ -39,17 +34,15 @@ class UploadOperation extends \Icybee\Modules\Files\UploadOperation
 
 			.
 
-			new Thumbnail
-			(
-				$path, array
-				(
-					'w' => 64,
-					'h' => 64,
-					'format' => 'png',
-					'background' => 'silver,white,medium',
-					'm' => 'surface'
-				)
-			)
+			new Thumbnail($path, [
+
+				'w' => 64,
+				'h' => 64,
+				'format' => 'png',
+				'background' => 'silver,white,medium',
+				'm' => 'surface'
+
+			])
 
 			. '</div>' . $this->response['infos'];
 		}

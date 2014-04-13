@@ -13,10 +13,5 @@ namespace Icybee\Modules\Images;
 
 class SaveOperation extends \Icybee\Modules\Files\SaveOperation
 {
-	protected $accept = array
-	(
-		'gif' => 'image/gif',
-		'png' => 'image/png',
-		'jpg' => 'image/jpeg'
-	);
+	protected $accept = [ '.gif', '.png', '.jpg', '.jpeg' ];
 }

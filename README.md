@@ -1,4 +1,4 @@
-# Images [![Build Status](https://travis-ci.org/Icybee/module-images.png?branch=2.0)](https://travis-ci.org/Icybee/module-images)
+# Images [![Build Status](https://travis-ci.org/Icybee/module-images.png?branch=2.1)](https://travis-ci.org/Icybee/module-images)
 
 The Images module (`images`) manages the images uploaded by the users of the
 CMS [Icybee](http://icybee.org/).
@@ -199,7 +199,7 @@ Create a `composer.json` file and run `php composer.phar install` command to ins
 	"minimum-stability": "dev",
 	"require":
 	{
-		"icybee/module-images": "2.x"
+		"icybee/module-images": "2.1.x"
 	}
 }
 ```
@@ -229,7 +229,7 @@ directory can later be cleaned with the `make clean` command.
 
 The package is continuously tested by [Travis CI](http://about.travis-ci.org/).
 
-[![Build Status](https://travis-ci.org/Icybee/module-images.png?branch=2.0)](https://travis-ci.org/Icybee/module-images)
+[![Build Status](https://travis-ci.org/Icybee/module-images.png?branch=2.1)](https://travis-ci.org/Icybee/module-images)
 
 
 
