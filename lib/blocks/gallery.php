@@ -62,13 +62,11 @@ class GalleryBlock extends ManageBlock
 				(
 					Element::INNER_HTML => \ICanBoogie\escape($title),
 
-					'class' => 'edit',
+					'class' => 'goto-edit',
 					'title' => I18n\t('Edit this item'),
 					'href' => \ICanBoogie\Routing\contextualize("/admin/{$record->constructor}/{$record->nid}/edit")
 				)
 			);
-
-			$label .= $row['surface'] . '<br />' . $row['updated_at'];
 
 			$img = $record->thumbnail('$gallery')->to_element(array(
 
@@ -77,112 +75,22 @@ class GalleryBlock extends ManageBlock
 
 			));
 
-			$key = '';
-
 			$html .= <<<EOT
-<div class="thumbnailer-wrapper" style="width: 128px;">
+<div class="thumbnailer-wrapper" data-key="{$record->nid}" style="width: 128px;">
 	<a href="{$record->path}" rel="lightbox[]">$img</a>
-	<div class="key">$key</div>
 	$label
 </div>
 EOT;
 		}
 
-// 		var_dump($rows);
-
 		$colspan = count($this->columns) + 1;
 
 		return <<<EOT
 <tr id="gallery">
-	<td colspan="{$colspan}">
-	$html
+	<td colspan="{$colspan}" class="gallery-inner">
+		<div class="gallery-contents">$html</div>
 	</td>
 </tr>
 EOT;
-
-
-
-
-
-
-
-
-
-		$size = 128; // TODO-20110627: make this customizable
-		$size = min($size, max($size, 16), 512);
-
-		$module_id = $this->module->id;
-
-		$order = $this->options->order_by;
-
-		$rc = PHP_EOL . '<tr id="gallery"><td colspan="' . (count($this->columns) + 1) . '">';
-
-		$user = $core->user;
-		$context = $core->site->path;
-
-		foreach ($this->records as $entry)
-		{
-			$title = $entry->title;
-			$key = null;
-
-			$label = new Element
-			(
-				'a', array
-				(
-					Element::INNER_HTML => \ICanBoogie\escape($title),
-
-					'class' => 'edit',
-					'title' => I18n\t('Edit this item'),
-					'href' => $context . '/admin/' . $module_id . '/' . $entry->nid . '/edit'
-				)
-			);
-
-			if ($size >= 64)
-			{
-				if ($user->has_ownership($module_id, $entry))
-				{
-					$key = new Element
-					(
-						Element::TYPE_CHECKBOX, array
-						(
-							'class' => 'key',
-							'title' => I18n\t('Toggle selection for entry #\1', array($entry->nid)),
-							'value' => $entry->nid
-						)
-					);
-				}
-
-				if (isset($order['updated_at']))
-				{
-					$label .= ' <span class="small">(' . $this->render_cell_datetime($entry, 'updated_at') . ')</span>';
-				}
-				else if (isset($order['size']))
-				{
-					$label .= ' <span class="small">(' . $this->render_cell_size($entry, 'size') . ')</span>';
-				}
-			}
-
-			$img = $entry->thumbnail('$gallery')->to_element(array(
-
-				'title' => $title,
-				'alt' => $title
-
-			));
-
-			$path = $entry->path;
-
-			$rc .= <<<EOT
-<div class="thumbnailer-wrapper" style="width: {$size}px;">
-<a href="$path" rel="lightbox[]">$img</a>
-<div class="key">$key</div>
-$label
-</div>
-EOT;
-
-		}
-
-		$rc .= '</td></tr>' . PHP_EOL;
-
-		return $rc;
 	}
 }

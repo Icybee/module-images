@@ -1,11 +1,13 @@
 <?php
 
+namespace Icybee\Modules\Images;
+
 return array
 (
 	'admin:images/gallery' => array
 	(
 		'pattern' => '/admin/images/gallery',
-		'controller' => 'Icybee\BlockController',
+		'controller' => __NAMESPACE__ . '\GalleryController',
 		'title' => '.gallery',
 		'block' => 'gallery'
 	),

@@ -1,35 +1,34 @@
-#gallery
-{
-	text-align: center;
-}
-
-#gallery div.thumbnailer-wrapper
-{
-	text-align: center;
-	font-size: .8em;
-	margin: 1em;
-	display: inline-block;
-	position: relative;
-}
-
-.listview tbody tr:hover a
-{
+.block--images--gallery .listview tbody tr:hover a:not(.btn) {
 	color: inherit;
 }
 
-.listview tbody tr:hover a:hover
-{
-	color: #4B8BB3;
+.block--images--gallery .listview tbody tr {
+	text-align: center;
 }
 
-#gallery div.thumbnailer-wrapper img
-{
+
+.block--images--gallery .gallery-inner {
+	padding: 30px !important;
+}
+
+.block--images--gallery .gallery-contents {
+	margin: -30px 0 0 -30px;
+}
+
+.block--images--gallery .thumbnailer-wrapper {
+	text-align: center;
+	margin: 30px 0 0 30px;
+	display: inline-block;
+	position: relative;
+	vertical-align: bottom;
+}
+
+.block--images--gallery .thumbnailer-wrapper img {
 	margin-bottom: .5em;
-	border: 1px solid #CCC;
-	box-shadow: 0 0 5px 0 #CCC;
+	box-shadow: 2px 2px 5px 0 #CCC;
 }
 
-#gallery div.thumbnailer-wrapper a.edit
+.block--images--gallery .thumbnailer-wrapper .goto-edit
 {
 	display: block;
 	height: 2.5em;
