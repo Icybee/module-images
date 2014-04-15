@@ -84,13 +84,18 @@ class Model extends \Icybee\Modules\Files\Model
 
 		if (!$keys)
 		{
-			return;
+			return $records;
 		}
 
 		$pairs = ActiveRecord\get_model('registry/node')
 		->select('targetid, value')
 		->filter_by_name_and_targetid('image_id', $keys)
 		->pairs;
+
+		if (!$pairs)
+		{
+			return $records;
+		}
 
 		try
 		{
