@@ -12,7 +12,6 @@
 namespace Icybee\Modules\Images;
 
 use ICanBoogie\Errors;
-use ICanBoogie\I18n\FormattedString;
 
 use ICanBoogie\Modules\Thumbnailer\Versions;
 
@@ -79,7 +78,7 @@ class Module extends \Icybee\Modules\Files\Module
 				continue;
 			}
 
-			$errors[$this->id] = new FormattedString("Thumbnail version %version is not defined.", array('version' => $version));
+			$errors[$this->id] = $errors->format("Thumbnail version %version is not defined.", array('version' => $version));
 		}
 
 		return parent::is_installed($errors);
