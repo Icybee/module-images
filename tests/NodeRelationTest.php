@@ -15,6 +15,31 @@ use Icybee\Modules\Nodes\Node;
 
 class NodeRelationTest extends \PHPUnit_Framework_TestCase
 {
+	static private $record;
+
+	static public function setupBeforeClass()
+	{
+		copy(__DIR__ . '/resources/claire.png', \ICanBoogie\REPOSITORY . 'tmp/claire.png');
+
+		$record = Image::from([
+
+			Image::HTTP_FILE => \ICanBoogie\HTTP\File::from([ 'pathname' => \ICanBoogie\REPOSITORY . 'tmp/claire.png' ])
+
+		]);
+
+		$record->save();
+
+		self::$record = $record;
+	}
+
+	static public function  tearDownAfterClass()
+	{
+		if (self::$record)
+		{
+			self::$record->delete();
+		}
+	}
+
 	public function testCanGetNodeAndImage()
 	{
 		$node = new Node;

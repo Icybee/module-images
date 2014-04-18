@@ -11,6 +11,109 @@
 
 namespace Icybee\Modules\Images;
 
+$_SERVER['DOCUMENT_ROOT'] = __DIR__;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+#
+# Create the _core_ instance used for the tests.
+#
+
+global $core;
+
+$core = new \ICanBoogie\Core(\ICanBoogie\array_merge_recursive(\ICanBoogie\get_autoconfig(), [
+
+	'config-path' => [
+
+		__DIR__ . DIRECTORY_SEPARATOR . 'config'
+
+	],
+
+	'module-path' => [
+
+		realpath(__DIR__ . '/../')
+
+	]
+
+]));
+
+$core();
+
+#
+# Install modules
+#
+
+$errors = new \ICanBoogie\Errors();
+
+foreach (array_keys($core->modules->enabled_modules_descriptors) as $module_id)
+{
+	#
+	# The index on the `constructor` column of the `nodes` module clashes with SQLite, we don't
+	# care right now, so the exception is discarted.
+	#
+
+	try
+	{
+		$core->modules[$module_id]->install($errors);
+	}
+	catch (\Exception $e)
+	{
+		$errors[$module_id] = "Unable to install module: " . $e->getMessage();
+	}
+}
+
+if ($errors->count())
+{
+	foreach ($errors as $error)
+	{
+		echo "$module_id: $error\n";
+	}
+
+	exit(1);
+}
+
+#
+#
+#
+
+$core->site_id = 0;
+
+use Icybee\Modules\Users\User;
+
+$user = User::from([
+
+	'username' => 'admin',
+	'email' => 'admin@example.com'
+
+]);
+
+$user->save();
+
+#
+#
+#
+
+$thumbnailer_version = $core->thumbnailer_versions;
+$thumbnailer_version['articles-list'] = 'w:120;h:100';
+$thumbnailer_version['articles-view'] = 'w:420;h:340';
+
+
+/*
+use ICanBoogie\Modules\Thumbnailer\Versions;
+
+$thumbnailer_versions = new Versions
+(
+	array
+	(
+		'articles-list' => 'w:120;h:100',
+		'articles-view' => 'w:420;h:340'
+	)
+);
+
+$thumbnailer_versions->save();
+*/
+
+/*
 use ICanBoogie\Modules\Thumbnailer\Version;
 use ICanBoogie\Modules\Thumbnailer\Versions;
 use ICanBoogie\Prototype;
@@ -55,3 +158,19 @@ $core = (object) array
 		)
 	)
 );
+*/
+
+namespace Tests\Icybee\Modules\Images;
+
+class FakeSaveOperation extends \Icybee\Modules\Images\SaveOperation
+{
+	protected function get_controls()
+	{
+		return [
+
+			self::CONTROL_AUTHENTICATION => false,
+			self::CONTROL_FORM => false
+
+		] + parent::get_controls();
+	}
+}

@@ -46,7 +46,7 @@ class Image extends \Icybee\Modules\Files\File
 	 *
 	 * @var string
 	 */
-	public $alt;
+	public $alt = '';
 
 	/**
 	 * Defaults the model to "images".
@@ -71,6 +71,23 @@ class Image extends \Icybee\Modules\Files\File
 		return <<<EOT
 <img src="$path" alt="$alt" width="{$this->width}" height="{$this->height}" data-nid="{$this->nid}" />
 EOT;
+	}
+
+	public function save()
+	{
+		if (isset($this->{ self::HTTP_FILE }))
+		{
+			/* @var $file \ICanBoogie\HTTP\File */
+
+			$file = $this->{ self::HTTP_FILE };
+
+			list($w, $h) = getimagesize($file->pathname);
+
+			$this->width = $w;
+			$this->height = $h;
+		}
+
+		return parent::save();
 	}
 
 	/**

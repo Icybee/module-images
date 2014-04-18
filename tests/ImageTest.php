@@ -13,6 +13,40 @@ namespace Icybee\Modules\Images;
 
 class ImageTest extends \PHPUnit_Framework_TestCase
 {
+	public function test_save()
+	{
+		$source = __DIR__ . '/resources/claire.png';
+
+		copy($source, \ICanBoogie\REPOSITORY . 'tmp/claire.png');
+
+		$record = Image::from([
+
+			Image::HTTP_FILE => \ICanBoogie\HTTP\File::from([ 'pathname' => \ICanBoogie\REPOSITORY . 'tmp/claire.png' ])
+
+		]);
+
+		$nid = $record->save();
+
+		$this->assertEquals($nid, $record->nid);
+		$this->assertEquals(200, $record->width);
+		$this->assertEquals(200, $record->height);
+		$this->assertEquals("/repository/files/image/1-claire.png", $record->path);
+		$this->assertEquals("image/png", $record->mime);
+		$this->assertEquals(filesize($source), $record->size);
+		$this->assertEquals('claire', $record->title);
+		$this->assertFileExists(dirname(\ICanBoogie\REPOSITORY) . $record->path);
+		$this->assertObjectNotHasAttribute(Image::HTTP_FILE, $record);
+
+		$record->title = "Madonna";
+		$record->save();
+
+		$this->assertEquals("/repository/files/image/1-madonna.png", $record->path);
+		$this->assertFileExists(dirname(\ICanBoogie\REPOSITORY) . $record->path);
+
+		$record->delete();
+		$this->assertFileNotExists(dirname(\ICanBoogie\REPOSITORY) . $record->path);
+	}
+
 	public function test_get_model_id()
 	{
 		$image = new Image;

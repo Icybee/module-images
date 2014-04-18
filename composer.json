@@ -4,6 +4,7 @@
 	"description": "Manages the images uploaded by the users of the CMS Icybee.",
 	"keywords": [ "file", "upload" ],
 	"license": "BSD-3-Clause",
+
 	"authors": [
 		{
 			"name": "Olivier Laviale",
@@ -12,24 +13,33 @@
 			"role" : "Developer"
 		}
 	],
+
 	"support": {
 		"issues": "https://github.com/Icybee/module-images/issues",
 		"source": "https://github.com/Icybee/module-images"
 	},
+
 	"minimum-stability": "dev",
+
 	"require": {
 		"php": ">=5.4.0",
 		"icanboogie/module-installer": "*",
 		"icybee/module-files": "2.1.x",
 		"icybee/module-thumbnailer": "2.x"
 	},
+
 	"require-dev": {
 		"icanboogie/icanboogie": "2.x",
 		"icanboogie/operation": "2.x",
 		"icanboogie/i18n": "2.x",
 		"icybee/core": "2.x"
 	},
+
 	"autoload": {
 		"classmap": [ "lib" ]
+	},
+
+	"scripts": {
+		"post-autoload-dump": "ICanBoogie\\AutoConfig\\Generator::on_autoload_dump"
 	}
 }
