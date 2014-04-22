@@ -20,6 +20,16 @@ class Model extends \Icybee\Modules\Files\Model
 
 	public function save(array $properties, $key=null, array $options=[])
 	{
+		if (isset($properties[Image::HTTP_FILE]))
+		{
+			$file = $properties[Image::HTTP_FILE];
+
+			list($w, $h) = getimagesize($file->pathname);
+
+			$properties[Image::WIDTH] = $w;
+			$properties[Image::HEIGHT] = $h;
+		}
+
 		return parent::save($properties, $key, $options + [
 
 			self::ACCEPT => self::$accept
