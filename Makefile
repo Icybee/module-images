@@ -76,3 +76,6 @@ clean:
 	@rm -fR vendor
 	@rm -f composer.lock
 	@rm -f composer.phar
+	@rm -fR tests/repository/files
+	@rm -fR tests/repository/thumbnailer
+	@rm -fR tests/repository/tmp
