@@ -283,7 +283,7 @@ cleaned with the `make clean` command.
 
 ## License
 
-The package is licensed under the New BSD License - See the (LICENSE)[LICENSE] file for details.
+The package is licensed under the New BSD License - See the [LICENSE](LICENSE) file for details.
 
 
 
