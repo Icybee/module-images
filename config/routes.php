@@ -2,8 +2,34 @@
 
 namespace Icybee\Modules\Images;
 
+use ICanBoogie\HTTP\Request;
+
 return array
 (
+	/*
+	 * api
+	 */
+
+	'api:images/thumbnail' => [
+
+		'pattern' => '/api/images/<nid:\d+>/<size:\d+x\d+|\d+x|x\d+>*',
+		'controller' => __NAMESPACE__ . '\ThumbnailOperation',
+		'via' => Request::METHOD_GET
+
+	],
+
+	'api:images/thumbnail-version' => [
+
+		'pattern' => '/api/images/<nid:\d+>/thumbnails/:version',
+		'controller' => __NAMESPACE__ . '\ThumbnailOperation',
+		'via' => Request::METHOD_GET
+
+	],
+
+	/*
+	 * admin
+	 */
+
 	'admin:images/gallery' => array
 	(
 		'pattern' => '/admin/images/gallery',

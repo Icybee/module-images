@@ -11,7 +11,6 @@
 
 namespace Icybee\Modules\Images;
 
-use ICanBoogie\Modules\Thumbnailer\Thumbnail;
 use ICanBoogie\PropertyNotWritable;
 
 use Icybee\Modules\Nodes\Node;

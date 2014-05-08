@@ -503,4 +503,30 @@ class Hooks
 
 		return new NodeRelation($node, $image);
 	}
+
+	/**
+	 * Callback for the `thumbnail()` method added to the active records of the "images" module.
+	 *
+	 * @param Icybee\Modules\Images\Image $ar An active record of the "images" module.
+	 * @param string $version The version used to create the thumbnail, or a number of options
+	 * defined as CSS properties. e.g. 'w:300;h=200'.
+	 * @return string The URL of the thumbnail.
+	 */
+	static public function prototype_thumbnail(Image $record, $version, $additionnal_options=null)
+	{
+		return new Thumbnail($record, $version, $additionnal_options);
+	}
+
+	/**
+	 * Callback for the `thumbnail` getter added to the active records of the "images" module.
+	 *
+	 * The thumbnail is created using options of the 'primary' version.
+	 *
+	 * @param Icybee\Modules\Images\Image $ar An active record of the "images" module.
+	 * @return string The URL of the thumbnail.
+	 */
+	static public function prototype_get_thumbnail(Image $record)
+	{
+		return $record->thumbnail('primary');
+	}
 }

@@ -14,7 +14,9 @@ Image active records render as string:
 ```php
 <?php
 
-echo $core->models['images']->one;
+$image = $core->models['images']->one;
+
+echo $image;
 ```
 
 Will produce something like:
@@ -27,7 +29,28 @@ Will produce something like:
 
 
 
-## Thumbnail versions
+## Thumbnails
+
+The [icybee/module-thumbnailer][] package is used to create thumbnails from images. The
+`thumbnail()` method is used to obtain a [Thumbnail][] instance which represent a thumbnail of an
+image:
+
+```php
+<?php
+
+$thumbnail = $image->thumbnail([ 'w' => 64, 'h' => 64 ]);
+# or
+$thumbnail = $image->thumbnail('w:64;h:64');
+
+echo $thumbnail->url; // /api/images/123/64x64
+echo $thumbnail;      // <img src="/api/images/123/64x64" …
+```
+
+
+
+
+
+### Thumbnail versions
 
 The following thumbnail versions are created when the module is installed:
 
@@ -43,6 +66,17 @@ in a grid.
 hovers an `$icon` image.
 
 - `$gallery`: Represents images when they are displayed in a gallery.
+
+Creating a thumbnail with a version is very easy:
+
+```php
+<?php
+
+$thumbnail = $image->thumbnail('$popover');
+
+echo $thumbnbail->url; // /api/images/thumbnails/$popover
+echo $thumbnail;       // <img src="/api/images/thumbnails/$popover" …
+```
 
 
 
@@ -250,3 +284,10 @@ cleaned with the `make clean` command.
 ## License
 
 The package is licensed under the New BSD License - See the (LICENSE)[LICENSE] file for details.
+
+
+
+
+
+[icybee/module-thumbnailer]: https://github.com/Icybee/module-thumbnailer
+[Thumbnail]: http://api.icybee.org/class-Icybee.Modules.Images.Thumbnail.html

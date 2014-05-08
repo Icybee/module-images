@@ -43,6 +43,8 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals("/repository/files/image/1-madonna.png", $record->path);
 		$this->assertFileExists(dirname(\ICanBoogie\REPOSITORY) . $record->path);
 
+		$this->assertInstanceOf('Icybee\Modules\Images\Thumbnail', $record->thumbnail('w:64;h:64'));
+
 		$record->delete();
 		$this->assertFileNotExists(dirname(\ICanBoogie\REPOSITORY) . $record->path);
 	}
