@@ -46,15 +46,22 @@
 }
 
 .widget-adjust-image .records li.selected::after {
-	color: white;
-	content: '\f14a';
-	font-family: FontAwesome;
-	font-size: 16px;
 	position: absolute;
-	bottom: 0;
-	right: 4px;
-	text-shadow: 0 0 4px hsl(214, 100%, 45%);
+	right: 5px;
+	bottom: 5px;
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	background: #427fed;
+	border: 2px solid white;
+	border-radius: 20px;
+	color: white;
+	content: "\f00c";
 	cursor: pointer;
+	font-family: FontAwesome;
+	font-size: 14px;
+	line-height: 20px;
+	text-align: center;
 }
 
 .widget-adjust-image .records li:hover:not(.empty) {
