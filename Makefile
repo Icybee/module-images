@@ -5,12 +5,17 @@ PACKAGE_NAME = "Icybee/Modules/Images"
 # assets
 
 JS_FILES = \
+	lib/operations/save.js \
+	lib/elements/image-control.js \
+	lib/elements/image-control-with-preview.js \
 	lib/elements/adjust-image.js \
 	lib/elements/adjust-thumbnail.js \
 	lib/elements/pop-image.js \
 	lib/elements/pop-or-upload-image.js
 
 CSS_FILES = \
+	lib/elements/image-control.css \
+	lib/elements/image-control-with-preview.css \
 	lib/elements/adjust-image.css \
 	lib/elements/adjust-thumbnail.css \
 	lib/elements/image-upload.css \
@@ -18,7 +23,7 @@ CSS_FILES = \
 	lib/elements/pop-or-upload-image.css
 
 JS_COMPRESSOR = curl -X POST -s --data-urlencode 'js_code@$^' --data-urlencode 'utf8=1' http://marijnhaverbeke.nl/uglifyjs
-#JS_COMPRESSOR = cat $^ # uncomment to produce uncompressed files
+JS_COMPRESSOR = cat $^ # uncomment to produce uncompressed files
 JS_COMPRESSED = public/module.js
 JS_UNCOMPRESSED = public/module-uncompressed.js
 

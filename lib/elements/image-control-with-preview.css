@@ -1,0 +1,18 @@
+.widget-image-control-with-preview .preview-wrapper {
+	display: inline-block;
+	vertical-align: middle;
+	padding: 4px;
+	background: white;
+	border: 1px solid #CFCFCF;
+	border-radius: 3px;
+}
+
+.widget-image-control-with-preview .preview-wrapper img {
+	vertical-align: top;
+	border-radius: 3px;
+}
+
+.widget-image-control-with-preview .control-wrapper {
+	display: inline-block;
+	vertical-align: middle;
+}
