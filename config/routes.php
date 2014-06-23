@@ -3,6 +3,7 @@
 namespace Icybee\Modules\Images;
 
 use ICanBoogie\HTTP\Request;
+use ICanBoogie\Operation;
 
 return array
 (
@@ -23,6 +24,19 @@ return array
 		'pattern' => '/api/images/<nid:\d+>/thumbnails/:version',
 		'controller' => __NAMESPACE__ . '\ThumbnailOperation',
 		'via' => Request::METHOD_GET
+
+	],
+
+	'api:images/get' => [
+
+		'pattern' => '/api/images/<nid:\d+>',
+		'controller' => __NAMESPACE__ . '\GetOperation',
+		'via' => Request::METHOD_GET,
+		'param_translation_list' => [
+
+			'nid' => Operation::KEY
+
+		]
 
 	],
 
