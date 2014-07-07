@@ -361,7 +361,7 @@ class Hooks
 
 			$light_src = $src;
 
-			$src = $record->thumbnail("w:$w;method:fixed-width;quality:80")->url;
+			$src = $record->thumbnail("w:$w")->url;
 		}
 
 		$params = array
