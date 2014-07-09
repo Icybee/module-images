@@ -63,6 +63,9 @@ define('icybee/images/save-operation', [], function() {
 		 * An event callback that invokes `status()`, `failure()` and `complete()` according to the
 		 * state of the request.
 		 *
+		 * If an error occurs during `complete()`, or if the response cannot be decoded,
+		 * `failure()` is invoked.
+		 *
 		 * @param readystatechange ev
 		 */
 		onReadyStateChange: function(ev) {
@@ -423,7 +426,7 @@ define('icybee/images/image-control', [ 'icybee/images/save-operation' ], functi
 /**
  * Register Brickrouge widget "ImageControl".
  */
-require([ 'icybee/images/image-control' ], function(ImageControl) {
+define([ 'icybee/images/image-control' ], function(ImageControl) {
 
 	Brickrouge.Widget.ImageControl = ImageControl
 
@@ -476,7 +479,7 @@ require([ 'icybee/images/image-control' ], function(ImageControl) {
 /**
  * Register Brickrouge widget "ImageControlWithPreview"
  */
-require([ 'icybee/images/image-control-with-preview' ], function(ImageControlWithPreview) {
+define([ 'icybee/images/image-control-with-preview' ], function(ImageControlWithPreview) {
 
 	Brickrouge.Widget.ImageControlWithPreview = ImageControlWithPreview
 
@@ -491,7 +494,7 @@ require([ 'icybee/images/image-control-with-preview' ], function(ImageControlWit
 
 })
 
-require([ 'icybee/images/adjust-image' ], function(AdjustImage) {
+define([ 'icybee/images/adjust-image' ], function(AdjustImage) {
 
 	Brickrouge.Widget.AdjustImage = AdjustImage
 
@@ -672,7 +675,7 @@ require([ 'icybee/images/adjust-image' ], function(AdjustImage) {
 
 })
 
-require([ 'icybee/images/pop-image' ], function(PopImage) {
+define([ 'icybee/images/pop-image' ], function(PopImage) {
 
 	Brickrouge.Widget.PopImage = PopImage
 
