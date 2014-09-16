@@ -25,7 +25,7 @@ use Brickrouge\Text;
 
 use Icybee\Modules\Contents\ConfigBlock as ContentsConfigBlock;
 use Icybee\Modules\Nodes\Node;
-use Icybee\Modules\Pages\PageController;
+use Icybee\Modules\Pages\PageRenderer;
 use Icybee\Modules\Views\ActiveRecordProvider\AlterResultEvent;
 
 class Hooks
@@ -398,20 +398,18 @@ class Hooks
 	/**
 	 * Adds assets to support lightbox links.
 	 *
-	 * This function is a callback for the `Icybee\Modules\Pages\PageController::render` event.
+	 * This function is a callback for the `Icybee\Modules\Pages\PageRenderer::render` event.
 	 *
 	 * @param Event $event
 	 */
-	static public function on_page_controller_render(PageController\RenderEvent $event, PageController $target)
+	static public function on_page_renderer_render(PageRenderer\RenderEvent $event, PageRenderer $target)
 	{
-		global $core;
-
 		if (strpos($event->html, 'rel="lightbox') === false)
 		{
 			return;
 		}
 
-		$document = $core->document;
+		$document = $event->document;
 		$document->css->add(DIR . 'public/slimbox.css');
 		$document->js->add(DIR . 'public/slimbox.js');
 	}
