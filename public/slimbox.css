@@ -1,6 +1,6 @@
 a[rel^='lightbox'] img
 {
-	cursor: url(zoomin.cur), pointer;
+	cursor: zoom-in;
 }
 
 /* SLIMBOX */
@@ -13,7 +13,7 @@ a[rel^='lightbox'] img
 	right: 0;
 	bottom: 0;
 	background-color: #000;
-	cursor: pointer;
+	cursor: zoom-out;
 }
 
 #lbCenter, #lbBottomContainer {
