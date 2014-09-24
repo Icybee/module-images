@@ -62,7 +62,10 @@ class ImageControlWithPreview extends Element
 		}
 
 		return <<<EOT
-<div class="preview-wrapper"><img src="$src" alt="" /></div>
+<div class="preview-wrapper">
+	<img src="$src" alt="" />
+	<button data-dismiss="value" class="close" type="button">×</button>
+</div>
 <div class="control-wrapper">$control</div>
 EOT;
 	}

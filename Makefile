@@ -28,6 +28,7 @@ JS_COMPRESSED = public/module.js
 JS_UNCOMPRESSED = public/module-uncompressed.js
 
 CSS_COMPRESSOR = curl -X POST -s --data-urlencode 'input@$^' http://cssminifier.com/raw
+#CSS_COMPRESSOR = cat $^ # http://cssminifier.com/raw # uncomment to produce uncompressed files
 CSS_COMPRESSED = public/module.css
 CSS_UNCOMPRESSED = public/module-uncompressed.css
 

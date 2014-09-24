@@ -5,6 +5,7 @@
 	background: white;
 	border: 1px solid #CFCFCF;
 	border-radius: 3px;
+	position: relative;
 }
 
 .widget-image-control-with-preview.empty .preview-wrapper {
@@ -19,4 +20,14 @@
 .widget-image-control-with-preview .control-wrapper {
 	display: inline-block;
 	vertical-align: middle;
+}
+
+.widget-image-control-with-preview .close {
+	background: white;
+	border-bottom-left-radius: 3px;
+	opacity: 1;
+	padding: 2px 5px;
+	position: absolute;
+	right: 0;
+	top: 0;
 }
