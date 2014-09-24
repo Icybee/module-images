@@ -55,5 +55,11 @@ return array
 
 	# config
 
-	'Associated image' => 'Image associée'
+	'Associated image' => 'Image associée',
+
+	"Choose a file"
+	=> "Choisir un fichier",
+
+	"An error has occured"
+	=> "Une erreur est survenue"
 );
