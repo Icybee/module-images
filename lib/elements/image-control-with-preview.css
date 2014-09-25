@@ -6,6 +6,7 @@
 	border: 1px solid #CFCFCF;
 	border-radius: 3px;
 	position: relative;
+	overflow: hidden;
 }
 
 .widget-image-control-with-preview.empty .preview-wrapper {
