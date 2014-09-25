@@ -33,7 +33,7 @@ class ImageControl extends Element
 	{
 		parent::__construct('div', $attributes + [
 
-			Element::WIDGET_CONSTRUCTOR => 'ImageControl',
+			Element::IS => 'ImageControl',
 
 			self::MAX_FILE_SIZE => ini_get('upload_max_filesize') * 1024 * 1024,
 			self::ACCEPTED_EXTENSIONS => '.gif .png .jpg .jpeg',

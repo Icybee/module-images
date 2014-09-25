@@ -55,7 +55,7 @@ class PopOrUploadImage extends Element
 					])
 				),
 
-				Element::WIDGET_CONSTRUCTOR => 'PopOrUploadImage'
+				Element::IS => 'PopOrUploadImage'
 			)
 		);
 	}

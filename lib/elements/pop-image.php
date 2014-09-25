@@ -31,7 +31,7 @@ class PopImage extends \Icybee\Modules\Nodes\PopNode
 		(
 			$attributes + array
 			(
-				Element::WIDGET_CONSTRUCTOR => 'PopImage',
+				Element::IS => 'PopImage',
 
 				self::T_CONSTRUCTOR => 'images',
 				self::THUMBNAIL_VERSION => '$popimage',

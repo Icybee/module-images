@@ -40,7 +40,7 @@ class AdjustThumbnail extends \Brickrouge\Widget
 					$this->adjust_thumbnail_options = new AdjustThumbnailOptions
 				),
 
-				Element::WIDGET_CONSTRUCTOR => 'AdjustThumbnail'
+				Element::IS => 'AdjustThumbnail'
 			)
 		);
 	}

@@ -30,7 +30,7 @@ class AdjustImage extends \Brickrouge\Widget\AdjustNode
 			$attributes + array
 			(
 				self::T_CONSTRUCTOR => 'images',
-				self::WIDGET_CONSTRUCTOR => 'AdjustImage',
+				Element::IS => 'AdjustImage',
 
 				'data-adjust' => 'adjust-image'
 			)

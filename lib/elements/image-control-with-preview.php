@@ -30,7 +30,7 @@ class ImageControlWithPreview extends Element
 	{
 		parent::__construct('div', $attributes + [
 
-			Element::WIDGET_CONSTRUCTOR => 'ImageControlWithPreview',
+			Element::IS => 'ImageControlWithPreview',
 
 			self::THUMBNAIL_VERSION => '$popimage',
 
