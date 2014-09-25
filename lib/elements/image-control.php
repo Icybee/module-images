@@ -11,6 +11,8 @@
 
 namespace Icybee\Modules\Images;
 
+use ICanBoogie\ActiveRecord\RecordNotFound;
+
 use Brickrouge\Alert;
 use Brickrouge\Button;
 use Brickrouge\Element;
@@ -52,6 +54,27 @@ class ImageControl extends Element
 			'accepted-extensions' => $this[self::ACCEPTED_EXTENSIONS]
 
 		];
+	}
+
+	public function offsetSet($attribute, $value)
+	{
+		global $core;
+
+		if ($attribute == 'value' && $value)
+		{
+			try
+			{
+				$core->models['images'][$value];
+			}
+			catch (RecordNotFound $e)
+			{
+				$core->logger->error($e->getMessage());
+
+				return;
+			}
+		}
+
+		parent::offsetSet($attribute, $value);
 	}
 
 	public function render_inner_html()
