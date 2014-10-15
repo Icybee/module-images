@@ -82,6 +82,12 @@ class Model extends \Icybee\Modules\Files\Model
 		foreach ($records as $record)
 		{
 			$nid = $record->nid;
+
+			if (empty($pairs[$nid]))
+			{
+				continue;
+			}
+
 			$image_key = $pairs[$nid];
 
 			if (empty($images[$image_key]))
