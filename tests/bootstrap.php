@@ -11,6 +11,9 @@
 
 namespace Icybee\Modules\Images;
 
+use ICanBoogie\Core;
+use ICanBoogie\Errors;
+
 $_SERVER['DOCUMENT_ROOT'] = __DIR__;
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -21,11 +24,11 @@ require __DIR__ . '/../vendor/autoload.php';
 
 global $core;
 
-$core = new \ICanBoogie\Core(\ICanBoogie\array_merge_recursive(\ICanBoogie\get_autoconfig(), [
+$core = new Core(\ICanBoogie\array_merge_recursive(\ICanBoogie\get_autoconfig(), [
 
 	'config-path' => [
 
-		__DIR__ . DIRECTORY_SEPARATOR . 'config'
+		__DIR__ . DIRECTORY_SEPARATOR . 'config' => 10
 
 	],
 
@@ -37,35 +40,23 @@ $core = new \ICanBoogie\Core(\ICanBoogie\array_merge_recursive(\ICanBoogie\get_a
 
 ]));
 
-$core();
+$core->boot();
 
 #
 # Install modules
 #
 
-$errors = new \ICanBoogie\Errors();
-
-foreach (array_keys($core->modules->enabled_modules_descriptors) as $module_id)
-{
-	#
-	# The index on the `constructor` column of the `nodes` module clashes with SQLite, we don't
-	# care right now, so the exception is discarted.
-	#
-
-	try
-	{
-		$core->modules[$module_id]->install($errors);
-	}
-	catch (\Exception $e)
-	{
-		$errors[$module_id] = "Unable to install module: " . $e->getMessage();
-	}
-}
+$errors = $core->modules->install(new Errors);
 
 if ($errors->count())
 {
-	foreach ($errors as $error)
+	foreach ($errors as $module_id => $error)
 	{
+		if ($error instanceof \Exception)
+		{
+			$error = $error->getMessage();
+		}
+
 		echo "$module_id: $error\n";
 	}
 
@@ -96,7 +87,6 @@ $user->save();
 $thumbnailer_version = $core->thumbnailer_versions;
 $thumbnailer_version['articles-list'] = 'w:120;h:100';
 $thumbnailer_version['articles-view'] = 'w:420;h:340';
-
 
 /*
 use ICanBoogie\Modules\Thumbnailer\Versions;

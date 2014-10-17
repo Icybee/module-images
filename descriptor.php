@@ -31,7 +31,8 @@ return array
 	Module::T_NAMESPACE => __NAMESPACE__,
 	Module::T_REQUIRES => array
 	(
-		'thumbnailer' => '1.0'
+		'thumbnailer' => '1.0',
+		'registry' => "2.x"
 	),
 
 	Module::T_TITLE => 'Images',

@@ -25,6 +25,7 @@
 		"php": ">=5.4.0",
 		"icanboogie/module-installer": "*",
 		"icybee/module-files": "2.1.x",
+		"icybee/module-registry": "*",
 		"icybee/module-thumbnailer": "2.1.x"
 	},
 
