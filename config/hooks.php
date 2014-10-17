@@ -13,7 +13,7 @@ return array
 		'Icybee\Modules\Contents\ConfigOperation::process:before' => $hooks . 'before_contents_config',
 		'Icybee\Modules\Contents\Content::alter_css_class_names' => $hooks . 'on_alter_css_class_names',
 		'Icybee\Modules\Contents\EditBlock::alter_children' => $hooks . 'on_contents_editblock_alter_children',
-		'Icybee\Modules\Contents\ViewProvider::alter_result' => $hooks . 'on_contents_provider_alter_result',
+		'Icybee\Modules\Contents\View::alter_records' => $hooks . 'on_contents_view_alter_records',
 		'Icybee\Modules\Pages\PageRenderer::render' => $hooks . 'on_page_renderer_render',
 		'Icybee\Modules\Contents\ManageBlock::alter_rendered_cells' => $hooks . 'on_manageblock_alter_rendered_cells'
 	),

@@ -26,7 +26,6 @@ use Brickrouge\Text;
 use Icybee\Modules\Contents\ConfigBlock as ContentsConfigBlock;
 use Icybee\Modules\Nodes\Node;
 use Icybee\Modules\Pages\PageRenderer;
-use Icybee\Modules\Views\ActiveRecordProvider\AlterResultEvent;
 
 class Hooks
 {
@@ -43,57 +42,22 @@ class Hooks
 	 * The method is canceled if there is only 3 records because bunch loading takes 3 database
 	 * requests.
 	 *
-	 * TODO-20120713: Use an event to load images when the first `image` property is accessed.
-	 *
-	 * @param AlterResultEvent $event
+	 * @param \Icybee\Modules\Views\View\AlterRecordsEvent $event
 	 * @param \Icybee\Modules\Contents\ViewProvider $provider
 	 */
-	static public function on_contents_provider_alter_result(AlterResultEvent $event, \Icybee\Modules\Contents\ViewProvider $provider)
+	static public function on_contents_view_alter_records(\Icybee\Modules\Views\View\AlterRecordsEvent $event, \Icybee\Modules\Contents\View $target)
 	{
 		global $core;
 
-		$result = $event->result;
+		$records = &$event->records;
 
-		if (!is_array($result) || count($result) < 3 || !(current($result) instanceof \Icybee\Modules\Contents\Content)
-		|| !$core->registry['images.inject.' . $event->module->flat_id])
+		if (count($records) < 3
+		|| !$core->registry['images.inject.' . $target->module->flat_id])
 		{
 			return;
 		}
 
-		$node_keys = array();
-
-		foreach ($result as $node)
-		{
-			$node_keys[] = $node->nid;
-		}
-
-		$image_keys = $core->models['registry/node']
-		->select('targetid, value')
-		->where(array('targetid' => $node_keys, 'name' => 'image_id'))
-		->where('value + 0 != 0')
-		->pairs;
-
-		if (!$image_keys)
-		{
-			return;
-		}
-
-		$images = $core->models['images']->find($image_keys);
-
-		foreach ($result as $node)
-		{
-			$nid = $node->nid;
-
-			if (empty($image_keys[$nid]))
-			{
-				continue;
-			}
-
-			$imageid = $image_keys[$nid];
-			$image = $images[$imageid];
-
-			$node->image = new NodeRelation($node, $image);
-		}
+		$core->models['images']->including_assigned_image($records);
 	}
 
 	/**

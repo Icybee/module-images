@@ -209,6 +209,16 @@ The previous code will produce something like:
 
 
 
+## Event hooks
+
+The following event hooks are used:
+
+- `Icybee\Modules\Views\View::alter_records`: Include the assigned images to the records, if any.
+
+
+
+
+
 ----------
 
 

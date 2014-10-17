@@ -46,7 +46,7 @@ class Model extends \Icybee\Modules\Files\Model
 	 *
 	 * @return array
 	 */
-	public function including_assigned_image(array $records)
+	public function including_assigned_image(array &$records)
 	{
 		$keys = array();
 
@@ -95,7 +95,7 @@ class Model extends \Icybee\Modules\Files\Model
 				continue;
 			}
 
-			$record->image = $images[$image_key];
+			$record->image = new NodeRelation($record, $images[$image_key]);
 		}
 
 		return $records;
