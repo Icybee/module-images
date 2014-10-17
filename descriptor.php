@@ -3,15 +3,15 @@
 namespace Icybee\Modules\Images;
 
 use ICanBoogie\ActiveRecord\Model;
-use ICanBoogie\Module;
+use ICanBoogie\Module\Descriptor;
 
 return array
 (
-	Module::T_ID => 'images',
-	Module::T_CATEGORY => 'resources',
-	Module::T_DESCRIPTION => 'Manages the images uploaded by the users of Icybee.',
-	Module::T_EXTENDS => 'files',
-	Module::T_MODELS => array
+	Descriptor::ID => 'images',
+	Descriptor::CATEGORY => 'resources',
+	Descriptor::DESCRIPTION => 'Manages the images uploaded by the users of Icybee.',
+	Descriptor::INHERITS => 'files',
+	Descriptor::MODELS => array
 	(
 		'primary' => array
 		(
@@ -28,13 +28,13 @@ return array
 		)
 	),
 
-	Module::T_NAMESPACE => __NAMESPACE__,
-	Module::T_REQUIRES => array
+	Descriptor::NS => __NAMESPACE__,
+	Descriptor::REQUIRES => array
 	(
 		'thumbnailer' => '1.0',
 		'registry' => "2.x"
 	),
 
-	Module::T_TITLE => 'Images',
-	Module::T_VERSION => '1.0'
+	Descriptor::TITLE => 'Images',
+	Descriptor::VERSION => '1.0'
 );
