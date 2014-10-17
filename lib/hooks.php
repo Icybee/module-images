@@ -423,6 +423,8 @@ class Hooks
 		{
 			try
 			{
+				/* @var $image NodeRelation */
+
 				$image = $records[$i]->image;
 
 				if (!$image)
@@ -430,7 +432,7 @@ class Hooks
 					continue;
 				}
 
-				$cell = new ThumbnailDecorator($cell, $image);
+				$cell = new ThumbnailDecorator($cell, $image->image);
 			}
 			catch (\Exception $e) {}
 		}
