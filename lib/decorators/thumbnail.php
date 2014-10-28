@@ -31,11 +31,12 @@ class ThumbnailDecorator extends Decorator
 	 *
 	 * @var array
 	 */
-	protected $options = array
-	(
+	protected $options = [
+
 		'version' => '$icon',
 		'no-lightbox' => false
-	);
+
+	];
 
 	/**
 	 * Initializes the {@link $record} and {@link $options} properties.
@@ -44,7 +45,7 @@ class ThumbnailDecorator extends Decorator
 	 * @param Image $record The source of the thumbnail.
 	 * @param array $options Options.
 	 */
-	public function __construct($component, Image $record, array $options=array())
+	public function __construct($component, Image $record, array $options=[])
 	{
 		$this->record = $record;
 		$this->options = $options + $this->options;
@@ -55,17 +56,15 @@ class ThumbnailDecorator extends Decorator
 	public function render()
 	{
 		$record = $this->record;
-		$thumbnail = $record->thumbnail($this->options['version'])->to_element
-		(
-			array
-			(
-				'data-popover-image' => $record->thumbnail('$popover')->url
-			)
-		);
+		$thumbnail = $record->thumbnail($this->options['version'])->to_element([
+
+			'data-popover-image' => $record->thumbnail('$popover')->url
+
+		]);
 
 		if (!$this->options['no-lightbox'])
 		{
-			$thumbnail = new A($thumbnail, $record->path, array('rel' => "lightbox[thumbnail-decorator]"));
+			$thumbnail = new A($thumbnail, $record->path, [ 'rel' => "lightbox[thumbnail-decorator]" ]);
 		}
 
 		return $thumbnail . parent::render();

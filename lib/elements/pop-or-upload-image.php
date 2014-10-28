@@ -30,7 +30,7 @@ class PopOrUploadImage extends Element
 		$document->css->add(DIR . 'public/module.css');
 	}
 
-	public function __construct(array $attributes=array())
+	public function __construct(array $attributes=[])
 	{
 		$attributes += [
 
@@ -39,33 +39,32 @@ class PopOrUploadImage extends Element
 
 		];
 
-		parent::__construct
-		(
-			'div', $attributes + array
-			(
-				Element::CHILDREN => array
-				(
-					$this->pop_image = new PopImage($attributes[self::POP_OPTIONS]),
-					$this->upload_image = new UploadImage($attributes[self::UPLOAD_OPTIONS] + [
+		parent::__construct('div', $attributes + [
 
-						UploadImage::FILE_WITH_LIMIT => true,
+			Element::CHILDREN => [
 
-						'data-name' => Image::PATH,
-						'data-upload-url' => Operation::encode('images/save')
-					])
-				),
+				$this->pop_image = new PopImage($attributes[self::POP_OPTIONS]),
+				$this->upload_image = new UploadImage($attributes[self::UPLOAD_OPTIONS] + [
 
-				Element::IS => 'PopOrUploadImage'
-			)
-		);
+					UploadImage::FILE_WITH_LIMIT => true,
+
+					'data-name' => Image::PATH,
+					'data-upload-url' => Operation::encode('images/save')
+				])
+			],
+
+			Element::IS => 'PopOrUploadImage'
+
+		]);
 	}
 
 	protected function alter_class_names(array $class_names)
 	{
-		return parent::alter_class_names($class_names) + array
-		(
+		return parent::alter_class_names($class_names) + [
+
 			'widget-class' => 'widget-pop-or-upload-image'
-		);
+
+		];
 	}
 
 	public function offsetExists($attribute)

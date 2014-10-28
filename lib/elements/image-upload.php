@@ -40,30 +40,25 @@ class ImageUpload extends \Icybee\Modules\Files\FileUpload
 		$w = $this->w;
 		$h = $this->h;
 
-		$url = Operation::encode
-		(
-			'thumbnailer/get', array
-			(
-				'src' => $path,
-				'w' => $w,
-				'h' => $h,
-				'format' => 'jpeg',
-				'quality' => 90,
-				'background' => 'silver,white,medium',
-				'uniqid' => uniqid()
-			)
-		);
+		$url = Operation::encode('thumbnailer/get', [
 
-		$img = new Element
-		(
-			'img', array
-			(
-				'src' => $url,
-				'width' => $w,
-				'height' => $h,
-				'alt' => ''
-			)
-		);
+			'src' => $path,
+			'w' => $w,
+			'h' => $h,
+			'format' => 'jpeg',
+			'background' => 'silver,white,medium',
+			'uniqid' => uniqid()
+
+		]);
+
+		$img = new Element('img', [
+
+			'src' => $url,
+			'width' => $w,
+			'height' => $h,
+			'alt' => ''
+
+		]);
 
 		$repository = $core->config['repository.temp'];
 
@@ -108,15 +103,15 @@ class ImageUpload extends \Icybee\Modules\Files\FileUpload
 		# infos
 		#
 
-		$details = array
-		(
-// 			'<span title="' . $path . '">' . basename($path) . '</span>',
-			I18n\t('Image size: {0}×{1}px', array($entry_width, $entry_height))
-		);
+		$details = [
+
+			I18n\t('Image size: {0}×{1}px', [ $entry_width, $entry_height ])
+
+		];
 
 		if (($entry_width != $w) || ($entry_height != $h))
 		{
-			$details[] = I18n\t('Display ratio: :ratio%', array(':ratio' => round(($w * $h) / ($entry_width * $entry_height) * 100)));
+			$details[] = I18n\t('Display ratio: :ratio%', [ ':ratio' => round(($w * $h) / ($entry_width * $entry_height) * 100) ]);
 		}
 		else
 		{

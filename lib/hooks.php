@@ -92,18 +92,16 @@ class Hooks
 			$imageid = $block->record->metas['image_id'];
 		}
 
-		$event->children['image_id'] = new PopOrUploadImage
-		(
-			array
-			(
-				Form::LABEL => $core->registry['images.inject.' . $flat_id . '.title'] ?: 'Image',
-				Element::GROUP => $group,
-				Element::REQUIRED => $core->registry['images.inject.' . $flat_id . '.required'],
-				Element::DESCRIPTION => $core->registry['images.inject.' . $flat_id . '.description'],
+		$event->children['image_id'] = new PopOrUploadImage([
 
-				'value' => $imageid
-			)
-		);
+			Form::LABEL => $core->registry['images.inject.' . $flat_id . '.title'] ?: 'Image',
+			Element::GROUP => $group,
+			Element::REQUIRED => $core->registry['images.inject.' . $flat_id . '.required'],
+			Element::DESCRIPTION => $core->registry['images.inject.' . $flat_id . '.description'],
+
+			'value' => $imageid
+
+		]);
 	}
 
 	/**
@@ -120,125 +118,111 @@ class Hooks
 
 		$module_id = $event->module->id;
 
-		$views = array
-		(
-			$module_id . '/home' => array
-			(
-				'title' => I18n\t("Records home", array(), array('scope' => $module_id))
-			),
+		$views = [
 
-			$module_id . '/list' => array
-			(
-				'title' => I18n\t("Records list", array(), array('scope' => $module_id))
-			),
+			$module_id . '/home' => [
 
-			$module_id . '/view' => array
-			(
-				'title' => I18n\t("Record detail", array(), array('scope' => $module_id))
-			)
-		);
+				'title' => I18n\t("Records home", [], [ 'scope' => $module_id ])
 
-		$thumbnails = array();
+			],
+
+			$module_id . '/list' => [
+
+				'title' => I18n\t("Records list", [], [ 'scope' => $module_id ])
+
+			],
+
+			$module_id . '/view' => [
+
+				'title' => I18n\t("Record detail", [], [ 'scope' => $module_id ])
+
+			]
+		];
+
+		$thumbnails = [];
 
 		foreach ($views as $view_id => $view)
 		{
 			$id = \ICanBoogie\normalize($view_id);
 
-			$thumbnails["global[thumbnailer.versions][$id]"] = new \Brickrouge\Widget\PopThumbnailVersion
-			(
-				array
-				(
-					Element::GROUP => 'images__inject_thumbnails',
-					Form::LABEL => $view['title'],// . ' <span class="small">(' . $id . ')</span>',
-					Element::DESCRIPTION => 'Identifiant de la version&nbsp;: <q>' . $id . '</q>.'
-				)
-			);
+			$thumbnails["global[thumbnailer.versions][$id]"] = new \Brickrouge\Widget\PopThumbnailVersion([
+
+				Element::GROUP => 'images__inject_thumbnails',
+				Form::LABEL => $view['title'],// . ' <span class="small">(' . $id . ')</span>',
+				Element::DESCRIPTION => 'Identifiant de la version&nbsp;: <q>' . $id . '</q>.'
+
+			]);
 		}
 
 		$target_flat_id = $event->module->flat_id;
 
-		$event->children = array_merge
-		(
-			$event->children, array
-			(
-				"global[images.inject][$target_flat_id]" => new Element
-				(
-					Element::TYPE_CHECKBOX, array
-					(
-						Element::LABEL => 'image_inject_activate',
-						Element::GROUP => 'images__inject_toggler'
-					)
-				),
+		$event->children = array_merge($event->children, [
 
-				"global[images.inject][$target_flat_id.default]" => new PopImage
-				(
-					array
-					(
-						Form::LABEL => 'image_inject_default_image',
-						Element::GROUP => 'images__inject'
-					)
-				),
+			"global[images.inject][$target_flat_id]" => new Element(Element::TYPE_CHECKBOX, [
 
-				"global[images.inject][$target_flat_id.title]" => new Text
-				(
-					array
-					(
-						Group::LABEL => 'image_inject_control_title',
-						Element::GROUP => 'images__inject',
+				Element::LABEL => 'image_inject_activate',
+				Element::GROUP => 'images__inject_toggler'
 
-						'placeholder' => 'Image'
-					)
-				),
+			]),
 
-				"global[images.inject][$target_flat_id.description]" => new Text
-				(
-					array
-					(
-						Group::LABEL => 'image_inject_control_description',
-						Element::GROUP => 'images__inject'
-					)
-				),
+			"global[images.inject][$target_flat_id.default]" => new PopImage([
 
-				"global[images.inject][$target_flat_id.required]" => new Element
-				(
-					Element::TYPE_CHECKBOX, array
-					(
-						Element::LABEL => 'image_inject_required',
-						Element::GROUP => 'images__inject'
-					)
-				)
-			),
+				Form::LABEL => 'image_inject_default_image',
+				Element::GROUP => 'images__inject'
 
-			$thumbnails
-		);
+			]),
+
+			"global[images.inject][$target_flat_id.title]" => new Text([
+
+				Group::LABEL => 'image_inject_control_title',
+				Element::GROUP => 'images__inject',
+
+				'placeholder' => 'Image'
+
+			]),
+
+			"global[images.inject][$target_flat_id.description]" => new Text([
+
+				Group::LABEL => 'image_inject_control_description',
+				Element::GROUP => 'images__inject'
+
+			]),
+
+			"global[images.inject][$target_flat_id.required]" => new Element(Element::TYPE_CHECKBOX, [
+
+				Element::LABEL => 'image_inject_required',
+				Element::GROUP => 'images__inject'
+
+			])
+
+		], $thumbnails);
 
 		#
 		# Listen to the block `alert_attributes` event to add our groups.
 		#
 
-		$event->attributes[Element::GROUPS] = array_merge
-		(
-			$event->attributes[Element::GROUPS], array
-			(
-				'images__inject_toggler' => array
-				(
-					'title' => 'Associated image',
-					'class' => 'group-toggler'
-				),
+		$event->attributes[Element::GROUPS] = array_merge($event->attributes[Element::GROUPS], [
 
-				'images__inject' => array
-				(
+			'images__inject_toggler' => [
 
-				),
+				'title' => 'Associated image',
+				'class' => 'group-toggler'
 
-				'images__inject_thumbnails' => array
-				(
-					'description' => 'Use the following elements to configure the
-					thumbnails to create for the associated image. Each view provided by the
-					module has its own thumbnail configuration:'
-				)
-			)
-		);
+			],
+
+			'images__inject' => [
+
+
+			],
+
+			'images__inject_thumbnails' => [
+
+				'description' => 'Use the following elements to configure the
+				thumbnails to create for the associated image. Each view provided by the
+				module has its own thumbnail configuration:'
+
+			]
+		]);
 	}
 
 	static public function on_nodes_save(Event $event, \Icybee\Modules\Nodes\SaveOperation $operation)
@@ -266,12 +250,13 @@ class Hooks
 		$module_flat_id = $operation->module->flat_id;
 		$options = &$event->request->params['global']['images.inject'];
 
-		$options += array
-		(
+		$options += [
+
 			$module_flat_id => false,
 			$module_flat_id . '.required' => false,
 			$module_flat_id . '.default' => null
-		);
+
+		];
 
 		$options[$module_flat_id] = filter_var($options[$module_flat_id], FILTER_VALIDATE_BOOLEAN);
 		$options[$module_flat_id . '.required'] = filter_var($options[$module_flat_id . '.required'], FILTER_VALIDATE_BOOLEAN);
@@ -328,13 +313,14 @@ class Hooks
 			$src = $record->thumbnail("w:$w")->url;
 		}
 
-		$params = array
-		(
+		$params = [
+
 			'src' => $src,
 			'alt' => $alt,
 			'width' => $w,
 			'height' => $h
-		);
+
+		];
 
 		if ($align)
 		{

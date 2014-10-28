@@ -25,16 +25,14 @@ class GalleryBlock extends ManageBlock
 		$document->css->add('gallery.css');
 	}
 
-	public function __construct($module, array $tags=array())
+	public function __construct($module, array $tags=[])
 	{
-		parent::__construct
-		(
-			$module, $tags + array
-			(
-				self::T_ORDER_BY => 'title',
-				self::T_BLOCK => 'gallery'
-			)
-		);
+		parent::__construct($module, $tags + [
+
+			self::T_ORDER_BY => 'title',
+			self::T_BLOCK => 'gallery'
+
+		]);
 	}
 
 	protected function resolve_options($name, array $modifiers)
@@ -56,24 +54,22 @@ class GalleryBlock extends ManageBlock
 			$record = $this->records[$i];
 			$title =  $record->title;
 
-			$label = new Element
-			(
-				'a', array
-				(
-					Element::INNER_HTML => \ICanBoogie\escape($title),
+			$label = new Element('a', [
 
-					'class' => 'goto-edit',
-					'title' => I18n\t('Edit this item'),
-					'href' => \ICanBoogie\Routing\contextualize("/admin/{$record->constructor}/{$record->nid}/edit")
-				)
-			);
+				Element::INNER_HTML => \ICanBoogie\escape($title),
 
-			$img = $record->thumbnail('$gallery')->to_element(array(
+				'class' => 'goto-edit',
+				'title' => I18n\t('Edit this item'),
+				'href' => \ICanBoogie\Routing\contextualize("/admin/{$record->constructor}/{$record->nid}/edit")
+
+			]);
+
+			$img = $record->thumbnail('$gallery')->to_element([
 
 				'title' => $title,
 				'alt' => $title
 
-			));
+			]);
 
 			$html .= <<<EOT
 <div class="thumbnailer-wrapper" data-key="{$record->nid}" style="width: 128px;">

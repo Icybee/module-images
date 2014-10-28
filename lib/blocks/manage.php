@@ -24,16 +24,14 @@ class ManageBlock extends \Icybee\Modules\Files\ManageBlock
 
 	public function __construct(Module $module, array $attributes)
 	{
-		parent::__construct
-		(
-			$module, $attributes + array
-			(
-				self::T_COLUMNS_ORDER => array
-				(
-					'title', 'size', 'download', 'is_online', 'uid', 'surface', 'updated_at'
-				)
-			)
-		);
+		parent::__construct($module, $attributes + [
+
+			self::T_COLUMNS_ORDER => [
+
+				'title', 'size', 'download', 'is_online', 'uid', 'surface', 'updated_at'
+
+			]
+		]);
 	}
 
 	/**
@@ -44,11 +42,12 @@ class ManageBlock extends \Icybee\Modules\Files\ManageBlock
 	 */
 	protected function get_available_columns()
 	{
-		return array_merge(parent::get_available_columns(), array
-		(
+		return array_merge(parent::get_available_columns(), [
+
 			'title' => __CLASS__ . '\TitleColumn',
 			'surface' => __CLASS__ . '\SurfaceColumn'
-		));
+
+		]);
 	}
 }
 
@@ -76,25 +75,22 @@ class TitleColumn extends \Icybee\Modules\Nodes\ManageBlock\TitleColumn
  */
 class SurfaceColumn extends \Icybee\ManageBlock\Column
 {
-	public function __construct(\Icybee\ManageBlock $manager, $id, array $options=array())
+	public function __construct(\Icybee\ManageBlock $manager, $id, array $options=[])
 	{
-		parent::__construct
-		(
-			$manager, $id, $options + array
-			(
-				'class' => 'pull-right measure',
-				'orderable' => true,
-				'filters' => array
-				(
-					'options' => array
-					(
-						'=l' => 'Large',
-						'=m' => 'Medium',
-						'=s' => 'Small'
-					)
-				)
-			)
-		);
+		parent::__construct($manager, $id, $options + [
+
+			'class' => 'pull-right measure',
+			'orderable' => true,
+			'filters' => [
+
+				'options' => [
+
+					'=l' => 'Large',
+					'=m' => 'Medium',
+					'=s' => 'Small'
+				]
+			]
+		]);
 	}
 
 	/**
@@ -108,7 +104,7 @@ class SurfaceColumn extends \Icybee\ManageBlock\Column
 		{
 			$value = $modifiers['surface'];
 
-			if (in_array($value, array('l', 'm', 's')))
+			if (in_array($value, [ 'l', 'm', 's' ]))
 			{
 				$filters['surface'] = $value;
 			}
@@ -130,14 +126,15 @@ class SurfaceColumn extends \Icybee\ManageBlock\Column
 		{
 			list($avg, $max, $min) = $query->model->select('AVG(width * height), MAX(width * height), MIN(width * height)')->similar_site->one(\PDO::FETCH_NUM);
 
-			$bounds = array
-			(
+			$bounds = [
+
 				$min,
 				round($avg - ($avg - $min) / 3),
 				round($avg),
 				round($avg + ($max - $avg) / 3),
 				$max
-			);
+
+			];
 
 			switch ($filter_value)
 			{

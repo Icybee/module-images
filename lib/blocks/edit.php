@@ -16,27 +16,24 @@ use Brickrouge\Text;
 
 class EditBlock extends \Icybee\Modules\Files\EditBlock
 {
-	protected $accept = array
-	(
+	protected $accept = [
+
 		'image/gif', 'image/png', 'image/jpeg'
-	);
+
+	];
 
 	protected $uploader_class = 'Icybee\Modules\Images\ImageUpload';
 
 	protected function lazy_get_children()
 	{
-		return array_merge
-		(
-			parent::lazy_get_children(), array
-			(
-				'alt' => new Text
-				(
-					array
-					(
-						Group::LABEL => 'alt'
-					)
-				)
-			)
-		);
+		return array_merge(parent::lazy_get_children(), [
+
+			'alt' => new Text([
+
+				Group::LABEL => 'alt'
+
+			])
+
+		]);
 	}
 }

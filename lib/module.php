@@ -13,8 +13,6 @@ namespace Icybee\Modules\Images;
 
 use ICanBoogie\Errors;
 
-use ICanBoogie\Modules\Thumbnailer\Versions;
-
 class Module extends \Icybee\Modules\Files\Module
 {
 	const ICON_WIDTH = 24;
@@ -22,45 +20,15 @@ class Module extends \Icybee\Modules\Files\Module
 	const THUMBNAIL_WIDTH = 200;
 	const THUMBNAIL_HEIGHT = 200;
 
-	static private $thumbnail_versions = array
-	(
-		'$icon' => array
-		(
-			'w' => self::ICON_WIDTH,
-			'h' => self::ICON_HEIGHT,
-			'format' => 'png'
-		),
+	static private $thumbnail_versions = [
 
-		'$icon-m' => array
-		(
-			'w' => 64,
-			'h' => 64
-		),
+		'$icon' => "24x24.png",
+		'$icon-m' => "64x64",
+		'$popimage' => "96x96/surface",
+		'$popover' => "200x200/surface?nu=1",
+		'$gallery' => "128x128/constrained"
 
-		'$popimage' => array
-		(
-			'w' => 96,
-			'h' => 96,
-			'method' => 'surface'
-		),
-
-		'$popover' => array
-		(
-			'w' => self::THUMBNAIL_WIDTH,
-			'h' => self::THUMBNAIL_HEIGHT,
-			'method' => 'surface',
-			'no-upscale' => true,
-			'quality' => 90
-		),
-
-		'$gallery' => array
-		(
-			'w' => 128,
-			'h' => 128,
-			'method' => 'constrained',
-			'quality' => 90
-		)
-	);
+	];
 
 	/**
 	 * Checks that the thumbnail versions are defined.
@@ -78,7 +46,7 @@ class Module extends \Icybee\Modules\Files\Module
 				continue;
 			}
 
-			$errors[$this->id] = $errors->format("Thumbnail version %version is not defined.", array('version' => $version));
+			$errors[$this->id] = $errors->format("Thumbnail version %version is not defined.", [ 'version' => $version ]);
 		}
 
 		return parent::is_installed($errors);

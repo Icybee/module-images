@@ -88,68 +88,6 @@ $thumbnailer_version = $core->thumbnailer_versions;
 $thumbnailer_version['articles-list'] = 'w:120;h:100';
 $thumbnailer_version['articles-view'] = 'w:420;h:340';
 
-/*
-use ICanBoogie\Modules\Thumbnailer\Versions;
-
-$thumbnailer_versions = new Versions
-(
-	array
-	(
-		'articles-list' => 'w:120;h:100',
-		'articles-view' => 'w:420;h:340'
-	)
-);
-
-$thumbnailer_versions->save();
-*/
-
-/*
-use ICanBoogie\Modules\Thumbnailer\Version;
-use ICanBoogie\Modules\Thumbnailer\Versions;
-use ICanBoogie\Prototype;
-
-require __DIR__ . '/../vendor/autoload.php';
-
-#
-# Thumbnailer setup
-#
-$prototype = Prototype::from(__NAMESPACE__ . '\Image');
-$prototype['thumbnail'] = 'ICanBoogie\Modules\Thumbnailer\Hooks::method_thumbnail';
-
-#
-# Image setup
-#
-
-$prototype = Prototype::from('Icybee\Modules\Nodes\Node');
-$prototype['lazy_get_image'] = __NAMESPACE__ . '\Hooks::prototype_get_image';
-
-#
-# Mocking core
-#
-
-$core = (object) array
-(
-	'models' => array
-	(
-		'images' => array
-		(
-			1 => Image::from(array('nid' => 1)),
-			2 => Image::from(array('nid' => 2)),
-			3 => Image::from(array('nid' => 3))
-		)
-	),
-
-	'thumbnailer_versions' => new Versions
-	(
-		array
-		(
-			'articles-list' => new Version('w:120;h:100'),
-			'articles-view' => new Version('w:420;h:340')
-		)
-	)
-);
-*/
-
 namespace Tests\Icybee\Modules\Images;
 
 class FakeSaveOperation extends \Icybee\Modules\Images\SaveOperation

@@ -23,18 +23,16 @@ class AdjustImage extends \Brickrouge\Widget\AdjustNode
 		$document->js->add(DIR . 'public/module.js');
 	}
 
-	public function __construct(array $attributes=array())
+	public function __construct(array $attributes=[])
 	{
-		parent::__construct
-		(
-			$attributes + array
-			(
-				self::T_CONSTRUCTOR => 'images',
-				Element::IS => 'AdjustImage',
+		parent::__construct($attributes + [
 
-				'data-adjust' => 'adjust-image'
-			)
-		);
+			self::T_CONSTRUCTOR => 'images',
+			Element::IS => 'AdjustImage',
+
+			'data-adjust' => 'adjust-image'
+
+		]);
 	}
 
 	/**
@@ -42,10 +40,11 @@ class AdjustImage extends \Brickrouge\Widget\AdjustNode
 	 */
 	protected function alter_class_names(array $class_names)
 	{
-		return parent::alter_class_names($class_names) + array
-		(
+		return parent::alter_class_names($class_names) + [
+
 			'widget-adjust-image' => true
-		);
+
+		];
 	}
 
 	/**
@@ -60,26 +59,24 @@ class AdjustImage extends \Brickrouge\Widget\AdjustNode
 	{
 		$nid = $record->nid;
 
-		return $record->thumbnail('$icon-m')->to_element
-		(
-			array
-			(
-				'alt' => $record->alt,
-				'title' => $record->title,
+		return $record->thumbnail('$icon-m')->to_element([
 
-				'data-nid' => $nid,
-				'data-popover-image' => $record->thumbnail('$popover')->url,
-				'data-popover-target' => '.widget-adjust-image',
-				'data-title' => $record->title,
-				'data-path' => $record->path
-			)
-		);
+			'alt' => $record->alt,
+			'title' => $record->title,
+
+			'data-nid' => $nid,
+			'data-popover-image' => $record->thumbnail('$popover')->url,
+			'data-popover-target' => '.widget-adjust-image',
+			'data-title' => $record->title,
+			'data-path' => $record->path
+
+		]);
 	}
 
 	/**
 	 * Defaults constructor to `images`.
 	 */
-	public function get_results(array $options=array(), $constructor='images')
+	public function get_results(array $options=[], $constructor='images')
 	{
 		return parent::get_results($options, $constructor);
 	}

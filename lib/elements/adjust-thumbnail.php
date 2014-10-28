@@ -28,21 +28,20 @@ class AdjustThumbnail extends \Brickrouge\Widget
 		$document->js->add(DIR . 'public/module.js');
 	}
 
-	public function __construct(array $attributes=array())
+	public function __construct(array $attributes=[])
 	{
-		parent::__construct
-		(
-			'div', $attributes + array
-			(
-				Element::CHILDREN => array
-				(
-					$this->adjust_image = new AdjustImage,
-					$this->adjust_thumbnail_options = new AdjustThumbnailOptions
-				),
+		parent::__construct('div', $attributes + [
 
-				Element::IS => 'AdjustThumbnail'
-			)
-		);
+			Element::CHILDREN => [
+
+				$this->adjust_image = new AdjustImage,
+				$this->adjust_thumbnail_options = new AdjustThumbnailOptions
+
+			],
+
+			Element::IS => 'AdjustThumbnail'
+
+		]);
 	}
 
 	public function render_inner_html()
@@ -58,9 +57,9 @@ class AdjustThumbnail extends \Brickrouge\Widget
 		{
 			if (preg_match('/\/api\/images\/(\d+)(\/(\d*)x(\d*)(\/([a-z\-]+))?)?/', $value, $matches))
 			{
-				list($path, $nid, , $width, $height, , $method) = $matches + array(3 => null, 4 => null, 6 => null);
+				list($path, $nid, , $width, $height, , $method) = $matches + [ 3 => null, 4 => null, 6 => null ];
 
-				$options = array();
+				$options = [];
 
 				$qs = strpos($value, '?');
 

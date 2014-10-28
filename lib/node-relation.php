@@ -24,8 +24,8 @@ use Icybee\Modules\Nodes\Node;
  */
 class NodeRelation
 {
-	protected $node;
-	protected $image;
+	private $node;
+	private $image;
 
 	/**
 	 * Initializes the {@link $node} and {@link $image} properties.
@@ -60,7 +60,7 @@ class NodeRelation
 
 	public function __call($name, array $arguments)
 	{
-		return call_user_func_array(array($this->image, $name), $arguments);
+		return call_user_func_array([ $this->image, $name ], $arguments);
 	}
 
 	/**
@@ -77,10 +77,10 @@ class NodeRelation
 	 * Returns a {@link Thumbnail} instance.
 	 *
 	 * @param string $version The version of the thumbnail. If the version starts with a column
-	 * ":", it is removed and the node's constructor is prependend to the version. e.g. ":list"
-	 * becomes "news-list" for a news node. This is refered to as "shorthand version".
+	 * ":", it is removed and the node's constructor is prepended to the version. e.g. ":list"
+	 * becomes "news-list" for a news node. This is referred to as "shorthand version".
 	 *
-	 * @param mixed $additionnal_options Additionnal options.
+	 * @param mixed $additionnal_options Additional options.
 	 *
 	 * @return Thumbnail
 	 */

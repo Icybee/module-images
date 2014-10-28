@@ -25,33 +25,29 @@ class PopImage extends \Icybee\Modules\Nodes\PopNode
 		$document->css->add(DIR . 'public/module.css');
 	}
 
-	public function __construct($attributes=array())
+	public function __construct($attributes=[])
 	{
-		parent::__construct
-		(
-			$attributes + array
-			(
-				Element::IS => 'PopImage',
+		parent::__construct($attributes + [
 
-				self::T_CONSTRUCTOR => 'images',
-				self::THUMBNAIL_VERSION => '$popimage',
+			Element::IS => 'PopImage',
 
-				'placeholder' => 'Sélectionner une image',
+			self::T_CONSTRUCTOR => 'images',
+			self::THUMBNAIL_VERSION => '$popimage',
 
-				'data-adjust' => 'adjust-image'
-			)
-		);
+			'placeholder' => 'Sélectionner une image',
+
+			'data-adjust' => 'adjust-image'
+
+		]);
 	}
 
 	protected function alter_dataset(array $dataset)
 	{
-		return parent::alter_dataset
-		(
-			$dataset + array
-			(
-				'thumbnail-version' => $this[self::THUMBNAIL_VERSION]
-			)
-		);
+		return parent::alter_dataset($dataset + [
+
+			'thumbnail-version' => $this[self::THUMBNAIL_VERSION]
+
+		]);
 	}
 
 	protected function getEntry($model, $value)
@@ -66,11 +62,11 @@ class PopImage extends \Icybee\Modules\Nodes\PopNode
 			return new Element('img');
 		}
 
-		return $record->thumbnail($this[self::THUMBNAIL_VERSION])->to_element(array(
+		return $record->thumbnail($this[self::THUMBNAIL_VERSION])->to_element([
 
 			'data-nid' => $record->nid,
 			'data-path' => $record->url('get')
 
-		));
+		]);
 	}
 }

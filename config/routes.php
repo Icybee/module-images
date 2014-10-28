@@ -5,8 +5,8 @@ namespace Icybee\Modules\Images;
 use ICanBoogie\HTTP\Request;
 use ICanBoogie\Operation;
 
-return array
-(
+return [
+
 	/*
 	 * api
 	 */
@@ -44,22 +44,26 @@ return array
 	 * admin
 	 */
 
-	'admin:images/gallery' => array
-	(
+	'admin:images/gallery' => [
+
 		'pattern' => '/admin/images/gallery',
 		'controller' => __NAMESPACE__ . '\GalleryController',
 		'title' => '.gallery',
 		'block' => 'gallery'
-	),
 
-	'!admin:config' => array
-	(
+	],
 
-	),
+	'!admin:config' => [
 
-	'redirect:admin/resources' => array
-	(
+		'pattern' => '!auto',
+		'controller' => true
+
+	],
+
+	'redirect:admin/resources' => [
+
 		'pattern' => '/admin/resources',
 		'location' => '/admin/images'
-	)
-);
+
+	]
+];
