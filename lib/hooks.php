@@ -47,17 +47,16 @@ class Hooks
 	 */
 	static public function on_contents_view_alter_records(\Icybee\Modules\Views\View\AlterRecordsEvent $event, \Icybee\Modules\Contents\View $target)
 	{
-		global $core;
-
+		$app = \ICanBoogie\app();
 		$records = &$event->records;
 
 		if (count($records) < 3
-		|| !$core->registry['images.inject.' . $target->module->flat_id])
+		|| !$app->registry['images.inject.' . $target->module->flat_id])
 		{
 			return;
 		}
 
-		$core->models['images']->including_assigned_image($records);
+		$app->models['images']->including_assigned_image($records);
 	}
 
 	/**
@@ -68,10 +67,9 @@ class Hooks
 	 */
 	static public function on_contents_editblock_alter_children(Event $event, \Icybee\Modules\Nodes\EditBlock $block)
 	{
-		global $core;
-
+		$registry = \ICanBoogie\app()->registry;
 		$flat_id = $event->module->flat_id;
-		$inject = $core->registry['images.inject.' . $flat_id];
+		$inject = $registry['images.inject.' . $flat_id];
 
 		if (!$inject)
 		{
@@ -94,10 +92,10 @@ class Hooks
 
 		$event->children['image_id'] = new PopOrUploadImage([
 
-			Form::LABEL => $core->registry['images.inject.' . $flat_id . '.title'] ?: 'Image',
+			Form::LABEL => $registry['images.inject.' . $flat_id . '.title'] ?: 'Image',
 			Element::GROUP => $group,
-			Element::REQUIRED => $core->registry['images.inject.' . $flat_id . '.required'],
-			Element::DESCRIPTION => $core->registry['images.inject.' . $flat_id . '.description'],
+			Element::REQUIRED => $registry['images.inject.' . $flat_id . '.required'],
+			Element::DESCRIPTION => $registry['images.inject.' . $flat_id . '.description'],
 
 			'value' => $imageid
 
@@ -112,9 +110,7 @@ class Hooks
 	 */
 	static public function on_contents_configblock_alter_children(Event $event, ContentsConfigBlock $block)
 	{
-		global $core;
-
-		$core->document->css->add(DIR . 'public/admin.css');
+		\ICanBoogie\app()->document->css->add(DIR . 'public/admin.css');
 
 		$module_id = $event->module->id;
 
@@ -264,12 +260,11 @@ class Hooks
 
 	static public function textmark_images_reference(array $args, \Textmark_Parser $textmark, array $matches)
 	{
-		global $core;
 		static $model;
 
 		if (!$model)
 		{
-			$model = $core->models['images'];
+			$model = \ICanBoogie\app()->models['images'];
 		}
 
 		$align = $matches[2];
@@ -368,14 +363,14 @@ class Hooks
 
 	static public function on_alter_css_class_names(\Brickrouge\AlterCSSClassNamesEvent $event, \Icybee\Modules\Nodes\Node $node)
 	{
-		global $core;
-
 		if (self::$attached === null)
 		{
-			self::$attached = $core->models['registry/node']
+			$app = \ICanBoogie\app();
+
+			self::$attached = $app->models['registry/node']
 			->select('targetid, value')
 			->joins('INNER JOIN {prefix}nodes ON(targetid = nid)')
-			->where('(siteid = 0 OR siteid = ?) AND name = "image_id"', $core->site_id)
+			->where('(siteid = 0 OR siteid = ?) AND name = "image_id"', $app->site_id)
 			->pairs;
 		}
 
@@ -395,15 +390,15 @@ class Hooks
 	 */
 	static public function on_manageblock_alter_rendered_cells(\Icybee\ManageBlock\AlterRenderedCellsEvent $event, \Icybee\Modules\Contents\ManageBlock $target)
 	{
-		global $core;
+		$app = \ICanBoogie\app();
 
-		if (!($core->registry["images.inject.{$target->module->flat_id}"]))
+		if (!($app->registry["images.inject.{$target->module->flat_id}"]))
 		{
 			return;
 		}
 
 		$rendered_cells = &$event->rendered_cells;
-		$records = $core->models['images']->including_assigned_image($event->records);
+		$records = $app->models['images']->including_assigned_image($event->records);
 
 		foreach ($rendered_cells['title'] as $i => &$cell)
 		{
@@ -423,8 +418,8 @@ class Hooks
 			catch (\Exception $e) {}
 		}
 
-		$core->document->css->add(DIR . 'public/slimbox.css');
-		$core->document->js->add(DIR . 'public/slimbox.js');
+		$app->document->css->add(DIR . 'public/slimbox.css');
+		$app->document->js->add(DIR . 'public/slimbox.js');
 	}
 
 	/*
@@ -440,8 +435,6 @@ class Hooks
 	 */
 	static public function prototype_get_image(\Icybee\Modules\Nodes\Node $node)
 	{
-		global $core;
-
 		$id = $node->metas['image_id'];
 
 		if (!$id)
@@ -449,7 +442,7 @@ class Hooks
 			return;
 		}
 
-		$image = $core->models['images'][$id];
+		$image = \ICanBoogie\app()->models['images'][$id];
 
 		return new NodeRelation($node, $image);
 	}

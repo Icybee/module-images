@@ -35,8 +35,6 @@ class ImageUpload extends \Icybee\Modules\Files\FileUpload
 
 	protected function preview($path)
 	{
-		global $core;
-
 		$w = $this->w;
 		$h = $this->h;
 
@@ -60,7 +58,7 @@ class ImageUpload extends \Icybee\Modules\Files\FileUpload
 
 		]);
 
-		$repository = $core->config['repository.temp'];
+		$repository = \ICanBoogie\app()->config['repository.temp'];
 
 		if (strpos($path, $repository) === 0)
 		{

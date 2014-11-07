@@ -27,19 +27,6 @@ return [
 
 	],
 
-	'api:images/get' => [
-
-		'pattern' => '/api/images/<nid:\d+>',
-		'controller' => __NAMESPACE__ . '\GetOperation',
-		'via' => Request::METHOD_GET,
-		'param_translation_list' => [
-
-			'nid' => Operation::KEY
-
-		]
-
-	],
-
 	/*
 	 * admin
 	 */

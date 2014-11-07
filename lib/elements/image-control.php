@@ -58,17 +58,17 @@ class ImageControl extends Element
 
 	public function offsetSet($attribute, $value)
 	{
-		global $core;
-
 		if ($attribute == 'value' && $value)
 		{
+			$app = \ICanBoogie\app();
+
 			try
 			{
-				$core->models['images'][$value];
+				$app->models['images'][$value];
 			}
 			catch (RecordNotFound $e)
 			{
-				$core->logger->error($e->getMessage());
+				$app->logger->error($e->getMessage());
 
 				return;
 			}

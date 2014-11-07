@@ -42,8 +42,6 @@ class GalleryBlock extends ManageBlock
 
 	protected function render_body()
 	{
-		global $core;
-
 		$rendered_columns_cells = $this->render_columns_cells($this->columns);
 		$rows = $this->columns_to_rows($rendered_columns_cells);
 

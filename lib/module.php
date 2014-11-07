@@ -35,9 +35,7 @@ class Module extends \Icybee\Modules\Files\Module
 	 */
 	public function is_installed(Errors $errors)
 	{
-		global $core;
-
-		$versions = $core->thumbnailer_versions;
+		$versions = $this->app->thumbnailer_versions;
 
 		foreach (self::$thumbnail_versions as $version => $options)
 		{
@@ -57,9 +55,7 @@ class Module extends \Icybee\Modules\Files\Module
 	 */
 	public function install(Errors $errors)
 	{
-		global $core;
-
-		$versions = $core->thumbnailer_versions;
+		$versions = $this->app->thumbnailer_versions;
 
 		foreach (self::$thumbnail_versions as $version => $options)
 		{
