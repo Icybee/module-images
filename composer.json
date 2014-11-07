@@ -22,8 +22,6 @@
 	"require": {
 		"php": ">=5.4.0",
 		"icanboogie/module-installer": "~1.2",
-		"icybee/module-sites": "2.x@dev",
-		"icybee/module-nodes": "2.x@dev",
 		"icybee/module-files": "2.1.x@dev",
 		"icybee/module-registry": "~2.0",
 		"icybee/module-thumbnailer": "~2.0"
