@@ -11,9 +11,6 @@
 
 namespace Icybee\Modules\Images;
 
-use ICanBoogie\I18n;
-use ICanBoogie\Operation;
-
 use Brickrouge\Element;
 
 class GalleryBlock extends ManageBlock
@@ -57,7 +54,7 @@ class GalleryBlock extends ManageBlock
 				Element::INNER_HTML => \ICanBoogie\escape($title),
 
 				'class' => 'goto-edit',
-				'title' => I18n\t('Edit this item'),
+				'title' => $this->t('Edit this item'),
 				'href' => \ICanBoogie\Routing\contextualize("/admin/{$record->constructor}/{$record->nid}/edit")
 
 			]);

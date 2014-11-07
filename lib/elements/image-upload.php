@@ -12,11 +12,10 @@
 namespace Icybee\Modules\Images;
 
 use ICanBoogie\I18n;
+use ICanBoogie\Modules\Thumbnailer\Thumbnail;
 use ICanBoogie\Operation;
 
 use Brickrouge\Element;
-
-// @todo-20130521: use Thumbnail and version $icon-m
 
 class ImageUpload extends \Icybee\Modules\Files\FileUpload
 {
@@ -38,20 +37,18 @@ class ImageUpload extends \Icybee\Modules\Files\FileUpload
 		$w = $this->w;
 		$h = $this->h;
 
-		$url = Operation::encode('thumbnailer/get', [
+		$thumbnail = new Thumbnail($path, [
 
-			'src' => $path,
 			'w' => $w,
 			'h' => $h,
 			'format' => 'jpeg',
-			'background' => 'silver,white,medium',
-			'uniqid' => uniqid()
+			'background' => 'silver,white,medium'
 
 		]);
 
 		$img = new Element('img', [
 
-			'src' => $url,
+			'src' => $thumbnail->url . '&uniqid=' . uniqid(),
 			'width' => $w,
 			'height' => $h,
 			'alt' => ''
@@ -65,7 +62,7 @@ class ImageUpload extends \Icybee\Modules\Files\FileUpload
 			return $img;
 		}
 
-		return '<a href="' . $path . '&amp;uniqid=' . uniqid() . '" rel="lightbox">' . $img . '</a>';
+		return '<a href="' . $path . '?uniqid=' . uniqid() . '" rel="lightbox">' . $img . '</a>';
 	}
 
 	protected function details($path)
@@ -103,17 +100,17 @@ class ImageUpload extends \Icybee\Modules\Files\FileUpload
 
 		$details = [
 
-			I18n\t('Image size: {0}×{1}px', [ $entry_width, $entry_height ])
+			$this->t('Image size: {0}×{1}px', [ $entry_width, $entry_height ])
 
 		];
 
 		if (($entry_width != $w) || ($entry_height != $h))
 		{
-			$details[] = I18n\t('Display ratio: :ratio%', [ ':ratio' => round(($w * $h) / ($entry_width * $entry_height) * 100) ]);
+			$details[] = $this->t('Display ratio: :ratio%', [ ':ratio' => round(($w * $h) / ($entry_width * $entry_height) * 100) ]);
 		}
 		else
 		{
-			$details[] = I18n\t('Displayed as is');
+			$details[] = $this->t('Displayed as is');
 		}
 
 		$details[] = I18n\format_size(filesize($_SERVER['DOCUMENT_ROOT'] . $path));

@@ -89,7 +89,7 @@ class ImageControl extends Element
 
 		]);
 
-		$alert = new Alert(\ICanBoogie\I18n\t("An error has occured"), [
+		$alert = new Alert($this->t("An error has occured"), [
 
 			Alert::CONTEXT => Alert::CONTEXT_ERROR,
 			Alert::UNDISMISSABLE => true
@@ -98,7 +98,7 @@ class ImageControl extends Element
 
 		$cancel = new Button("Cancel", [ 'class' => 'btn-danger' ]);
 
-		$choose_a_file = \ICanBoogie\I18n\t("Choose a file");
+		$choose_a_file = $this->t("Choose a file");
 
 		return <<<EOT
 $html
