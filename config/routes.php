@@ -27,6 +27,14 @@ return [
 
 	],
 
+	'api:images/compat-get' => [
+
+		'pattern' => '/api/images/<nid:\d+>',
+		'controller' => __NAMESPACE__ . '\CompatGetOperation',
+		'via' => Request::METHOD_GET
+
+	],
+
 	/*
 	 * admin
 	 */
