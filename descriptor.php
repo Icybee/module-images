@@ -15,8 +15,8 @@ return array
 	(
 		'primary' => array
 		(
-			Model::T_EXTENDS => 'files',
-			Model::T_SCHEMA => array
+			Model::EXTENDING => 'files',
+			Model::SCHEMA => array
 			(
 				'fields' => array
 				(

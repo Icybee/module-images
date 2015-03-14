@@ -369,7 +369,7 @@ class Hooks
 
 			self::$attached = $app->models['registry/node']
 			->select('targetid, value')
-			->joins('INNER JOIN {prefix}nodes ON(targetid = nid)')
+			->join('INNER JOIN {prefix}nodes ON(targetid = nid)')
 			->where('(siteid = 0 OR siteid = ?) AND name = "image_id"', $app->site_id)
 			->pairs;
 		}

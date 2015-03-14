@@ -22,9 +22,7 @@ require __DIR__ . '/../vendor/autoload.php';
 # Create the _core_ instance used for the tests.
 #
 
-global $core;
-
-$core = new Core(\ICanBoogie\array_merge_recursive(\ICanBoogie\get_autoconfig(), [
+$app = new Core(\ICanBoogie\array_merge_recursive(\ICanBoogie\get_autoconfig(), [
 
 	'config-path' => [
 
@@ -40,13 +38,13 @@ $core = new Core(\ICanBoogie\array_merge_recursive(\ICanBoogie\get_autoconfig(),
 
 ]));
 
-$core->boot();
+$app->boot();
 
 #
 # Install modules
 #
 
-$errors = $core->modules->install(new Errors);
+$errors = $app->modules->install(new Errors);
 
 if ($errors->count())
 {
@@ -67,7 +65,7 @@ if ($errors->count())
 #
 #
 
-$core->site_id = 0;
+$app->site_id = 0;
 
 use Icybee\Modules\Users\User;
 
@@ -84,7 +82,7 @@ $user->save();
 #
 #
 
-$thumbnailer_version = $core->thumbnailer_versions;
+$thumbnailer_version = $app->thumbnailer_versions;
 $thumbnailer_version['articles-list'] = 'w:120;h:100';
 $thumbnailer_version['articles-view'] = 'w:420;h:340';
 

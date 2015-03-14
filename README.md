@@ -14,7 +14,7 @@ Image active records render as string:
 ```php
 <?php
 
-$image = $core->models['images']->one;
+$image = $app->models['images']->one;
 
 echo $image;
 ```
@@ -91,16 +91,16 @@ module is used to provide thumbnails through a fluent API.
 ```php
 <?php
 
-echo $core->models['images']->one->thumbnail;
-echo $core->models['images']->one->thumbnail('news-list');
+echo $app->models['images']->one->thumbnail;
+echo $app->models['images']->one->thumbnail('news-list');
 
-echo $core->models['news']->one->image->thumbnail('news-list');
+echo $app->models['news']->one->image->thumbnail('news-list');
 # or
-echo $core->models['news']->one->image->thumbnail(':list');
+echo $app->models['news']->one->image->thumbnail(':list');
 
-echo $core->models['news']->one->image->thumbnail('news-view');
+echo $app->models['news']->one->image->thumbnail('news-view');
 # or
-echo $core->models['news']->one->image->thumbnail;
+echo $app->models['news']->one->image->thumbnail;
 ```
 
 
@@ -155,7 +155,7 @@ The image associated with a record is obtained through the `image` magic propert
 ```php
 <?php
 
-$core->models['articles']->one->image;
+$app->models['articles']->one->image;
 ```
 
 Note that it's not an `Image` instance that is obtained but a `NodeRelation` instance. Because
@@ -170,7 +170,7 @@ articles:
 ```php
 <?php 
 
-$core->models['articles']->one->image->thumbnail(':list');
+$app->models['articles']->one->image->thumbnail(':list');
 ```
 
 The magic property `thumbnail` returns the _view_ thumbnail:
@@ -178,9 +178,9 @@ The magic property `thumbnail` returns the _view_ thumbnail:
 ```php
 <?php 
 
-$core->models['articles']->one->image->thumbnail(':view');
+$app->models['articles']->one->image->thumbnail(':view');
 // or
-$core->models['articles']->one->image->thumbnail;
+$app->models['articles']->one->image->thumbnail;
 ```
 
 
