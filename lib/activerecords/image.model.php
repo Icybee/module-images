@@ -46,7 +46,7 @@ class Model extends \Icybee\Modules\Files\Model
 	 *
 	 * @return array
 	 */
-	public function including_assigned_image(array &$records)
+	public function including_assigned_image(&$records)
 	{
 		$keys = [];
 
