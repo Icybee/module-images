@@ -11,6 +11,7 @@
 
 namespace Icybee\Modules\Images;
 
+use Brickrouge\Document;
 use Brickrouge\Element;
 
 class ImageControlWithPreview extends Element
@@ -18,7 +19,7 @@ class ImageControlWithPreview extends Element
 	const CONTROL = "#preview-decorator-control";
 	const THUMBNAIL_VERSION = "#preview-decorator-thumbnail-version";
 
-	static protected function add_assets(\Brickrouge\Document $document)
+	static protected function add_assets(Document $document)
 	{
 		parent::add_assets($document);
 
@@ -26,7 +27,7 @@ class ImageControlWithPreview extends Element
 		$document->js->add(DIR . 'public/module.js');
 	}
 
-	public function __construct(array $attributes=[])
+	public function __construct(array $attributes = [])
 	{
 		parent::__construct('div', $attributes + [
 

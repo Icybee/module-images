@@ -11,6 +11,7 @@
 
 namespace Icybee\Modules\Images;
 
+use Brickrouge\Document;
 use ICanBoogie\I18n;
 use ICanBoogie\Modules\Thumbnailer\Thumbnail;
 use ICanBoogie\Operation;
@@ -22,7 +23,7 @@ class ImageUpload extends \Icybee\Modules\Files\FileUpload
 	const THUMBNAIL_WIDTH = 64;
 	const THUMBNAIL_HEIGHT = 64;
 
-	static protected function add_assets(\Brickrouge\Document $document)
+	static protected function add_assets(Document $document)
 	{
 		parent::add_assets($document);
 
@@ -79,12 +80,8 @@ class ImageUpload extends \Icybee\Modules\Files\FileUpload
 		# the "surface" mode.
 		#
 
-		$resized = false;
-
 		if (($w * $h) > (self::THUMBNAIL_WIDTH * self::THUMBNAIL_HEIGHT))
 		{
-			$resized = true;
-
 			$ratio = sqrt($w * $h);
 
 			$w = round($w / $ratio * self::THUMBNAIL_WIDTH);

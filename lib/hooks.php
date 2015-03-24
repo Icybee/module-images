@@ -11,6 +11,7 @@
 
 namespace Icybee\Modules\Images;
 
+use Brickrouge\AlterCSSClassNamesEvent;
 use ICanBoogie\Debug;
 use ICanBoogie\I18n;
 use ICanBoogie\Event;
@@ -43,7 +44,7 @@ class Hooks
 	 * requests.
 	 *
 	 * @param \Icybee\Modules\Views\View\AlterRecordsEvent $event
-	 * @param \Icybee\Modules\Contents\ViewProvider $provider
+	 * @param \Icybee\Modules\Contents\View $target
 	 */
 	static public function on_contents_view_alter_records(\Icybee\Modules\Views\View\AlterRecordsEvent $event, \Icybee\Modules\Contents\View $target)
 	{
@@ -282,14 +283,9 @@ class Hooks
 
 		if (!$record)
 		{
-			$matches[2] = $matches[3];
-			$matches[3] = $matches[4];
+			\ICanBoogie\app()->logger->debug('Invalid image: %id', [ 'id' => $matches[3] ]);
 
-			trigger_error('should call standard one !');
-
-			//return parent::_doImages_reference_callback($matches);
-
-			return;
+			return null;
 		}
 
 		$src = $record->path;
@@ -345,7 +341,8 @@ class Hooks
 	 *
 	 * This function is a callback for the `Icybee\Modules\Pages\PageRenderer::render` event.
 	 *
-	 * @param Event $event
+	 * @param PageRenderer\RenderEvent $event
+	 * @param PageRenderer $target
 	 */
 	static public function on_page_renderer_render(PageRenderer\RenderEvent $event, PageRenderer $target)
 	{
@@ -361,7 +358,11 @@ class Hooks
 
 	static private $attached;
 
-	static public function on_alter_css_class_names(\Brickrouge\AlterCSSClassNamesEvent $event, \Icybee\Modules\Nodes\Node $node)
+	/**
+	 * @param AlterCSSClassNamesEvent $event
+	 * @param Node $node
+	 */
+	static public function on_alter_css_class_names(AlterCSSClassNamesEvent $event, Node $node)
 	{
 		if (self::$attached === null)
 		{
@@ -433,16 +434,18 @@ class Hooks
 	 *
 	 * @return Image|null
 	 */
-	static public function prototype_get_image(\Icybee\Modules\Nodes\Node $node)
+	static public function prototype_get_image(Node $node)
 	{
 		$id = $node->metas['image_id'];
 
 		if (!$id)
 		{
-			return;
+			return null;
 		}
 
-		$image = \ICanBoogie\app()->models['images'][$id];
+		/* @var $image Image */
+
+		$image = $node->model->models['images'][$id];
 
 		return new NodeRelation($node, $image);
 	}
@@ -450,14 +453,16 @@ class Hooks
 	/**
 	 * Callback for the `thumbnail()` method added to the active records of the "images" module.
 	 *
-	 * @param Icybee\Modules\Images\Image $ar An active record of the "images" module.
-	 * @param string $version The version used to create the thumbnail, or a number of options
-	 * defined as CSS properties. e.g. 'w:300;h=200'.
+	 * @param Image $record An active record of the "images" module.
+	 * @param string|array $version The version used to create the thumbnail, or a number of
+	 * options defined as CSS properties. e.g. 'w:300;h=200'.
+	 * @param string $additional_options
+	 *
 	 * @return string The URL of the thumbnail.
 	 */
-	static public function prototype_thumbnail(Image $record, $version, $additionnal_options=null)
+	static public function prototype_thumbnail(Image $record, $version, $additional_options = null)
 	{
-		return new Thumbnail($record, $version, $additionnal_options);
+		return new Thumbnail($record, $version, $additional_options);
 	}
 
 	/**
@@ -465,7 +470,8 @@ class Hooks
 	 *
 	 * The thumbnail is created using options of the 'primary' version.
 	 *
-	 * @param Icybee\Modules\Images\Image $ar An active record of the "images" module.
+	 * @param Image $record An active record of the "images" module.
+	 *
 	 * @return string The URL of the thumbnail.
 	 */
 	static public function prototype_get_thumbnail(Image $record)

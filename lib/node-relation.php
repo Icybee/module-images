@@ -52,10 +52,12 @@ class NodeRelation
 
 	/**
 	 * @throws PropertyNotWritable in attempt to set a property.
+	 *
+	 * @inheritdoc
 	 */
 	public function __set($property, $value)
 	{
-		throw new PropertyNotWritable(array($property, $this));
+		throw new PropertyNotWritable([ $property, $this ]);
 	}
 
 	public function __call($name, array $arguments)
@@ -80,17 +82,17 @@ class NodeRelation
 	 * ":", it is removed and the node's constructor is prepended to the version. e.g. ":list"
 	 * becomes "news-list" for a news node. This is referred to as "shorthand version".
 	 *
-	 * @param mixed $additionnal_options Additional options.
+	 * @param mixed $additional_options Additional options.
 	 *
 	 * @return Thumbnail
 	 */
-	public function thumbnail($version, $additionnal_options=null)
+	public function thumbnail($version, $additional_options = null)
 	{
 		if ($version && $version{0} == ':')
 		{
 			$version = $this->node->constructor . '-' . substr($version, 1);
 		}
 
-		return new Thumbnail($this->image, $version, $additionnal_options);
+		return new Thumbnail($this->image, $version, $additional_options);
 	}
 }

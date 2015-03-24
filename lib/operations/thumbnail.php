@@ -43,7 +43,7 @@ class ThumbnailOperation extends \ICanBoogie\Modules\Thumbnailer\GetOperation
 
 		if (!$files)
 		{
-			return;
+			return null;
 		}
 
 		return substr(array_shift($files), strlen($root));

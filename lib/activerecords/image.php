@@ -23,6 +23,8 @@ namespace Icybee\Modules\Images;
  */
 class Image extends \Icybee\Modules\Files\File
 {
+	const MODEL_ID = 'images';
+
 	const WIDTH = 'width';
 	const HEIGHT = 'height';
 	const ALT = 'alt';
@@ -47,16 +49,6 @@ class Image extends \Icybee\Modules\Files\File
 	 * @var string
 	 */
 	public $alt = '';
-
-	/**
-	 * Defaults the model to "images".
-	 *
-	 * @param string $model
-	 */
-	public function __construct($model='images')
-	{
-		parent::__construct($model);
-	}
 
 	/**
 	 * Returns an `IMG` element.

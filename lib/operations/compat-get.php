@@ -17,11 +17,6 @@ class CompatGetOperation extends \Icybee\Modules\Files\GetOperation
 	{
 		$nid = $this->request['nid'];
 
-		if (!$nid)
-		{
-			return;
-		}
-
-		return $this->module->model[$nid];
+		return $nid ? $this->module->model[$nid] : null;
 	}
 }

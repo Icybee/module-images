@@ -13,6 +13,7 @@ namespace Icybee\Modules\Images;
 
 use ICanBoogie\Operation;
 
+use Brickrouge\Document;
 use Brickrouge\Element;
 
 class PopOrUploadImage extends Element
@@ -22,7 +23,7 @@ class PopOrUploadImage extends Element
 
 	private $pop_image;
 
-	static protected function add_assets(\Brickrouge\Document $document)
+	static protected function add_assets(Document $document)
 	{
 		parent::add_assets($document);
 
@@ -30,7 +31,7 @@ class PopOrUploadImage extends Element
 		$document->css->add(DIR . 'public/module.css');
 	}
 
-	public function __construct(array $attributes=[])
+	public function __construct(array $attributes = [])
 	{
 		$attributes += [
 

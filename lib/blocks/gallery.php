@@ -11,18 +11,22 @@
 
 namespace Icybee\Modules\Images;
 
+use Brickrouge\Document;
 use Brickrouge\Element;
 
+/**
+ * @property Image[] $records
+ */
 class GalleryBlock extends ManageBlock
 {
-	static protected function add_assets(\Brickrouge\Document $document)
+	static protected function add_assets(Document $document)
 	{
 		parent::add_assets($document);
 
 		$document->css->add('gallery.css');
 	}
 
-	public function __construct($module, array $tags=[])
+	public function __construct($module, array $tags = [])
 	{
 		parent::__construct($module, $tags + [
 

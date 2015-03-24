@@ -15,6 +15,7 @@ use ICanBoogie\ActiveRecord\RecordNotFound;
 
 use Brickrouge\Alert;
 use Brickrouge\Button;
+use Brickrouge\Document;
 use Brickrouge\Element;
 
 class ImageControl extends Element
@@ -23,7 +24,7 @@ class ImageControl extends Element
 	const MAX_FILE_SIZE_ALERT = '#image-control-max-file-size-alert';
 	const ACCEPTED_EXTENSIONS = '#image-control-accepted-extensions';
 
-	static protected function add_assets(\Brickrouge\Document $document)
+	static protected function add_assets(Document $document)
 	{
 		parent::add_assets($document);
 
@@ -31,7 +32,7 @@ class ImageControl extends Element
 		$document->js->add(DIR . 'public/module.js');
 	}
 
-	public function __construct(array $attributes=[])
+	public function __construct(array $attributes = [])
 	{
 		parent::__construct('div', $attributes + [
 

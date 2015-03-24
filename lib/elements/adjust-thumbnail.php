@@ -13,6 +13,7 @@ namespace Icybee\Modules\Images;
 
 use ICanBoogie\Modules\Thumbnailer\AdjustThumbnailOptions;
 
+use Brickrouge\Document;
 use Brickrouge\Element;
 
 class AdjustThumbnail extends \Brickrouge\Widget
@@ -20,7 +21,7 @@ class AdjustThumbnail extends \Brickrouge\Widget
 	protected $adjust_image;
 	protected $adjust_thumbnail_options;
 
-	static protected function add_assets(\Brickrouge\Document $document)
+	static protected function add_assets(Document $document)
 	{
 		parent::add_assets($document);
 
@@ -28,7 +29,7 @@ class AdjustThumbnail extends \Brickrouge\Widget
 		$document->js->add(DIR . 'public/module.js');
 	}
 
-	public function __construct(array $attributes=[])
+	public function __construct(array $attributes = [])
 	{
 		parent::__construct('div', $attributes + [
 

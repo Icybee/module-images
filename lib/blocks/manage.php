@@ -11,9 +11,13 @@
 
 namespace Icybee\Modules\Images;
 
-class ManageBlock extends \Icybee\Modules\Files\ManageBlock
+use Brickrouge\Document;
+
+use Icybee\Modules\Files\ManageBlock as FilesManageBlock;
+
+class ManageBlock extends FilesManageBlock
 {
-	static protected function add_assets(\Brickrouge\Document $document)
+	static protected function add_assets(Document $document)
 	{
 		parent::add_assets($document);
 
@@ -44,8 +48,8 @@ class ManageBlock extends \Icybee\Modules\Files\ManageBlock
 	{
 		return array_merge(parent::get_available_columns(), [
 
-			'title' => __CLASS__ . '\TitleColumn',
-			'surface' => __CLASS__ . '\SurfaceColumn'
+			'title' => ManageBlock\TitleColumn::class,
+			'surface' => ManageBlock\SurfaceColumn::class
 
 		]);
 	}
@@ -55,13 +59,22 @@ namespace Icybee\Modules\Images\ManageBlock;
 
 use ICanBoogie\ActiveRecord\Query;
 
+use Icybee\ManageBlock;
+use Icybee\ManageBlock\Column;
+use Icybee\Modules\Images\Image;
 use Icybee\Modules\Images\ThumbnailDecorator;
+use Icybee\Modules\Nodes\ManageBlock\TitleColumn as IcybeeTitleColumn;
 
 /**
  * Class for the `title` column.
  */
-class TitleColumn extends \Icybee\Modules\Nodes\ManageBlock\TitleColumn
+class TitleColumn extends IcybeeTitleColumn
 {
+	/**
+	 * @param Image $record
+	 *
+	 * @inheritdoc
+	 */
 	public function render_cell($record)
 	{
 		return new ThumbnailDecorator(parent::render_cell($record), $record);
@@ -73,9 +86,9 @@ class TitleColumn extends \Icybee\Modules\Nodes\ManageBlock\TitleColumn
  *
  * @todo-20130624: disable options, when count < 10
  */
-class SurfaceColumn extends \Icybee\ManageBlock\Column
+class SurfaceColumn extends Column
 {
-	public function __construct(\Icybee\ManageBlock $manager, $id, array $options=[])
+	public function __construct(ManageBlock $manager, $id, array $options = [])
 	{
 		parent::__construct($manager, $id, $options + [
 
@@ -95,6 +108,8 @@ class SurfaceColumn extends \Icybee\ManageBlock\Column
 
 	/**
 	 * Adds support for the `surface` filter.
+	 *
+	 * @inheritdoc
 	 */
 	public function alter_filters(array $filters, array $modifiers)
 	{
@@ -119,12 +134,17 @@ class SurfaceColumn extends \Icybee\ManageBlock\Column
 
 	/**
 	 * Adds support for the `surface` filter.
+	 *
+	 * @inheritdoc
 	 */
 	public function alter_query_with_filter(Query $query, $filter_value)
 	{
 		if ($filter_value)
 		{
-			list($avg, $max, $min) = $query->model->select('AVG(width * height), MAX(width * height), MIN(width * height)')->similar_site->one(\PDO::FETCH_NUM);
+			list($avg, $max, $min) = $query->model
+				->select('AVG(width * height), MAX(width * height), MIN(width * height)')
+				->similar_site
+				->one(\PDO::FETCH_NUM);
 
 			$bounds = [
 
@@ -149,12 +169,19 @@ class SurfaceColumn extends \Icybee\ManageBlock\Column
 
 	/**
 	 * Alters the order of the query with the surface of the image.
+	 *
+	 * @inheritdoc
 	 */
 	public function alter_query_with_order(Query $query, $order_direction)
 	{
 		return $query->order('(width * height) ' . ($order_direction < 0 ? 'DESC' : 'ASC'));
 	}
 
+	/**
+	 * @param Image $record
+	 *
+	 * @inheritdoc
+	 */
 	public function render_cell($record)
 	{
 		return "{$record->width}&times;{$record->height}&nbsp;px";

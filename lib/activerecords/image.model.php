@@ -18,7 +18,7 @@ class Model extends \Icybee\Modules\Files\Model
 {
 	static protected $accept = [ '.gif', '.png', '.jpg', '.jpeg' ];
 
-	public function save(array $properties, $key=null, array $options=[])
+	public function save(array $properties, $key = null, array $options = [])
 	{
 		if (isset($properties[Image::HTTP_FILE]))
 		{
@@ -60,7 +60,7 @@ class Model extends \Icybee\Modules\Files\Model
 			return $records;
 		}
 
-		$pairs = ActiveRecord\get_model('registry/node')
+		$pairs = $this->models['registry/node']
 		->select('targetid, value')
 		->filter_by_name_and_targetid('image_id', $keys)
 		->pairs;

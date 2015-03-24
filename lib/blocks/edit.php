@@ -22,7 +22,7 @@ class EditBlock extends \Icybee\Modules\Files\EditBlock
 
 	];
 
-	protected $uploader_class = 'Icybee\Modules\Images\ImageUpload';
+	protected $uploader_class = ImageUpload::class;
 
 	protected function lazy_get_children()
 	{

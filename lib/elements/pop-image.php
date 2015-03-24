@@ -11,13 +11,14 @@
 
 namespace Icybee\Modules\Images;
 
+use Brickrouge\Document;
 use Brickrouge\Element;
 
 class PopImage extends \Icybee\Modules\Nodes\PopNode
 {
 	const THUMBNAIL_VERSION = '#popimage-thumbnail-version';
 
-	static protected function add_assets(\Brickrouge\Document $document)
+	static protected function add_assets(Document $document)
 	{
 		parent::add_assets($document);
 
@@ -25,7 +26,7 @@ class PopImage extends \Icybee\Modules\Nodes\PopNode
 		$document->css->add(DIR . 'public/module.css');
 	}
 
-	public function __construct($attributes=[])
+	public function __construct($attributes = [])
 	{
 		parent::__construct($attributes + [
 
@@ -52,9 +53,17 @@ class PopImage extends \Icybee\Modules\Nodes\PopNode
 
 	protected function getEntry($model, $value)
 	{
-		return $model->where('path = ? OR title = ? OR slug = ?', $value, $value, $value)->order('created_at DESC')->one;
+		return $model
+			->where('path = ? OR title = ? OR slug = ?', $value, $value, $value)
+			->order('created_at DESC')
+			->one;
 	}
 
+	/**
+	 * @param Image $record
+	 *
+	 * @inheritdoc
+	 */
 	protected function getPreview($record)
 	{
 		if (!$record)

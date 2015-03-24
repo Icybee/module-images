@@ -11,11 +11,12 @@
 
 namespace Icybee\Modules\Images;
 
+use Brickrouge\Document;
 use Brickrouge\Element;
 
 class AdjustImage extends \Brickrouge\Widget\AdjustNode
 {
-	static protected function add_assets(\Brickrouge\Document $document)
+	static protected function add_assets(Document $document)
 	{
 		parent::add_assets($document);
 
@@ -23,7 +24,7 @@ class AdjustImage extends \Brickrouge\Widget\AdjustNode
 		$document->js->add(DIR . 'public/module.js');
 	}
 
-	public function __construct(array $attributes=[])
+	public function __construct(array $attributes = [])
 	{
 		parent::__construct($attributes + [
 
@@ -37,6 +38,8 @@ class AdjustImage extends \Brickrouge\Widget\AdjustNode
 
 	/**
 	 * Adds the `widget-adjust-image` class name.
+	 *
+	 * @inheritdoc
 	 */
 	protected function alter_class_names(array $class_names)
 	{
@@ -49,14 +52,18 @@ class AdjustImage extends \Brickrouge\Widget\AdjustNode
 
 	/**
 	 * Because a 4x4 grid is used, `$limit` defaults to 16.
+	 *
+	 * @inheritdoc
 	 */
-	protected function get_records($constructor, array $options, $limit=16)
+	protected function get_records($constructor, array $options, $limit = 16)
 	{
 		return parent::get_records($constructor, $options, $limit);
 	}
 
 	protected function render_record(\Icybee\Modules\Nodes\Node $record, $selected, array $range, array $options)
 	{
+		/* @var $record Image */
+
 		$nid = $record->nid;
 
 		return $record->thumbnail('$icon-m')->to_element([
@@ -75,8 +82,10 @@ class AdjustImage extends \Brickrouge\Widget\AdjustNode
 
 	/**
 	 * Defaults constructor to `images`.
+	 *
+	 * @inheritdoc
 	 */
-	public function get_results(array $options=[], $constructor='images')
+	public function get_results(array $options = [], $constructor = 'images')
 	{
 		return parent::get_results($options, $constructor);
 	}

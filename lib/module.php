@@ -32,6 +32,8 @@ class Module extends \Icybee\Modules\Files\Module
 
 	/**
 	 * Checks that the thumbnail versions are defined.
+	 *
+	 * @inheritdoc
 	 */
 	public function is_installed(Errors $errors)
 	{
@@ -52,6 +54,8 @@ class Module extends \Icybee\Modules\Files\Module
 
 	/**
 	 * Define thumbnail versions.
+	 *
+	 * @inheritdoc
 	 */
 	public function install(Errors $errors)
 	{

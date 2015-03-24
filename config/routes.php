@@ -14,7 +14,7 @@ return [
 	'api:images/thumbnail' => [
 
 		'pattern' => '/api/images/<nid:\d+>/<size:\d+x\d+|\d+x|x\d+>*',
-		'controller' => __NAMESPACE__ . '\ThumbnailOperation',
+		'controller' => ThumbnailOperation::class,
 		'via' => Request::METHOD_GET
 
 	],
@@ -22,7 +22,7 @@ return [
 	'api:images/thumbnail-version' => [
 
 		'pattern' => '/api/images/<nid:\d+>/thumbnails/:version',
-		'controller' => __NAMESPACE__ . '\ThumbnailOperation',
+		'controller' => ThumbnailOperation::class,
 		'via' => Request::METHOD_GET
 
 	],
@@ -30,7 +30,7 @@ return [
 	'api:images/compat-get' => [
 
 		'pattern' => '/api/images/<nid:\d+>',
-		'controller' => __NAMESPACE__ . '\CompatGetOperation',
+		'controller' => CompatGetOperation::class,
 		'via' => Request::METHOD_GET
 
 	],
@@ -42,7 +42,7 @@ return [
 	'admin:images/gallery' => [
 
 		'pattern' => '/admin/images/gallery',
-		'controller' => __NAMESPACE__ . '\GalleryController',
+		'controller' => GalleryController::class,
 		'title' => '.gallery',
 		'block' => 'gallery'
 

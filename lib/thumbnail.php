@@ -16,10 +16,10 @@ namespace Icybee\Modules\Images;
  */
 class Thumbnail extends \ICanBoogie\Modules\Thumbnailer\Thumbnail
 {
-	/* @var $record \Icybee\Modules\Images\Image */
-
 	protected function get_url()
 	{
+		/* @var $record Image */
+
 		$record = $this->src;
 		$options = $this->filtered_options;
 		$version_name = $this->version_name;
@@ -47,7 +47,7 @@ class Thumbnail extends \ICanBoogie\Modules\Thumbnailer\Thumbnail
 		return $url;
 	}
 
-	public function to_element(array $attributes=[])
+	public function to_element(array $attributes = [])
 	{
 		$element = parent::to_element($attributes);
 

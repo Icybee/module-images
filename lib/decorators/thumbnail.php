@@ -45,7 +45,7 @@ class ThumbnailDecorator extends Decorator
 	 * @param Image $record The source of the thumbnail.
 	 * @param array $options Options.
 	 */
-	public function __construct($component, Image $record, array $options=[])
+	public function __construct($component, Image $record, array $options = [])
 	{
 		$this->record = $record;
 		$this->options = $options + $this->options;
