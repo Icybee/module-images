@@ -15,6 +15,32 @@ use ICanBoogie\Updater\Update;
 use ICanBoogie\Updater\AssertionFailed;
 
 /**
+ * - Rename table `resources_images` as `images`.
+ *
+ * @module images
+ */
+class Update20120101 extends Update
+{
+	public function update_table_images()
+	{
+		$db = $this->app->db;
+
+		if (!$db->table_exists('resources_images'))
+		{
+			throw new AssertionFailed('assert_table_exists', 'resources_images');
+		}
+
+		$db("RENAME TABLE `resources_images` TO `images`");
+	}
+
+	public function update_constructor_type()
+	{
+		$db = $this->app->db;
+		$db("UPDATE nodes SET constructor = 'images' WHERE constructor = 'resources.images'");
+	}
+}
+
+/**
  * @module images
  */
 class Update20130426 extends Update
