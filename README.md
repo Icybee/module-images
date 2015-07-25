@@ -227,7 +227,7 @@ The following event hooks are used:
 
 ## Requirement
 
-The package requires PHP 5.4 or later.
+The package requires PHP 5.5 or later.
 
 
 
@@ -238,17 +238,11 @@ The package requires PHP 5.4 or later.
 The recommended way to install this package is through [Composer](http://getcomposer.org/).
 Create a `composer.json` file and run `php composer.phar install` command to install it:
 
-```json
-{
-	"minimum-stability": "dev",
-	"require":
-	{
-		"icybee/module-images": "2.1.x"
-	}
-}
+```
+$ composer require icybee/module-images
 ```
 
-Note: This module is part of the modules required by [Icybee](http://icybee.org/).
+**Note:** This module is part of the modules required by [Icybee](http://icybee.org/).
 
 
 

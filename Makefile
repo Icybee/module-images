@@ -1,6 +1,7 @@
 # customization
 
-PACKAGE_NAME = "Icybee/Modules/Images"
+PACKAGE_NAME = icybee/module-images
+PACKAGE_VERSION = 2.1.0
 
 # assets
 
@@ -52,10 +53,10 @@ usage:
 	@echo "test:  Runs the test suite.\ndoc:   Creates the documentation.\nclean: Removes the documentation, the dependencies and the Composer files."
 
 vendor:
-	@composer install --dev
+	@composer install
 
 update:
-	@composer update --dev
+	@composer update
 
 autoload: vendor
 	@composer dump-autoload
@@ -63,18 +64,20 @@ autoload: vendor
 test: vendor
 	@phpunit
 
-doc: vendor
-	@mkdir -p "docs"
+test-coverage: vendor
+	@mkdir -p build/coverage
+	@phpunit --coverage-html build/coverage
 
-	@apigen \
-	--source ./ \
-	--destination docs/ --title $(PACKAGE_NAME) \
-	--exclude "*/tests/*" \
-	--exclude "*/composer/*" \
-	--template-config /usr/share/php/data/ApiGen/templates/bootstrap/config.neon
+doc: vendor
+	@mkdir -p build/docs
+	@apigen generate \
+	--source lib \
+	--destination build/docs/ \
+	--title "$(PACKAGE_NAME) $(PACKAGE_VERSION)" \
+	--template-theme "bootstrap"
 
 clean:
-	@rm -fR docs
+	@rm -fR build
 	@rm -fR vendor
 	@rm -f composer.lock
 	@rm -fR tests/repository/files
