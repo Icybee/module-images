@@ -4,6 +4,7 @@ namespace Icybee\Modules\Images;
 
 use ICanBoogie\HTTP\Request;
 use ICanBoogie\Operation;
+use Icybee\Routing\RouteMaker as Make;
 
 return [
 
@@ -39,26 +40,19 @@ return [
 	 * admin
 	 */
 
-	'admin:images/gallery' => [
-
-		'pattern' => '/admin/images/gallery',
-		'controller' => GalleryController::class,
-		'title' => '.gallery',
-		'block' => 'gallery'
-
-	],
-
-	'!admin:config' => [
-
-		'pattern' => '!auto',
-		'controller' => true
-
-	],
-
 	'redirect:admin/resources' => [
 
 		'pattern' => '/admin/resources',
 		'location' => '/admin/images'
 
 	]
-];
+
+] + Make::admin('images', Routing\ImagesAdminController::class, [
+
+	'actions' => [
+
+		'gallery' => [ '/{name}/gallery', Request::METHOD_ANY ]
+
+	]
+
+]);
