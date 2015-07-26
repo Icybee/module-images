@@ -11,7 +11,7 @@
 
 namespace Icybee\Modules\Images;
 
-class GalleryController extends \Icybee\BlockController
+class GalleryController extends \Icybee\Controller\BlockController
 {
 	protected function decorate_with_block($component)
 	{
