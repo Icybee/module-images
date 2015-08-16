@@ -49,6 +49,7 @@ return [
 
 ] + Make::admin('images', Routing\ImagesAdminController::class, [
 
+	'id_name' => 'nid',
 	'actions' => [
 
 		'gallery' => [ '/{name}/gallery', Request::METHOD_ANY ]

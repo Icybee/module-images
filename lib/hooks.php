@@ -12,10 +12,8 @@
 namespace Icybee\Modules\Images;
 
 use Brickrouge\AlterCSSClassNamesEvent;
-use ICanBoogie\Debug;
 use ICanBoogie\I18n;
 use ICanBoogie\Event;
-use ICanBoogie\Events;
 use ICanBoogie\Modules;
 use ICanBoogie\Operation;
 
@@ -111,7 +109,8 @@ class Hooks
 	 */
 	static public function on_contents_configblock_alter_children(Event $event, ContentsConfigBlock $block)
 	{
-		\ICanBoogie\app()->document->css->add(DIR . 'public/admin.css');
+		$app = self::app();
+		$app->document->css->add(DIR . 'public/admin.css');
 
 		$module_id = $event->module->id;
 
@@ -119,19 +118,19 @@ class Hooks
 
 			$module_id . '/home' => [
 
-				'title' => I18n\t("Records home", [], [ 'scope' => $module_id ])
+				'title' => $app->translate("Records home", [], [ 'scope' => $module_id ])
 
 			],
 
 			$module_id . '/list' => [
 
-				'title' => I18n\t("Records list", [], [ 'scope' => $module_id ])
+				'title' => $app->translate("Records list", [], [ 'scope' => $module_id ])
 
 			],
 
 			$module_id . '/view' => [
 
-				'title' => I18n\t("Record detail", [], [ 'scope' => $module_id ])
+				'title' => $app->translate("Record detail", [], [ 'scope' => $module_id ])
 
 			]
 		];
@@ -265,7 +264,7 @@ class Hooks
 
 		if (!$model)
 		{
-			$model = \ICanBoogie\app()->models['images'];
+			$model = self::app()->models['images'];
 		}
 
 		$align = $matches[2];
@@ -283,7 +282,7 @@ class Hooks
 
 		if (!$record)
 		{
-			\ICanBoogie\app()->logger->debug('Invalid image: %id', [ 'id' => $matches[3] ]);
+			self::app()->logger->debug('Invalid image: %id', [ 'id' => $matches[3] ]);
 
 			return null;
 		}
@@ -366,7 +365,7 @@ class Hooks
 	{
 		if (self::$attached === null)
 		{
-			$app = \ICanBoogie\app();
+			$app = self::app();
 
 			self::$attached = $app->models['registry/node']
 			->select('targetid, value')
@@ -391,7 +390,7 @@ class Hooks
 	 */
 	static public function on_manageblock_alter_rendered_cells(\Icybee\ManageBlock\AlterRenderedCellsEvent $event, \Icybee\Modules\Contents\ManageBlock $target)
 	{
-		$app = \ICanBoogie\app();
+		$app = self::app();
 
 		if (!($app->registry["images.inject.{$target->module->flat_id}"]))
 		{
@@ -477,5 +476,17 @@ class Hooks
 	static public function prototype_get_thumbnail(Image $record)
 	{
 		return $record->thumbnail('primary');
+	}
+
+	/*
+	 * Support
+	 */
+
+	/**
+	 * @return \ICanBoogie\Core|\Icybee\Binding\CoreBindings
+	 */
+	static private function app()
+	{
+		return \ICanBoogie\app();
 	}
 }

@@ -59,7 +59,7 @@ class GalleryBlock extends ManageBlock
 
 				'class' => 'goto-edit',
 				'title' => $this->t('Edit this item'),
-				'href' => \ICanBoogie\Routing\contextualize("/admin/{$record->constructor}/{$record->nid}/edit")
+				'href' => $this->app->url_for("admin:{$record->constructor}:edit", $record)
 
 			]);
 
