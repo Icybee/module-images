@@ -14,7 +14,9 @@ namespace Icybee\Modules\Images;
 use ICanBoogie\ActiveRecord;
 use ICanBoogie\ActiveRecord\RecordNotFound;
 
-class Model extends \Icybee\Modules\Files\Model
+use Icybee\Modules\Files\FileModel;
+
+class ImageModel extends FileModel
 {
 	static protected $accept = [ '.gif', '.png', '.jpg', '.jpeg' ];
 
