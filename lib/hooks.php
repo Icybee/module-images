@@ -46,7 +46,7 @@ class Hooks
 	 */
 	static public function on_contents_view_alter_records(\Icybee\Modules\Views\View\AlterRecordsEvent $event, \Icybee\Modules\Contents\View $target)
 	{
-		$app = \ICanBoogie\app();
+		$app = self::app();
 		$records = &$event->records;
 
 		if (count($records) < 3
@@ -55,7 +55,10 @@ class Hooks
 			return;
 		}
 
-		$app->models['images']->including_assigned_image($records);
+		/* @var $image_model ImageModel */
+
+		$image_model = $app->models['images'];
+		$image_model->including_assigned_image($records);
 	}
 
 	/**
@@ -397,8 +400,11 @@ class Hooks
 			return;
 		}
 
+		/* @var $image_model ImageModel */
+
 		$rendered_cells = &$event->rendered_cells;
-		$records = $app->models['images']->including_assigned_image($event->records);
+		$image_model = $app->models['images'];
+		$records = $image_model->including_assigned_image($event->records);
 
 		foreach ($rendered_cells['title'] as $i => &$cell)
 		{

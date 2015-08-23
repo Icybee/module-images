@@ -15,6 +15,9 @@ use Icybee\Modules\Nodes\Node;
 
 class NodeRelationTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * @var Image
+	 */
 	static private $record;
 
 	static public function setupBeforeClass()

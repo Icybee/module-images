@@ -11,6 +11,10 @@
 
 namespace Icybee\Modules\Images;
 
+use ICanBoogie\Modules\Thumbnailer\Thumbnail;
+
+use Icybee\Modules\Files\File;
+
 /**
  * Representation of a managed image.
  *
@@ -19,9 +23,9 @@ namespace Icybee\Modules\Images;
  *
  * @property-read \Icybee\Modules\Nodes\Node $consumer The node to which the image is associated.
  *
- * @method \ICanBoogie\Modules\Thumbnailer\Thumbnail thumbnail()
+ * @method Thumbnail thumbnail($version, $additional_options = null)
  */
-class Image extends \Icybee\Modules\Files\File
+class Image extends File
 {
 	const MODEL_ID = 'images';
 

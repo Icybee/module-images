@@ -13,6 +13,7 @@ namespace Icybee\Modules\Images;
 
 use Brickrouge\Document;
 use Brickrouge\Element;
+use ICanBoogie\ActiveRecord\Model;
 
 class PopImage extends \Icybee\Modules\Nodes\PopNode
 {
@@ -51,7 +52,7 @@ class PopImage extends \Icybee\Modules\Nodes\PopNode
 		]);
 	}
 
-	protected function getEntry($model, $value)
+	protected function getEntry(Model $model, $value)
 	{
 		return $model
 			->where('path = ? OR title = ? OR slug = ?', $value, $value, $value)

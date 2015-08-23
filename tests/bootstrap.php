@@ -18,9 +18,7 @@ $_SERVER['DOCUMENT_ROOT'] = __DIR__;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-#
-# Create the _core_ instance used for the tests.
-#
+/* @var $app Core|\ICanBoogie\Module\CoreBindings|\Icybee\Modules\Sites\Binding\CoreBindings */
 
 $app = new Core(\ICanBoogie\array_merge_recursive(\ICanBoogie\get_autoconfig(), [
 

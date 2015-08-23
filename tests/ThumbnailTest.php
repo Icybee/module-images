@@ -15,6 +15,9 @@ use ICanBoogie\HTTP\File as HTTPFile;
 
 class ThumbnailTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * @var Image
+	 */
 	static private $image;
 
 	static public function setupBeforeClass()
