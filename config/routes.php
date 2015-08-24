@@ -31,7 +31,7 @@ return [
 	'api:images/compat-get' => [
 
 		'pattern' => '/api/images/<nid:\d+>',
-		'controller' => CompatGetOperation::class,
+		'controller' => CompatShowOperation::class,
 		'via' => Request::METHOD_GET
 
 	],

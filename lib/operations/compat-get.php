@@ -11,7 +11,7 @@
 
 namespace Icybee\Modules\Images;
 
-class CompatGetOperation extends \Icybee\Modules\Files\GetOperation
+class CompatShowOperation extends \Icybee\Modules\Files\ShowOperation
 {
 	protected function lazy_get_record()
 	{
