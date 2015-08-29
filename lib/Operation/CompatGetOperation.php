@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Icybee\Modules\Images;
+namespace Icybee\Modules\Images\Operation;
 
-class CompatShowOperation extends \Icybee\Modules\Files\ShowOperation
+class CompatShowOperation extends \Icybee\Modules\Files\Operation\ShowOperation
 {
 	protected function lazy_get_record()
 	{

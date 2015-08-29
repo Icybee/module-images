@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Icybee\Modules\Images;
+namespace Icybee\Modules\Images\Operation;
 
 use ICanBoogie\HTTP\Request;
 use ICanBoogie\Modules\Thumbnailer\Version;
@@ -17,7 +17,7 @@ use ICanBoogie\Modules\Thumbnailer\Version;
 /**
  * Creates a thumbnail of an image managed by the "images" module.
  */
-class ThumbnailOperation extends \ICanBoogie\Modules\Thumbnailer\GetOperation
+class ThumbnailOperation extends \ICanBoogie\Modules\Thumbnailer\Operation\GetOperation
 {
 	protected function resolve_version(Request $request)
 	{

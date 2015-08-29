@@ -86,7 +86,7 @@ $thumbnailer_version['articles-view'] = 'w:420;h:340';
 
 namespace Tests\Icybee\Modules\Images;
 
-class FakeSaveOperation extends \Icybee\Modules\Images\SaveOperation
+class FakeSaveOperation extends \Icybee\Modules\Images\Operation\SaveOperation
 {
 	protected function get_controls()
 	{

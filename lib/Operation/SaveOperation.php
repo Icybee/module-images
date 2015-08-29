@@ -9,9 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Icybee\Modules\Images;
+namespace Icybee\Modules\Images\Operation;
 
-class SaveOperation extends \Icybee\Modules\Files\SaveOperation
+use Icybee\Modules\Images\Image;
+
+class SaveOperation extends \Icybee\Modules\Files\Operation\SaveOperation
 {
 	protected $accept = [ '.gif', '.png', '.jpg', '.jpeg' ];
 

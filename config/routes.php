@@ -4,6 +4,9 @@ namespace Icybee\Modules\Images;
 
 use ICanBoogie\HTTP\Request;
 use ICanBoogie\Operation;
+
+use Icybee\Modules\Images\Operation\CompatShowOperation;
+use Icybee\Modules\Images\Operation\ThumbnailOperation;
 use Icybee\Routing\RouteMaker as Make;
 
 return [

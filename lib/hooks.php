@@ -224,7 +224,7 @@ class Hooks
 		]);
 	}
 
-	static public function on_nodes_save(Event $event, \Icybee\Modules\Nodes\SaveOperation $operation)
+	static public function on_nodes_save(Event $event, \Icybee\Modules\Nodes\Operation\SaveOperation $operation)
 	{
 		$params = &$event->request->params;
 

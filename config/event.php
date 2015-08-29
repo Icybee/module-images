@@ -8,7 +8,7 @@ $hooks = Hooks::class . '::';
 
 return [
 
-	Icybee\Modules\Nodes\SaveOperation::class . '::process' => $hooks . 'on_nodes_save',
+	Icybee\Modules\Nodes\Operation\SaveOperation::class . '::process' => $hooks . 'on_nodes_save',
 	Icybee\Modules\Contents\ConfigBlock::class . '::alter_children' => $hooks . 'on_contents_configblock_alter_children',
 	Icybee\Modules\Contents\ConfigOperation::class . '::process:before' => $hooks . 'before_contents_config',
 	Icybee\Modules\Contents\Content::class . '::alter_css_class_names' => $hooks . 'on_alter_css_class_names',

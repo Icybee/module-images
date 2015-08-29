@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Icybee\Modules\Images;
+namespace Icybee\Modules\Images\Operation;
 
 use ICanBoogie\Modules\Thumbnailer\Thumbnail;
 
 /**
  * Appends a preview to the response of the operation.
  */
-class UploadOperation extends \Icybee\Modules\Files\UploadOperation
+class UploadOperation extends \Icybee\Modules\Files\Operation\UploadOperation
 {
 	protected $accept = [ '.gif', '.png', '.jpg', '.jpeg' ];
 
