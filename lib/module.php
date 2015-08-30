@@ -12,11 +12,11 @@
 namespace Icybee\Modules\Images;
 
 use ICanBoogie\Errors;
-use Icybee\Binding\ObjectBindings;
+use Icybee\Binding\PrototypedBindings;
 
 class Module extends \Icybee\Modules\Files\Module
 {
-	use ObjectBindings;
+	use PrototypedBindings;
 
 	const ICON_WIDTH = 24;
 	const ICON_HEIGHT = 24;
