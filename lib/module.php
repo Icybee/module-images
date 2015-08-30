@@ -12,7 +12,8 @@
 namespace Icybee\Modules\Images;
 
 use ICanBoogie\Errors;
-use Icybee\Binding\PrototypedBindings;
+
+use Icybee\Binding\Core\PrototypedBindings;
 
 class Module extends \Icybee\Modules\Files\Module
 {
