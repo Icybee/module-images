@@ -9,21 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace Icybee\Modules\Images;
+namespace Icybee\Modules\Images\Block;
 
 use Brickrouge\Document;
 
-use Icybee\Modules\Files\ManageBlock as FilesManageBlock;
+use Icybee\Modules\Images as Root;
+use Icybee\Modules\Images\Module;
 
-class ManageBlock extends FilesManageBlock
+class ManageBlock extends \Icybee\Modules\Files\Block\ManageBlock
 {
 	static protected function add_assets(Document $document)
 	{
 		parent::add_assets($document);
 
-		$document->js->add(DIR . 'public/slimbox.js');
-		$document->css->add(DIR . 'public/slimbox.css');
-		$document->js->add('manage.js');
+		$document->js->add(Root\DIR . 'public/slimbox.js');
+		$document->css->add(Root\DIR . 'public/slimbox.css');
+		$document->js->add('ManageBlock.js');
 	}
 
 	public function __construct(Module $module, array $attributes)
@@ -55,15 +56,15 @@ class ManageBlock extends FilesManageBlock
 	}
 }
 
-namespace Icybee\Modules\Images\ManageBlock;
+namespace Icybee\Modules\Images\Block\ManageBlock;
 
 use ICanBoogie\ActiveRecord\Query;
 
-use Icybee\ManageBlock;
-use Icybee\ManageBlock\Column;
+use Icybee\Block\ManageBlock;
+use Icybee\Block\ManageBlock\Column;
 use Icybee\Modules\Images\Image;
 use Icybee\Modules\Images\ThumbnailDecorator;
-use Icybee\Modules\Nodes\ManageBlock\TitleColumn as IcybeeTitleColumn;
+use Icybee\Modules\Nodes\Block\ManageBlock\TitleColumn as IcybeeTitleColumn;
 
 /**
  * Class for the `title` column.

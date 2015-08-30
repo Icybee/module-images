@@ -9,10 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Icybee\Modules\Images;
+namespace Icybee\Modules\Images\Block;
 
 use Brickrouge\Document;
 use Brickrouge\Element;
+
+use Icybee\Modules\Images\Image;
 
 /**
  * @property Image[] $records
@@ -23,7 +25,7 @@ class GalleryBlock extends ManageBlock
 	{
 		parent::add_assets($document);
 
-		$document->css->add('gallery.css');
+		$document->css->add('GalleryBlock.css');
 	}
 
 	public function __construct($module, array $tags = [])

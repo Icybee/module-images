@@ -9,12 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Icybee\Modules\Images;
+namespace Icybee\Modules\Images\Block;
 
 use Brickrouge\Group;
 use Brickrouge\Text;
 
-class EditBlock extends \Icybee\Modules\Files\EditBlock
+use Icybee\Modules\Images\ImageUpload;
+
+class EditBlock extends \Icybee\Modules\Files\Block\EditBlock
 {
 	protected $accept = [
 

@@ -22,7 +22,7 @@ use Brickrouge\Form;
 use Brickrouge\Group;
 use Brickrouge\Text;
 
-use Icybee\Modules\Contents\ConfigBlock as ContentsConfigBlock;
+use Icybee\Modules\Contents\Block\ConfigBlock as ContentsConfigBlock;
 use Icybee\Modules\Nodes\Node;
 use Icybee\Modules\Pages\PageRenderer;
 
@@ -65,9 +65,9 @@ class Hooks
 	 * Adds control for the image associated with the content.
 	 *
 	 * @param Event $event
-	 * @param \Icybee\Modules\Nodes\EditBlock $block
+	 * @param \Icybee\Modules\Nodes\Block\EditBlock $block
 	 */
-	static public function on_contents_editblock_alter_children(Event $event, \Icybee\Modules\Nodes\EditBlock $block)
+	static public function on_contents_editblock_alter_children(Event $event, \Icybee\Modules\Nodes\Block\EditBlock $block)
 	{
 		$registry = \ICanBoogie\app()->registry;
 		$flat_id = $event->module->flat_id;
@@ -108,7 +108,7 @@ class Hooks
 	 * Alters the config block of contents modules with controls for the associated image.
 	 *
 	 * @param Event $event
-	 * @param \Icybee\Modules\Contents\ConfigBlock $block
+	 * @param \Icybee\Modules\Contents\Block\ConfigBlock $block
 	 */
 	static public function on_contents_configblock_alter_children(Event $event, ContentsConfigBlock $block)
 	{
@@ -388,10 +388,10 @@ class Hooks
 	/**
 	 * Decorates `title` cell of the record with an associated image with an icon.
 	 *
-	 * @param \Icybee\ManageBlock\AlterRenderedCellsEvent $event
-	 * @param \Icybee\Modules\Contents\ManageBlock $target
+	 * @param \Icybee\Block\ManageBlock\AlterRenderedCellsEvent $event
+	 * @param \Icybee\Modules\Contents\Block\ManageBlock $target
 	 */
-	static public function on_manageblock_alter_rendered_cells(\Icybee\ManageBlock\AlterRenderedCellsEvent $event, \Icybee\Modules\Contents\ManageBlock $target)
+	static public function on_manageblock_alter_rendered_cells(\Icybee\Block\ManageBlock\AlterRenderedCellsEvent $event, \Icybee\Modules\Contents\Block\ManageBlock $target)
 	{
 		$app = self::app();
 
