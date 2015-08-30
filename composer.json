@@ -31,8 +31,6 @@
 
 	"require-dev": {
 		"icanboogie/icanboogie": "^2.4.0",
-		"icanboogie/operation": "^2.2.0",
-		"icanboogie/i18n": "^2.0.8",
 		"icybee/core": "^3.0.0"
 	},
 
