@@ -24,7 +24,7 @@ class ManageBlock extends \Icybee\Modules\Files\Block\ManageBlock
 
 		$document->js->add(Root\DIR . 'public/slimbox.js');
 		$document->css->add(Root\DIR . 'public/slimbox.css');
-		$document->js->add('ManageBlock.js');
+		$document->js->add(__DIR__ . '/ManageBlock.js');
 	}
 
 	public function __construct(Module $module, array $attributes)
