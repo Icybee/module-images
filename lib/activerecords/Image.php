@@ -11,6 +11,7 @@
 
 namespace Icybee\Modules\Images;
 
+use ICanBoogie\HTTP\File as HTTPFile;
 use ICanBoogie\Modules\Thumbnailer\Thumbnail;
 
 use Icybee\Modules\Files\File;
@@ -55,6 +56,17 @@ class Image extends File
 	public $alt = '';
 
 	/**
+	 * Returns the surface of the image, computed from the {@link $width} and {@link $height}
+	 * properties.
+	 *
+	 * @return int
+	 */
+	protected function get_surface()
+	{
+		return $this->width * $this->height;
+	}
+
+	/**
 	 * Returns an `IMG` element.
 	 *
 	 * @return string
@@ -69,31 +81,13 @@ class Image extends File
 EOT;
 	}
 
-	public function save()
+	protected function save_file_begin(HTTPFile $file)
 	{
-		if (isset($this->{ self::HTTP_FILE }))
-		{
-			/* @var $file \ICanBoogie\HTTP\File */
+		parent::save_file_begin($file);
 
-			$file = $this->{ self::HTTP_FILE };
+		list($w, $h) = getimagesize($file->pathname);
 
-			list($w, $h) = getimagesize($file->pathname);
-
-			$this->width = $w;
-			$this->height = $h;
-		}
-
-		return parent::save();
-	}
-
-	/**
-	 * Returns the surface of the image, computed from the {@link $width} and {@link $height}
-	 * properties.
-	 *
-	 * @return int
-	 */
-	protected function get_surface()
-	{
-		return $this->width * $this->height;
+		$this->width = $w;
+		$this->height = $h;
 	}
 }

@@ -64,7 +64,7 @@ class ThumbnailDecorator extends Decorator
 
 		if (!$this->options['no-lightbox'])
 		{
-			$thumbnail = new A($thumbnail, $record->path, [ 'rel' => "lightbox[thumbnail-decorator]" ]);
+			$thumbnail = new A($thumbnail, $record->app->url_for('api:images/compat-get', $record), [ 'rel' => "lightbox[thumbnail-decorator]" ]);
 		}
 
 		return $thumbnail . parent::render();

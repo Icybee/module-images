@@ -7,6 +7,7 @@ use ICanBoogie\Operation;
 
 use Icybee\Modules\Images\Operation\CompatShowOperation;
 use Icybee\Modules\Images\Operation\ThumbnailOperation;
+use Icybee\Modules\Images\Operation\WidgetOperation;
 use Icybee\Routing\RouteMaker as Make;
 
 return [
@@ -35,6 +36,14 @@ return [
 
 		'pattern' => '/api/images/<nid:\d+>',
 		'controller' => CompatShowOperation::class,
+		'via' => Request::METHOD_GET
+
+	],
+
+	'api:widgets:adjust-image:popup' => [
+
+		'pattern' => '/api/widgets/adjust-image/:mode',
+		'controller' => WidgetOperation::class,
 		'via' => Request::METHOD_GET
 
 	],

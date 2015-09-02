@@ -11,6 +11,8 @@
 
 namespace Icybee\Modules\Images;
 
+use ICanBoogie\Image as ImageSupport;
+
 /**
  * Representation of an image thumbnail.
  */
@@ -29,7 +31,7 @@ class Thumbnail extends \ICanBoogie\Modules\Thumbnailer\Thumbnail
 
 		if ($version_name)
 		{
-			$url .= "/thumbnails/" . $version_name;
+			$url .= "/thumbnails/{$version_name}";
 		}
 		else
 		{
@@ -37,14 +39,10 @@ class Thumbnail extends \ICanBoogie\Modules\Thumbnailer\Thumbnail
 			$remove_path_params = true;
 		}
 
-		$query_string = self::format_options_as_query_string($options, true);
+		$query_string = self::format_options_as_query_string($options, $remove_path_params);
+		$query_string = '?' . $query_string . ($query_string ? '&' : '') . $record->path->short_hash;
 
-		if ($query_string)
-		{
-			$url .= '?' . $query_string;
-		}
-
-		return $url;
+		return $url . $query_string;
 	}
 
 	public function to_element(array $attributes = [])
@@ -53,7 +51,7 @@ class Thumbnail extends \ICanBoogie\Modules\Thumbnailer\Thumbnail
 
 		$record = $this->src;
 
-		list($w, $h) = \ICanBoogie\Image::compute_final_size($this->w, $this->h, $this->method, [ $record->width, $record->height ]);
+		list($w, $h) = ImageSupport::compute_final_size($this->w, $this->h, $this->method, [ $record->width, $record->height ]);
 
 		$element['alt'] = $record->alt;
 		$element['width'] = $w;

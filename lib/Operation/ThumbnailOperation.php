@@ -11,11 +11,14 @@
 
 namespace Icybee\Modules\Images\Operation;
 
+use ICanBoogie\HTTP\NotFound;
 use ICanBoogie\HTTP\Request;
 use ICanBoogie\Modules\Thumbnailer\Version;
 
 /**
  * Creates a thumbnail of an image managed by the "images" module.
+ *
+ * @property \ICanBoogie\Core|\Icybee\Modules\Files\Binding\CoreBindings $app
  */
 class ThumbnailOperation extends \ICanBoogie\Modules\Thumbnailer\Operation\GetOperation
 {
@@ -38,14 +41,13 @@ class ThumbnailOperation extends \ICanBoogie\Modules\Thumbnailer\Operation\GetOp
 	protected function resolve_version_src(Request $request)
 	{
 		$nid = $request['nid'];
-		$root = \ICanBoogie\DOCUMENT_ROOT;
-		$files = glob(\ICanBoogie\REPOSITORY . "files/*/{$nid}-*");
 
-		if (!$files)
-		{
-			return null;
+		$pathname = $this->app->file_storage->find($nid);
+
+		if (!$pathname) {
+			throw new NotFound;
 		}
 
-		return substr(array_shift($files), strlen($root));
+		return $pathname->relative;
 	}
 }

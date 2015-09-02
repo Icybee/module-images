@@ -13,8 +13,9 @@ namespace Icybee\Modules\Images;
 
 use Brickrouge\Document;
 use Brickrouge\Element;
+use Icybee\Modules\Nodes\AdjustNode;
 
-class AdjustImage extends \Brickrouge\Widget\AdjustNode
+class AdjustImage extends AdjustNode
 {
 	static protected function add_assets(Document $document)
 	{
@@ -75,7 +76,7 @@ class AdjustImage extends \Brickrouge\Widget\AdjustNode
 			'data-popover-image' => $record->thumbnail('$popover')->url,
 			'data-popover-target' => '.widget-adjust-image',
 			'data-title' => $record->title,
-			'data-path' => $record->path
+			'data-path' => $this->app->url_for('api:images/compat-get', $record)
 
 		]);
 	}
@@ -89,11 +90,4 @@ class AdjustImage extends \Brickrouge\Widget\AdjustNode
 	{
 		return parent::get_results($options, $constructor);
 	}
-}
-
-namespace Brickrouge\Widget;
-
-class AdjustImage extends \Icybee\Modules\Images\AdjustImage
-{
-
 }

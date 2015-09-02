@@ -18,27 +18,6 @@ use Icybee\Modules\Files\FileModel;
 
 class ImageModel extends FileModel
 {
-	static protected $accept = [ '.gif', '.png', '.jpg', '.jpeg' ];
-
-	public function save(array $properties, $key = null, array $options = [])
-	{
-		if (isset($properties[Image::HTTP_FILE]))
-		{
-			$file = $properties[Image::HTTP_FILE];
-
-			list($w, $h) = getimagesize($file->pathname);
-
-			$properties[Image::WIDTH] = $w;
-			$properties[Image::HEIGHT] = $h;
-		}
-
-		return parent::save($properties, $key, $options + [
-
-			self::ACCEPT => self::$accept
-
-		]);
-	}
-
 	/**
 	 * Includes the images assigned to the records.
 	 *

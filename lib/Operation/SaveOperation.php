@@ -17,13 +17,13 @@ class SaveOperation extends \Icybee\Modules\Files\Operation\SaveOperation
 {
 	protected $accept = [ '.gif', '.png', '.jpg', '.jpeg' ];
 
-	protected function control(array $controls)
+	protected function lazy_get_properties()
 	{
-		$request = $this->request;
+		$properties = parent::lazy_get_properties();
 
-		unset($request[Image::WIDTH]);
-		unset($request[Image::HEIGHT]);
+		unset($properties[Image::WIDTH]);
+		unset($properties[Image::HEIGHT]);
 
-		return parent::control($controls);
+		return $properties;
 	}
 }
