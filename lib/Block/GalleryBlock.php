@@ -74,7 +74,7 @@ class GalleryBlock extends ManageBlock
 
 			$html .= <<<EOT
 <div class="thumbnailer-wrapper" data-key="{$record->nid}" style="width: 128px;">
-	<a href="{$record->path}" rel="lightbox[]">$img</a>
+	<a href="{$record->pathname->relative}" rel="lightbox[]">$img</a>
 	$label
 </div>
 EOT;

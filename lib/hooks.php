@@ -281,6 +281,8 @@ class Hooks
 			$id = $alt;
 		}
 
+		/* @var $record Image */
+
 		$record = $model->where('nid = ? OR slug = ? OR title = ?', (int) $id, $id, $id)->order('created_at DESC')->one;
 
 		if (!$record)
@@ -290,7 +292,7 @@ class Hooks
 			return null;
 		}
 
-		$src = $record->path;
+		$src = self::app()->url_for('files:show', $record);
 		$w = $record->width;
 		$h = $record->height;
 

@@ -18,13 +18,29 @@ return [
 
 	'api:images/thumbnail' => [
 
-		'pattern' => '/api/images/<nid:\d+>/<size:\d+x\d+|\d+x|x\d+>*',
+		'pattern' => '/api/images/<uuid:{:uuid:}>/<size:\d+x\d+|\d+x|x\d+>*',
 		'controller' => ThumbnailOperation::class,
 		'via' => Request::METHOD_GET
 
 	],
 
 	'api:images/thumbnail-version' => [
+
+		'pattern' => '/api/images/<uuid:{:uuid:}>/thumbnails/:version',
+		'controller' => ThumbnailOperation::class,
+		'via' => Request::METHOD_GET
+
+	],
+
+	'api:protected:images/thumbnail' => [
+
+		'pattern' => '/api/images/<nid:\d+>/<size:\d+x\d+|\d+x|x\d+>*',
+		'controller' => ThumbnailOperation::class,
+		'via' => Request::METHOD_GET
+
+	],
+
+	'api:protected:images/thumbnail-version' => [
 
 		'pattern' => '/api/images/<nid:\d+>/thumbnails/:version',
 		'controller' => ThumbnailOperation::class,

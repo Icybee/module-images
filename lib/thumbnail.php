@@ -26,7 +26,7 @@ class Thumbnail extends \ICanBoogie\Modules\Thumbnailer\Thumbnail
 		$options = $this->filtered_options;
 		$version_name = $this->version_name;
 
-		$url = "/api/images/{$record->nid}";
+		$url = "/api/images/{$record->uuid}";
 		$remove_path_params = false;
 
 		if ($version_name)
@@ -40,7 +40,7 @@ class Thumbnail extends \ICanBoogie\Modules\Thumbnailer\Thumbnail
 		}
 
 		$query_string = self::format_options_as_query_string($options, $remove_path_params);
-		$query_string = '?' . $query_string . ($query_string ? '&' : '') . $record->path->short_hash;
+		$query_string = '?' . $query_string . ($query_string ? '&' : '') . $record->pathname->short_hash;
 
 		return $url . $query_string;
 	}

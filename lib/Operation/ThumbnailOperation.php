@@ -11,6 +11,7 @@
 
 namespace Icybee\Modules\Images\Operation;
 
+use ICanBoogie\HTTP\ClientError;
 use ICanBoogie\HTTP\NotFound;
 use ICanBoogie\HTTP\Request;
 use ICanBoogie\Modules\Thumbnailer\Version;
@@ -40,11 +41,17 @@ class ThumbnailOperation extends \ICanBoogie\Modules\Thumbnailer\Operation\GetOp
 
 	protected function resolve_version_src(Request $request)
 	{
-		$nid = $request['nid'];
+		$reference = $request['nid'] ?: $request['uuid'];
 
-		$pathname = $this->app->file_storage->find($nid);
+		if (!$reference)
+		{
+			throw new ClientError("Image identifier is empty.");
+		}
 
-		if (!$pathname) {
+		$pathname = $this->app->file_storage->find($reference);
+
+		if (!$pathname)
+		{
 			throw new NotFound;
 		}
 
