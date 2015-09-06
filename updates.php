@@ -30,13 +30,13 @@ class Update20120101 extends Update
 			throw new AssertionFailed('assert_table_exists', 'resources_images');
 		}
 
-		$db("RENAME TABLE `resources_images` TO `images`");
+		$db("RENAME TABLE `{prefix}resources_images` TO `{prefix}images`");
 	}
 
 	public function update_constructor_type()
 	{
 		$db = $this->app->db;
-		$db("UPDATE nodes SET constructor = 'images' WHERE constructor = 'resources.images'");
+		$db("UPDATE {prefix}nodes SET constructor = 'images' WHERE constructor = 'resources.images'");
 	}
 }
 
