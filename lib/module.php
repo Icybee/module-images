@@ -50,7 +50,7 @@ class Module extends \Icybee\Modules\Files\Module
 				continue;
 			}
 
-			$errors[$this->id] = $errors->format("Thumbnail version %version is not defined.", [ 'version' => $version ]);
+			$errors->add($this->id, "Thumbnail version %version is not defined.", [ 'version' => $version ]);
 		}
 
 		return parent::is_installed($errors);
