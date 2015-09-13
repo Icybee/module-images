@@ -73,7 +73,7 @@ class Image extends File
 	 */
 	public function __toString()
 	{
-		$path = \ICanBoogie\escape($this->path);
+		$path = \ICanBoogie\escape($this->pathname);
 		$alt = \ICanBoogie\escape($this->alt);
 
 		return <<<EOT
