@@ -8,21 +8,21 @@ COMPOSER_ENV = COMPOSER_ROOT_VERSION=$(PACKAGE_VERSION)
 
 JS_FILES = \
 	lib/Operation/SaveOperation.js \
-	lib/elements/image-control.js \
-	lib/elements/image-control-with-preview.js \
-	lib/elements/adjust-image.js \
-	lib/elements/adjust-thumbnail.js \
-	lib/elements/pop-image.js \
-	lib/elements/pop-or-upload-image.js
+	lib/ImageControl.js \
+	lib/ImageControlWithPreview.js \
+	lib/AdjustImage.js \
+	lib/AdjustThumbnail.js \
+	lib/PopImage.js \
+	lib/PopOrUploadImage.js
 
 CSS_FILES = \
-	lib/elements/image-control.css \
-	lib/elements/image-control-with-preview.css \
-	lib/elements/adjust-image.css \
-	lib/elements/adjust-thumbnail.css \
-	lib/elements/image-upload.css \
-	lib/elements/pop-image.css \
-	lib/elements/pop-or-upload-image.css
+	lib/ImageControl.css \
+	lib/ImageControlWithPreview.css \
+	lib/AdjustImage.css \
+	lib/AdjustThumbnail.css \
+	lib/ImageUpload.css \
+	lib/PopImage.css \
+	lib/PopOrUploadImage.css
 
 JS_COMPRESSOR = curl -X POST -s --data-urlencode 'js_code@$^' --data-urlencode 'utf8=1' http://marijnhaverbeke.nl/uglifyjs
 #JS_COMPRESSOR = cat $^ # uncomment to produce uncompressed files
