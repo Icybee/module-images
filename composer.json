@@ -30,7 +30,7 @@
 	},
 
 	"require-dev": {
-		"icanboogie/icanboogie": "^2.4.0",
+		"icanboogie/icanboogie": "^3.0.0",
 		"icybee/core": "^3.0.0"
 	},
 

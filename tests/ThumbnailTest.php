@@ -47,8 +47,9 @@ class ThumbnailTest extends \PHPUnit_Framework_TestCase
 	{
 		$image = self::$image;
 		$thumbnail = new Thumbnail($image, $options);
+		$separator = strpos($expected, '?') === false ? '?' : '&';
 
-		$this->assertEquals("/api/images/{$image->nid}/$expected", $thumbnail->url);
+		$this->assertEquals("/images/{$image->uuid}/$expected{$separator}{$image->pathname->short_hash}", $thumbnail->url);
 	}
 
 	public function provide_test_url()

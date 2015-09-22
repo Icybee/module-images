@@ -13,10 +13,10 @@ class WidgetOperation extends \Icybee\Operation\Widget\Get
 		return AdjustImage::class;
 	}
 
-	public function __invoke(Request $request)
+	public function action(Request $request)
 	{
 		$request['class'] = 'adjust-image';
 
-		return parent::__invoke($request);
+		return parent::action($request);
 	}
 }

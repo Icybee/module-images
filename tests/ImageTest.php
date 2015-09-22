@@ -30,23 +30,21 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($nid, $record->nid);
 		$this->assertEquals(200, $record->width);
 		$this->assertEquals(200, $record->height);
-		$this->assertEquals("/repository/files/image/1-claire.png", $record->path);
 		$this->assertEquals("image/png", $record->mime);
 		$this->assertEquals(filesize($source), $record->size);
 		$this->assertEquals('claire', $record->title);
-		$this->assertFileExists(dirname(\ICanBoogie\REPOSITORY) . $record->path);
+		$this->assertFileExists((string) $record->pathname);
 		$this->assertObjectNotHasAttribute(Image::HTTP_FILE, $record);
 
 		$record->title = "Madonna";
 		$record->save();
 
-		$this->assertEquals("/repository/files/image/1-madonna.png", $record->path);
-		$this->assertFileExists(dirname(\ICanBoogie\REPOSITORY) . $record->path);
+		$this->assertFileExists((string) $record->pathname);
 
 		$this->assertInstanceOf('Icybee\Modules\Images\Thumbnail', $record->thumbnail('w:64;h:64'));
 
 		$record->delete();
-		$this->assertFileNotExists(dirname(\ICanBoogie\REPOSITORY) . $record->path);
+		$this->assertFileNotExists((string) $record->pathname);
 	}
 
 	public function test_get_model_id()
@@ -67,28 +65,33 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 
 	public function testToString()
 	{
-		$image = Image::from(array(
+		$uuid = \ICanBoogie\generate_v4_uuid();
+		$extension = '.jpeg';
+
+		$image = Image::from([
 
 			'nid' => 16,
+			'uuid' => $uuid,
 			'width' => 320,
 			'height' => 240,
-			'path' => '/repository/files/madonna.jpeg'
+			'extension' => $extension
 
-		));
+		]);
 
-		$this->assertEquals('<img src="/repository/files/madonna.jpeg" alt="" width="320" height="240" data-nid="16" />', (string) $image);
+		$this->assertEquals('<img src="/images/' . $uuid . $extension . '" alt="" width="320" height="240" data-nid="16" />', (string) $image);
 
-		$image = Image::from(array(
+		$image = Image::from([
 
 			'nid' => 16,
+			'uuid' => $uuid,
 			'width' => 320,
 			'height' => 240,
-			'path' => '/repository/files/madonna.jpeg',
-			'alt' => 'Madonna'
+			'extension' => $extension,
+			'alt' => "Madonna"
 
-		));
+		]);
 
-		$this->assertEquals('<img src="/repository/files/madonna.jpeg" alt="Madonna" width="320" height="240" data-nid="16" />', (string) $image);
+		$this->assertEquals('<img src="/images/' . $uuid . $extension . '" alt="Madonna" width="320" height="240" data-nid="16" />', (string) $image);
 	}
 
 	public function test_get_surface()

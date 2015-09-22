@@ -25,7 +25,23 @@ use Icybee\Modules\Nodes\Node;
 class NodeRelation
 {
 	private $node;
+
+	protected function get_node()
+	{
+		return $this->node;
+	}
+
 	private $image;
+
+	protected function get_image()
+	{
+		return $this->image;
+	}
+
+	protected function get_thumbnail()
+	{
+		return $this->thumbnail(':view');
+	}
 
 	/**
 	 * Initializes the {@link $node} and {@link $image} properties.
@@ -41,13 +57,12 @@ class NodeRelation
 
 	public function __get($property)
 	{
-		switch ($property)
+		if (in_array($property, [ 'node', 'image', 'thumbnail' ]))
 		{
-			case 'node': return $this->node;
-			case 'image': return $this->image;
-			case 'thumbnail': return $this->thumbnail(':view');
-			default: return $this->image->$property;
+			return $this->{ 'get_' . $property }();
 		}
+
+		return $this->image->$property;
 	}
 
 	/**
@@ -60,6 +75,14 @@ class NodeRelation
 		throw new PropertyNotWritable([ $property, $this ]);
 	}
 
+	/**
+	 * Forwards calls to the image.
+	 *
+	 * @param string $name
+	 * @param array $arguments
+	 *
+	 * @return mixed
+	 */
 	public function __call($name, array $arguments)
 	{
 		return call_user_func_array([ $this->image, $name ], $arguments);

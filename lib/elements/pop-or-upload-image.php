@@ -49,7 +49,7 @@ class PopOrUploadImage extends Element
 
 					UploadImage::FILE_WITH_LIMIT => true,
 
-					'data-name' => Image::PATH,
+					'data-name' => Image::HTTP_FILE,
 					'data-upload-url' => Operation::encode('images/save')
 				])
 			],

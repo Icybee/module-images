@@ -120,8 +120,6 @@ var Slimbox = (function() {
 
 				activeURL = activeURL.substring(base.length);
 
-				//console.log('activeurl: %s', activeURL);
-
 				var size = $(document.body).getSize();
 				var maxw = size.x - 150;
 				var maxh = size.y - 200;
@@ -136,9 +134,9 @@ var Slimbox = (function() {
 					maxh = 600;
 				}
 
-				if (activeURL.match('/api/images/'))
+				if (activeURL.match('/api/images/') || activeURL.match('/images/'))
 				{
-					activeURL += '/' + maxw + 'x' + maxh + '/constrained?no-upscale=1';
+					activeURL = activeURL.replace(/\.[a-z]{3,4}$/, '') + '/' + maxw + 'x' + maxh + '/constrained?no-upscale=1';
 				}
 				else
 				{

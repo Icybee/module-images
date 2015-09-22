@@ -7,7 +7,7 @@ COMPOSER_ENV = COMPOSER_ROOT_VERSION=$(PACKAGE_VERSION)
 # assets
 
 JS_FILES = \
-	lib/operations/save.js \
+	lib/Operation/SaveOperation.js \
 	lib/elements/image-control.js \
 	lib/elements/image-control-with-preview.js \
 	lib/elements/adjust-image.js \

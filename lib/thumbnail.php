@@ -26,7 +26,7 @@ class Thumbnail extends \ICanBoogie\Modules\Thumbnailer\Thumbnail
 		$options = $this->filtered_options;
 		$version_name = $this->version_name;
 
-		$url = "/api/images/{$record->uuid}";
+		$url = "/images/{$record->uuid}";
 		$remove_path_params = false;
 
 		if ($version_name)

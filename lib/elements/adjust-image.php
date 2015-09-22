@@ -13,7 +13,9 @@ namespace Icybee\Modules\Images;
 
 use Brickrouge\Document;
 use Brickrouge\Element;
+
 use Icybee\Modules\Nodes\AdjustNode;
+use Icybee\Modules\Nodes\Node;
 
 class AdjustImage extends AdjustNode
 {
@@ -29,7 +31,7 @@ class AdjustImage extends AdjustNode
 	{
 		parent::__construct($attributes + [
 
-			self::T_CONSTRUCTOR => 'images',
+			self::T_CONSTRUCTOR => Image::MODEL_ID,
 			Element::IS => 'AdjustImage',
 
 			'data-adjust' => 'adjust-image'
@@ -61,32 +63,37 @@ class AdjustImage extends AdjustNode
 		return parent::get_records($constructor, $options, $limit);
 	}
 
-	protected function render_record(\Icybee\Modules\Nodes\Node $record, $selected, array $range, array $options)
+	/**
+	 * @param Node|Image $record
+	 * @param mixed $selected
+	 * @param array $range
+	 * @param array $options
+	 *
+	 * @return Element
+	 */
+	protected function render_record(Node $record, $selected, array $range, array $options)
 	{
-		/* @var $record Image */
-
-		$nid = $record->nid;
-
 		return $record->thumbnail('$icon-m')->to_element([
 
 			'alt' => $record->alt,
 			'title' => $record->title,
 
-			'data-nid' => $nid,
+			'data-nid' => $record->nid,
+			'data-uuid' => $record->uuid,
 			'data-popover-image' => $record->thumbnail('$popover')->url,
 			'data-popover-target' => '.widget-adjust-image',
 			'data-title' => $record->title,
-			'data-path' => $this->app->url_for('api:images/compat-get', $record)
+			'data-path' => $this->app->url_for('images:show', $record)
 
 		]);
 	}
 
 	/**
-	 * Defaults constructor to `images`.
+	 * Defaults constructor to {@link Image::MODEL_ID}.
 	 *
 	 * @inheritdoc
 	 */
-	public function get_results(array $options = [], $constructor = 'images')
+	public function get_results(array $options = [], $constructor = Image::MODEL_ID)
 	{
 		return parent::get_results($options, $constructor);
 	}

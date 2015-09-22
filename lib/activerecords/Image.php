@@ -73,21 +73,34 @@ class Image extends File
 	 */
 	public function __toString()
 	{
-		$path = \ICanBoogie\escape($this->pathname);
-		$alt = \ICanBoogie\escape($this->alt);
+		try
+		{
+			return (string) $this->render();
+		}
+		catch (\Exception $e)
+		{
+			trigger_error($e->getMessage() . "\nin: " . $e->getFile() . ':' . $e->getLine(), E_USER_ERROR);
 
-		return <<<EOT
-<img src="$path" alt="$alt" width="{$this->width}" height="{$this->height}" data-nid="{$this->nid}" />
-EOT;
+			return '';
+		}
 	}
 
-	protected function save_file_begin(HTTPFile $file)
+	protected function save_file_before(HTTPFile $file)
 	{
-		parent::save_file_begin($file);
+		parent::save_file_before($file);
 
 		list($w, $h) = getimagesize($file->pathname);
 
 		$this->width = $w;
 		$this->height = $h;
+	}
+
+	public function render()
+	{
+		$alt = \ICanBoogie\escape($this->alt);
+
+		return <<<EOT
+<img src="/images/{$this->uuid}{$this->extension}" alt="$alt" width="{$this->width}" height="{$this->height}" data-nid="{$this->nid}" />
+EOT;
 	}
 }

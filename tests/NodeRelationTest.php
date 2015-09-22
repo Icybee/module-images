@@ -15,86 +15,129 @@ use Icybee\Modules\Nodes\Node;
 
 class NodeRelationTest extends \PHPUnit_Framework_TestCase
 {
-	/**
-	 * @var Image
-	 */
-	static private $record;
-
-	static public function setupBeforeClass()
+	public function test_get_node()
 	{
-		copy(__DIR__ . '/resources/claire.png', \ICanBoogie\REPOSITORY . 'tmp/claire.png');
-
-		$record = Image::from([
-
-			Image::HTTP_FILE => \ICanBoogie\HTTP\File::from([ 'pathname' => \ICanBoogie\REPOSITORY . 'tmp/claire.png' ])
-
-		]);
-
-		$record->save();
-
-		self::$record = $record;
-	}
-
-	static public function  tearDownAfterClass()
-	{
-		if (self::$record)
-		{
-			self::$record->delete();
-		}
-	}
-
-	public function testCanGetNodeAndImage()
-	{
-		$node = new Node;
-		$image = new Image;
+		$node = Node::from();
+		$image = Image::from();
 		$relation = new NodeRelation($node, $image);
 
 		$this->assertSame($node, $relation->node);
+	}
+
+	public function test_get_image()
+	{
+		$node = Node::from();
+		$image = Image::from();
+		$relation = new NodeRelation($node, $image);
+
 		$this->assertSame($image, $relation->image);
 	}
 
-	/**
-	 * @expectedException \ICanBoogie\PropertyNotWritable
-	 */
-	public function testCannotSetNode()
+	public function test_get_thumbnail()
 	{
-		$relation = new NodeRelation(new Node, new Image);
-		$relation->node = null;
+		$thumbnail = $this
+			->getMockBuilder(Thumbnail::class)
+			->disableOriginalConstructor()
+			->getMock();
+
+		$relation = $this
+			->getMockBuilder(NodeRelation::class)
+			->disableOriginalConstructor()
+			->setMethods([ 'thumbnail' ])
+			->getMock();
+		$relation
+			->expects($this->once())
+			->method('thumbnail')
+			->with(':view')
+			->willReturn($thumbnail);
+
+		/* @var $relation NodeRelation */
+
+		$this->assertSame($thumbnail, $relation->thumbnail);
+	}
+
+	public function test_should_forward_undefined_properties()
+	{
+		$uuid = \ICanBoogie\generate_v4_uuid();
+		$node = Node::from();
+		$image = Image::from([ 'uuid' => $uuid ]);
+		$relation = new NodeRelation($node, $image);
+
+		$this->assertSame($uuid, $relation->uuid);
 	}
 
 	/**
 	 * @expectedException \ICanBoogie\PropertyNotWritable
 	 */
-	public function testCannotSetImage()
+	public function test_immutable()
 	{
-		$relation = new NodeRelation(new Node, new Image);
-		$relation->image = null;
+		$node = Node::from();
+		$image = Image::from();
+		$relation = new NodeRelation($node, $image);
+		$relation->{ uniqid() } = uniqid();
 	}
 
-	/**
-	 * @expectedException \ICanBoogie\PropertyNotWritable
-	 */
-	public function testCannotSetAnything()
+	public function test_should_forward_undefined_methods()
 	{
-		$relation = new NodeRelation(new Node, new Image);
-		$relation->anything = null;
-	}
+		$node = Node::from();
 
-	public function testShortVersion()
-	{
-		$node = Node::from(array('constructor' => 'articles'));
-		$image = Image::from(array('nid' => 1));
+		$method = 'method' . uniqid();
+		$arg1 = uniqid();
+		$arg2 = uniqid();
+		$rc = uniqid();
+
+		$image = $this
+			->getMockBuilder(Image::class)
+			->disableOriginalConstructor()
+			->setMethods([ $method ])
+			->getMockForAbstractClass();
+		$image
+			->expects($this->once())
+			->method($method)
+			->with($arg1, $arg2)
+			->willReturn($rc);
+
+		/* @var $image Image */
 
 		$relation = new NodeRelation($node, $image);
-		$this->assertEquals('/api/images/1/thumbnails/articles-list', $relation->thumbnail(':list')->url);
-		$this->assertEquals('/api/images/1/thumbnails/articles-view', $relation->thumbnail->url);
+		$this->assertSame($rc, $relation->$method($arg1, $arg2));
 	}
 
-	public function testPrototypeGetter()
+	public function test_to_string()
 	{
-		$node = Node::from(array('constructor' => 'articles'));
-		$node->metas = array('image_id' => 1);
+		$node = Node::from();
 
-		$this->assertInstanceOf(__NAMESPACE__ . '\NodeRelation', $node->image);
+		$expected = 'string' . uniqid();
+
+		$image = $this
+			->getMockBuilder(Image::class)
+			->disableOriginalConstructor()
+			->setMethods([ '__toString' ])
+			->getMockForAbstractClass();
+		$image
+			->expects($this->once())
+			->method('__toString')
+			->willReturn($expected);
+
+		/* @var $image Image */
+
+		$relation = new NodeRelation($node, $image);
+		$this->assertSame($expected, (string) $relation);
+	}
+
+	public function test_thumbnail()
+	{
+		$constructor = 'c' . uniqid();
+		$node = Node::from([ Node::CONSTRUCTOR => $constructor ]);
+		$image = Image::from();
+		$relation = new NodeRelation($node, $image);
+		$version = 'v' . uniqid();
+		$thumbnail = $relation->thumbnail(':' . $version);
+
+		$reflection = new \ReflectionObject($thumbnail);
+		$reflection_property = $reflection->getProperty('version_name');
+		$reflection_property->setAccessible(true);
+
+		$this->assertSame($constructor . '-' . $version, $reflection_property->getValue($thumbnail));
 	}
 }
