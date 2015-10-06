@@ -56,6 +56,7 @@ class AdjustThumbnail extends \Brickrouge\Widget
 	{
 		if ($attribute == 'value')
 		{
+			// FIXME-20150903: /api/images is deprecated
 			if (preg_match('/\/api\/images\/(\d+)(\/(\d*)x(\d*)(\/([a-z\-]+))?)?/', $value, $matches))
 			{
 				list($path, $nid, , $width, $height, , $method) = $matches + [ 3 => null, 4 => null, 6 => null ];

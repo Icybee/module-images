@@ -84,6 +84,14 @@ return [
 
 	],
 
+	'api:widgets:adjust-thumbnail:popup' => [
+
+		'pattern' => '/api/widgets/adjust-thumbnail/:mode',
+		'controller' => WidgetOperation::class,
+		'via' => Request::METHOD_GET
+
+	],
+
 	/*
 	 * admin
 	 */
