@@ -59,7 +59,7 @@ class ImageControlWithPreview extends Element
 
 		if ($value)
 		{
-			$src = "/api/images/$value/thumbnails/" . $this[self::THUMBNAIL_VERSION];
+			$src = "/images/$value/thumbnails/" . $this[self::THUMBNAIL_VERSION];
 		}
 
 		return <<<EOT
