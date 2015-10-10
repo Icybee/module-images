@@ -1,8 +1,15 @@
 <?php
 
-namespace Icybee\Modules\Images\Block\ManageBlock;
+/*
+ * This file is part of the Icybee package.
+ *
+ * (c) Olivier Laviale <olivier.laviale@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
-use ICanBoogie\ActiveRecord\Query;
+namespace Icybee\Modules\Images\Block\ManageBlock;
 
 use Icybee\Block\ManageBlock;
 use Icybee\Block\ManageBlock\Column;
@@ -10,11 +17,11 @@ use Icybee\Modules\Images\Image;
 
 /**
  * Class for the `surface` column.
- *
- * @todo-20130624: disable options, when count < 10
  */
 class SurfaceColumn extends Column
 {
+	use ManageBlock\CriterionColumnTrait;
+
 	public function __construct(ManageBlock $manager, $id, array $options = [])
 	{
 		parent::__construct($manager, $id, $options + [
@@ -31,77 +38,6 @@ class SurfaceColumn extends Column
 				]
 			]
 		]);
-	}
-
-	/**
-	 * Adds support for the `surface` filter.
-	 *
-	 * @inheritdoc
-	 */
-	public function alter_filters(array $filters, array $modifiers)
-	{
-		$filters = parent::alter_filters($filters, $modifiers);
-
-		if (isset($modifiers['surface']))
-		{
-			$value = $modifiers['surface'];
-
-			if (in_array($value, [ 'l', 'm', 's' ]))
-			{
-				$filters['surface'] = $value;
-			}
-			else
-			{
-				unset($filters['surface']);
-			}
-		}
-
-		return $filters;
-	}
-
-	/**
-	 * Adds support for the `surface` filter.
-	 *
-	 * @inheritdoc
-	 */
-	public function alter_query_with_filter(Query $query, $filter_value)
-	{
-		if ($filter_value)
-		{
-			list($avg, $max, $min) = $query->model
-				->select('AVG(width * height), MAX(width * height), MIN(width * height)')
-				->similar_site
-				->one(\PDO::FETCH_NUM);
-
-			$bounds = [
-
-				$min,
-				round($avg - ($avg - $min) / 3),
-				round($avg),
-				round($avg + ($max - $avg) / 3),
-				$max
-
-			];
-
-			switch ($filter_value)
-			{
-				case 'l': $query->where('width * height >= ?', $bounds[3]); break;
-				case 'm': $query->where('width * height >= ? AND width * height < ?', $bounds[2], $bounds[3]); break;
-				case 's': $query->where('width * height < ?', $bounds[2]); break;
-			}
-		}
-
-		return $query;
-	}
-
-	/**
-	 * Alters the order of the query with the surface of the image.
-	 *
-	 * @inheritdoc
-	 */
-	public function alter_query_with_order(Query $query, $order_direction)
-	{
-		return $query->order('(width * height) ' . ($order_direction < 0 ? 'DESC' : 'ASC'));
 	}
 
 	/**
