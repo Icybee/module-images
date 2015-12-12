@@ -43,14 +43,16 @@ class GalleryBlock extends ManageBlock
 		return parent::resolve_options($name . '/gallery', $modifiers);
 	}
 
-	protected function render_body()
+	/**
+	 * @param array $rendered_rows
+	 *
+	 * @return string
+	 */
+	protected function render_body(array $rendered_rows)
 	{
-		$rendered_columns_cells = $this->render_columns_cells($this->columns);
-		$rows = $this->columns_to_rows($rendered_columns_cells);
-
 		$html = '';
 
-		foreach ($rows as $i => $row)
+		foreach ($rendered_rows as $i => $row)
 		{
 			$record = $this->records[$i];
 			$title =  $record->title;
