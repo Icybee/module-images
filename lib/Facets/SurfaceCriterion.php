@@ -3,9 +3,9 @@
 namespace Icybee\Modules\Images\Facets;
 
 use ICanBoogie\ActiveRecord\Query;
-use ICanBoogie\Facets\Criterion;
+use ICanBoogie\Facets\Criterion\BasicCriterion;
 
-class SurfaceCriterion extends Criterion
+class SurfaceCriterion extends BasicCriterion
 {
 	/**
 	 * Adds support for the `surface` filter.
