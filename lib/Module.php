@@ -26,8 +26,8 @@ class Module extends \Icybee\Modules\Files\Module
 
 	static private $thumbnail_versions = [
 
-		'$icon' => "24x24.png",
-		'$icon-m' => "64x64",
+		'$icon' => "48x48.png",
+		'$icon-m' => "128x128",
 		'$popimage' => "96x96/surface",
 		'$popover' => "200x200/surface?nu=1",
 		'$gallery' => "128x128/constrained"

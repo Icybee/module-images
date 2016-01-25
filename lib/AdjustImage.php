@@ -75,13 +75,14 @@ class AdjustImage extends AdjustNode
 	{
 		return $record->thumbnail('$icon-m')->to_element([
 
-			'alt' => $record->alt,
-			'title' => $record->title,
+			'alt' => null,
+			'title' => null,
 
 			'data-nid' => $record->nid,
 			'data-uuid' => $record->uuid,
 			'data-popover-image' => $record->thumbnail('$popover')->url,
 			'data-popover-target' => '.widget-adjust-image',
+			'data-popover-title' => $record->title,
 			'data-title' => $record->title,
 			'data-path' => $this->app->url_for('images:show', $record)
 

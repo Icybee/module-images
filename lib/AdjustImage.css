@@ -6,10 +6,10 @@
 }
 
 .widget-adjust-image .records {
-	list-style: none;
 	overflow: hidden;
 	padding: 0;
-	width: 256px;
+	width: 260px;
+	margin: -1px 0 1px -1px;
 }
 
 .widget-adjust-image .records a[href] {
@@ -18,23 +18,29 @@
 
 .widget-adjust-image .records li {
 	float: left;
-	height: 64px;
-	width: 64px;
 	position: relative;
+	margin: 1px 0 0 1px;
+}
+
+.widget-adjust-node.widget-adjust-image .records img {
+	margin: 0;
+	vertical-align: top;
 }
 
 .widget-adjust-image .records img {
 	cursor: pointer;
 	display: block;
-	margin: 0;
 	padding: 0;
-	vertical-align: inherit;
+	width: 64px;
+	height: 64px;
+	transition: opacity 240ms;
 }
 
 .widget-adjust-image .records li.selected img,
 .widget-adjust-image .records li:not(.empty):hover img {
-	opacity: .5;
+	opacity: .6;
 }
+/*
 .widget-adjust-image .records li.selected {
 	background-color: hsla(214, 100%, 85%, .4);
 	box-shadow: inset 0px 0px 10px 2px hsl(214, 100%, 85%);
@@ -44,7 +50,7 @@
 	background-color: hsla(60, 25%, 73%, .4);
 	box-shadow: inset 0px 0px 10px 2px hsl(60, 25%, 73%);
 }
-
+*/
 .widget-adjust-image .records li.selected::after {
 	position: absolute;
 	right: 5px;
@@ -64,6 +70,8 @@
 	text-align: center;
 }
 
+/*
 .widget-adjust-image .records li:hover:not(.empty) {
 	background-color: #ffc;
 }
+*/
