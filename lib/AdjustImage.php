@@ -31,8 +31,9 @@ class AdjustImage extends AdjustNode
 	{
 		parent::__construct($attributes + [
 
-			self::T_CONSTRUCTOR => Image::MODEL_ID,
 			Element::IS => 'AdjustImage',
+
+			self::T_CONSTRUCTOR => Image::MODEL_ID,
 
 			'data-adjust' => 'adjust-image'
 

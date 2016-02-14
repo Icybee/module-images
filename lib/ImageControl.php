@@ -92,8 +92,7 @@ class ImageControl extends Element
 
 		$alert = new Alert($this->t("An error has occured"), [
 
-			Alert::CONTEXT => Alert::CONTEXT_ERROR,
-			Alert::UNDISMISSABLE => true
+			Alert::CONTEXT => Alert::CONTEXT_DANGER
 
 		]);
 
