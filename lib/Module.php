@@ -11,7 +11,7 @@
 
 namespace Icybee\Modules\Images;
 
-use ICanBoogie\Errors;
+use ICanBoogie\ErrorCollection;
 
 use Icybee\Binding\Core\PrototypedBindings;
 
@@ -39,7 +39,7 @@ class Module extends \Icybee\Modules\Files\Module
 	 *
 	 * @inheritdoc
 	 */
-	public function is_installed(Errors $errors)
+	public function is_installed(ErrorCollection $errors)
 	{
 		$versions = $this->app->thumbnailer_versions;
 
@@ -61,7 +61,7 @@ class Module extends \Icybee\Modules\Files\Module
 	 *
 	 * @inheritdoc
 	 */
-	public function install(Errors $errors)
+	public function install(ErrorCollection $errors)
 	{
 		$versions = $this->app->thumbnailer_versions;
 

@@ -12,7 +12,6 @@
 namespace Icybee\Modules\Images;
 
 use ICanBoogie\Core;
-use ICanBoogie\Errors;
 
 $_SERVER['DOCUMENT_ROOT'] = __DIR__;
 
@@ -37,32 +36,7 @@ $app = new Core(\ICanBoogie\array_merge_recursive(\ICanBoogie\get_autoconfig(), 
 ]));
 
 $app->boot();
-
-#
-# Install modules
-#
-
-$errors = $app->modules->install(new Errors);
-
-if ($errors->count())
-{
-	foreach ($errors as $module_id => $error)
-	{
-		if ($error instanceof \Exception)
-		{
-			$error = $error->getMessage();
-		}
-
-		echo "$module_id: $error\n";
-	}
-
-	exit(1);
-}
-
-#
-#
-#
-
+$app->modules->install();
 $app->site_id = 0;
 
 use Icybee\Modules\Users\User;
