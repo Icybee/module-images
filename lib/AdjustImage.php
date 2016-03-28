@@ -55,11 +55,11 @@ class AdjustImage extends AdjustNode
 	}
 
 	/**
-	 * Because a 4x4 grid is used, `$limit` defaults to 16.
+	 * Because a 5x5 grid is used, `$limit` defaults to 25.
 	 *
 	 * @inheritdoc
 	 */
-	protected function get_records($constructor, array $options, $limit = 16)
+	protected function get_records($constructor, array $options, $limit = 25)
 	{
 		return parent::get_records($constructor, $options, $limit);
 	}

@@ -1,15 +1,11 @@
-.widget-adjust-image .records {
+.widget-adjust-node.widget-adjust-image .records {
 	overflow: hidden;
 	padding: 0;
-	width: 260px;
+	width: 325px;
 	margin: -1px 0 1px -1px;
 }
 
-.widget-adjust-image .records a[href] {
-	padding: 0;
-}
-
-.widget-adjust-image .records li {
+.widget-adjust-node.widget-adjust-image .records li {
 	float: left;
 	position: relative;
 	margin: 1px 0 0 1px;
@@ -20,12 +16,16 @@
 	vertical-align: top;
 }
 
+.widget-adjust-image .records img,
+.widget-adjust-image .records li.empty {
+	width: 64px;
+	height: 64px;
+}
+
 .widget-adjust-image .records img {
 	cursor: pointer;
 	display: block;
 	padding: 0;
-	width: 64px;
-	height: 64px;
 	transition: opacity 240ms;
 }
 
