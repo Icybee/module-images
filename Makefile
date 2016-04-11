@@ -24,7 +24,12 @@ CSS_FILES = \
 	lib/PopImage.css \
 	lib/PopOrUploadImage.css
 
-JS_COMPRESSOR = curl -X POST -s --data-urlencode 'js_code@$^' --data-urlencode 'utf8=1' http://marijnhaverbeke.nl/uglifyjs
+JS_COMPRESSOR = curl -s \
+	-d compilation_level=SIMPLE_OPTIMIZATIONS \
+	-d output_format=text \
+	-d output_info=compiled_code \
+	--data-urlencode "js_code@$^" \
+	http://closure-compiler.appspot.com/compile
 #JS_COMPRESSOR = cat $^ # uncomment to produce uncompressed files
 JS_COMPRESSED = public/module.js
 JS_UNCOMPRESSED = public/module-uncompressed.js
