@@ -52,3 +52,13 @@
 	line-height: 20px;
 	text-align: center;
 }
+
+.widget-adjust-image .results .alert {
+	display: table-cell;
+	height: 260px;
+	padding: 10px;
+	text-align: center;
+	vertical-align: middle;
+	width: 260px;
+	border-radius: 0;
+}
