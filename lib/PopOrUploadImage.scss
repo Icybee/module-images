@@ -1,0 +1,11 @@
+.widget-pop-or-upload-image {
+	.widget-pop-image,
+	.widget-file {
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	.widget-file {
+		margin-left: 10px;
+	}
+}
