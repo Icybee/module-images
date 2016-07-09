@@ -40,7 +40,7 @@ class Thumbnail extends \ICanBoogie\Modules\Thumbnailer\Thumbnail
 		}
 
 		$query_string = self::format_options_as_query_string($options, $remove_path_params);
-		$query_string = '?' . $query_string . ($query_string ? '&' : '') . $record->pathname->short_hash;
+		$query_string = '?' . $query_string . ($query_string ? '&' : '') . $record->short_hash;
 
 		return $url . $query_string;
 	}
