@@ -108,7 +108,8 @@ return [
 	'id_name' => 'nid',
 	'actions' => [
 
-		'gallery' => [ '/{name}/gallery', Request::METHOD_ANY ]
+		'gallery' => [ '/{name}/gallery', Request::METHOD_ANY ],
+		'upload' => [ '/{name}/upload' , Request::METHOD_GET ],
 
 	]
 
