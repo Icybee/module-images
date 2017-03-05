@@ -9,46 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Icybee\Modules\Images;
-
-use ICanBoogie\Core;
-
-$_SERVER['DOCUMENT_ROOT'] = __DIR__;
-
-require __DIR__ . '/../vendor/autoload.php';
-
-/* @var $app Core|\ICanBoogie\Module\CoreBindings|\Icybee\Modules\Sites\Binding\CoreBindings */
-
-$app = new Core(\ICanBoogie\array_merge_recursive(\ICanBoogie\get_autoconfig(), [
-
-	'config-path' => [
-
-		__DIR__ . DIRECTORY_SEPARATOR . 'config' => 10
-
-	],
-
-	'module-path' => [
-
-		realpath(__DIR__ . '/../')
-
-	]
-
-]));
-
-$app->boot();
-$app->modules->install();
-$app->site_id = 0;
+namespace ICanBoogie;
 
 use Icybee\Modules\Users\User;
 
-$user = User::from([
+chdir(__DIR__);
 
-	'username' => 'admin',
-	'email' => 'admin@example.com'
+require __DIR__ . '/../vendor/autoload.php';
 
-]);
-
-$user->save();
+$app = boot();
+$app->modules->install();
 
 #
 #
@@ -58,17 +28,10 @@ $thumbnailer_version = $app->thumbnailer_versions;
 $thumbnailer_version['articles-list'] = 'w:120;h:100';
 $thumbnailer_version['articles-view'] = 'w:420;h:340';
 
-namespace Tests\Icybee\Modules\Images;
+User::from([
 
-class FakeSaveOperation extends \Icybee\Modules\Images\Operation\SaveOperation
-{
-	protected function get_controls()
-	{
-		return [
+	User::USERNAME => 'admin',
+	User::EMAIL => 'admin@example.com',
+	User::TIMEZONE => 'Europe/Paris'
 
-			self::CONTROL_AUTHENTICATION => false,
-			self::CONTROL_FORM => false
-
-		] + parent::get_controls();
-	}
-}
+])->save();

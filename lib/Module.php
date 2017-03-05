@@ -11,9 +11,8 @@
 
 namespace Icybee\Modules\Images;
 
+use ICanBoogie\Binding\PrototypedBindings;
 use ICanBoogie\ErrorCollection;
-
-use Icybee\Binding\Core\PrototypedBindings;
 
 class Module extends \Icybee\Modules\Files\Module
 {
@@ -24,13 +23,19 @@ class Module extends \Icybee\Modules\Files\Module
 	const THUMBNAIL_WIDTH = 200;
 	const THUMBNAIL_HEIGHT = 200;
 
-	static private $thumbnail_versions = [
+	const THUMBNAIL_VERSION_ICON = "24x24.jpeg";
+	const THUMBNAIL_VERSION_ICON_M = "128x128.jpeg";
+	const THUMBNAIL_VERSION_POP_IMAGE = "96x96/surface.jpeg";
+	const THUMBNAIL_VERSION_POPOVER = "200x200/surface.jpeg?nu=1";
+	const THUMBNAIL_VERSION_GALLERY = "128x128/constrained.jpeg";
 
-		'$icon' => "24x24.jpg",
-		'$icon-m' => "128x128.jpg",
-		'$popimage' => "96x96/surface.jpg",
-		'$popover' => "200x200/surface.jpg?nu=1",
-		'$gallery' => "128x128/constrained.jpg"
+	const THUMBNAIL_VERSIONS = [
+
+		'$icon'     => self::THUMBNAIL_VERSION_ICON,
+		'$icon-m'   => self::THUMBNAIL_VERSION_ICON_M,
+		'$popimage' => self::THUMBNAIL_VERSION_POP_IMAGE,
+		'$popover'  => self::THUMBNAIL_VERSION_POPOVER,
+		'$gallery'  => self::THUMBNAIL_VERSION_GALLERY
 
 	];
 
@@ -43,7 +48,7 @@ class Module extends \Icybee\Modules\Files\Module
 	{
 		$versions = $this->app->thumbnailer_versions;
 
-		foreach (self::$thumbnail_versions as $version => $options)
+		foreach (self::THUMBNAIL_VERSIONS as $version => $options)
 		{
 			if (isset($versions[$version]))
 			{
@@ -65,7 +70,7 @@ class Module extends \Icybee\Modules\Files\Module
 	{
 		$versions = $this->app->thumbnailer_versions;
 
-		foreach (self::$thumbnail_versions as $version => $options)
+		foreach (self::THUMBNAIL_VERSIONS as $version => $options)
 		{
 			$versions[$version] = $options;
 		}

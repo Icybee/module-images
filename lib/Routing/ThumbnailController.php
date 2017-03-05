@@ -16,12 +16,8 @@ use ICanBoogie\HTTP\NotFound;
 use ICanBoogie\HTTP\Request;
 use ICanBoogie\Modules\Thumbnailer\Version;
 
-use Icybee\Modules\Files\Binding\CoreBindings;
-
 class ThumbnailController extends \ICanBoogie\Modules\Thumbnailer\Routing\ThumbnailController
 {
-	use CoreBindings;
-
 	/**
 	 * @inheritdoc
 	 */

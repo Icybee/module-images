@@ -12,10 +12,8 @@
 namespace Icybee\Modules\Images;
 
 use Brickrouge\AlterCSSClassNamesEvent;
-use ICanBoogie\I18n;
 use ICanBoogie\Event;
 use ICanBoogie\Modules;
-use ICanBoogie\Operation;
 
 use Brickrouge\Element;
 use Brickrouge\Form;
@@ -491,7 +489,7 @@ class Hooks
 	 */
 
 	/**
-	 * @return \ICanBoogie\Core|\Icybee\Binding\CoreBindings
+	 * @return \ICanBoogie\Application
 	 */
 	static private function app()
 	{

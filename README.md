@@ -21,6 +21,8 @@ Image active records render as string:
 ```php
 <?php
 
+/* @var \ICanBoogie\Application $app */
+
 $image = $app->models['images']->one;
 
 echo $image;
@@ -45,9 +47,11 @@ image:
 ```php
 <?php
 
+/* @var \Icybee\Modules\Images\Image $image */
+
 $thumbnail = $image->thumbnail([ 'w' => 64, 'h' => 64 ]);
 # or
-$thumbnail = $image->thumbnail('w:64;h:64');
+$thumbnail = $image->thumbnail('64x64');
 
 echo $thumbnail->url; // /api/images/123/64x64
 echo $thumbnail;      // <img src="/api/images/123/64x64" …
@@ -79,10 +83,12 @@ Creating a thumbnail with a version is very easy:
 ```php
 <?php
 
+/* @var \Icybee\Modules\Images\Image $image */
+
 $thumbnail = $image->thumbnail('$popover');
 
-echo $thumbnbail->url; // /api/images/thumbnails/$popover
-echo $thumbnail;       // <img src="/api/images/thumbnails/$popover" …
+echo $thumbnail->url;  // /api/images/abcd/thumbnails/$popover
+echo $thumbnail;       // <img src="/api/images/abcd/thumbnails/$popover" …
 ```
 
 
@@ -97,6 +103,8 @@ module is used to provide thumbnails through a fluent API.
 
 ```php
 <?php
+
+/* @var \ICanBoogie\Application $app */
 
 echo $app->models['images']->one->thumbnail;
 echo $app->models['images']->one->thumbnail('news-list');
@@ -162,6 +170,8 @@ The image associated with a record is obtained through the `image` magic propert
 ```php
 <?php
 
+/* @var \ICanBoogie\Application $app */
+
 $app->models['articles']->one->image;
 ```
 
@@ -177,6 +187,8 @@ articles:
 ```php
 <?php 
 
+/* @var \ICanBoogie\Application $app */
+
 $app->models['articles']->one->image->thumbnail(':list');
 ```
 
@@ -184,6 +196,8 @@ The magic property `thumbnail` returns the _view_ thumbnail:
 
 ```php
 <?php 
+
+/* @var \ICanBoogie\Application $app */
 
 $app->models['articles']->one->image->thumbnail(':view');
 // or
@@ -234,7 +248,7 @@ The following event hooks are used:
 
 ## Requirement
 
-The package requires PHP 5.5 or later.
+The package requires PHP 5.6 or later.
 
 
 

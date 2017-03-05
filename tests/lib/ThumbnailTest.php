@@ -11,6 +11,8 @@
 
 namespace Icybee\Modules\Images;
 
+use function ICanBoogie\app;
+use ICanBoogie\AppConfig;
 use ICanBoogie\HTTP\File as HTTPFile;
 
 class ThumbnailTest extends \PHPUnit_Framework_TestCase
@@ -22,9 +24,11 @@ class ThumbnailTest extends \PHPUnit_Framework_TestCase
 
 	static public function setupBeforeClass()
 	{
-		$pathname = \ICanBoogie\REPOSITORY . 'tmp/claire.png';
+		$config = app()->config;
+		$repository_tmp = $config[AppConfig::REPOSITORY_TMP];
+		$pathname = "$repository_tmp/claire.png";
 
-		copy(\ICanBoogie\DOCUMENT_ROOT . 'resources/claire.png', $pathname);
+		copy(__DIR__ . '/resources/claire.png', $pathname);
 
 		self::$image = Image::from([
 

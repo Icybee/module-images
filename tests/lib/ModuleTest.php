@@ -11,38 +11,41 @@
 
 namespace Icybee\Modules\Images;
 
+use function ICanBoogie\app;
+use ICanBoogie\Modules\Thumbnailer\Version;
+
 class ModuleTest extends \PHPUnit_Framework_TestCase
 {
-	static private $app;
-	static private $module;
+	static private $thumbnailer_versions;
 
 	static public function setupBeforeClass()
 	{
-		self::$app = \ICanBoogie\app();
-		self::$module = self::$app->modules['images'];
+		self::$thumbnailer_versions = app()->thumbnailer_versions;
 	}
 
 	/**
 	 * @dataProvider provide_test_thumbnail_version
+	 *
+	 * @param string $id
+	 * @param string $expected
 	 */
 	public function test_thumbnail_version($id, $expected)
 	{
-		$version = self::$app->thumbnailer_versions[$id];
+		$version = self::$thumbnailer_versions[$id];
 
-		$this->assertInstanceOf('ICanBoogie\Modules\Thumbnailer\Version', $version);
+		$this->assertInstanceOf(Version::class, $version);
 		$this->assertEquals($expected, (string) $version);
 	}
 
 	public function provide_test_thumbnail_version()
 	{
-		return [
+		$versions = [];
 
-			[ '$icon',     '24x24.png' ],
-			[ '$icon-m',   '64x64' ],
-			[ '$popimage', '96x96/surface' ],
-			[ '$popover',  '200x200/surface?nu=1' ],
-			[ '$gallery',  '128x128/constrained' ]
+		foreach (Module::THUMBNAIL_VERSIONS as $id => $definition)
+		{
+			$versions[] = [ $id, $definition ];
+		}
 
-		];
+		return $versions;
 	}
 }
