@@ -1,4 +1,11 @@
-# Images [![Build Status](https://travis-ci.org/Icybee/module-images.png?branch=2.1)](https://travis-ci.org/Icybee/module-images)
+# Images
+ 
+[![Packagist](https://img.shields.io/packagist/v/icybee/module-images.svg)](https://packagist.org/packages/icybee/module-images)
+[![Build Status](https://img.shields.io/travis/Icybee/module-images.svg)](http://travis-ci.org/Icybee/module-images)
+[![HHVM](https://img.shields.io/hhvm/Icybee/module-images.svg)](http://hhvm.h4cc.de/package/Icybee/module-images)
+[![Code Quality](https://img.shields.io/scrutinizer/g/Icybee/module-images.svg)](https://scrutinizer-ci.com/g/Icybee/module-images)
+[![Code Coverage](https://img.shields.io/coveralls/Icybee/module-images.svg)](https://coveralls.io/r/Icybee/module-images)
+[![Downloads](https://img.shields.io/packagist/dt/icybee/module-images.svg)](https://packagist.org/packages/icybee/module-images/stats)
 
 The Images module (`images`) manages the images uploaded by the users of the
 CMS [Icybee](http://icybee.org/).
@@ -267,7 +274,8 @@ directory can later be cleaned with the `make clean` command.
 
 The package is continuously tested by [Travis CI](http://about.travis-ci.org/).
 
-[![Build Status](https://travis-ci.org/Icybee/module-images.png?branch=2.1)](https://travis-ci.org/Icybee/module-images)
+[![Build Status](https://img.shields.io/travis/Icybee/module-images.svg)](http://travis-ci.org/Icybee/module-images)
+[![Code Coverage](https://img.shields.io/coveralls/Icybee/module-images.svg)](https://coveralls.io/r/Icybee/module-images)
 
 
 
