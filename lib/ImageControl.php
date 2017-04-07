@@ -38,7 +38,7 @@ class ImageControl extends Element
 
 			Element::IS => 'ImageControl',
 
-			self::MAX_FILE_SIZE => ini_get('upload_max_filesize') * 1024 * 1024,
+			self::MAX_FILE_SIZE => (int) ini_get('upload_max_filesize') * 1024 * 1024,
 			self::ACCEPTED_EXTENSIONS => '.gif .png .jpg .jpeg',
 
 			'class' => 'widget-file-control'
