@@ -32,6 +32,5 @@ User::from([
 
 	User::USERNAME => 'admin',
 	User::EMAIL => 'admin@example.com',
-	User::TIMEZONE => 'Europe/Paris'
 
 ])->save();
