@@ -12,6 +12,7 @@
 namespace Icybee\Modules\Images;
 
 use Brickrouge\Document;
+use ICanBoogie\AppConfig;
 use ICanBoogie\I18n;
 use ICanBoogie\Modules\Thumbnailer\Thumbnail;
 use ICanBoogie\Operation;
@@ -56,7 +57,7 @@ class ImageUpload extends \Icybee\Modules\Files\FileUpload
 
 		]);
 
-		$repository = \ICanBoogie\app()->config['repository.temp'];
+		$repository = \ICanBoogie\app()->config[AppConfig::REPOSITORY_TMP];
 
 		if (strpos($path, $repository) === 0)
 		{
