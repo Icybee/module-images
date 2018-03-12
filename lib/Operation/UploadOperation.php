@@ -12,6 +12,8 @@
 namespace Icybee\Modules\Images\Operation;
 
 use ICanBoogie\Modules\Thumbnailer\Thumbnail;
+use function Brickrouge\get_accessible_file;
+use function ICanBoogie\strip_root;
 
 /**
  * Appends a preview to the response of the operation.
@@ -26,7 +28,7 @@ class UploadOperation extends \Icybee\Modules\Files\Operation\UploadOperation
 
 		if ($this->response['infos'])
 		{
-			$path = \ICanBoogie\strip_root($this->file->pathname);
+			$path = $this->resolve_public_file($this->file->pathname);
 
 			// TODO-20110106: compute surface w & h and use them for img in order to avoid poping
 
@@ -48,5 +50,10 @@ class UploadOperation extends \Icybee\Modules\Files\Operation\UploadOperation
 		}
 
 		return $rc;
+	}
+
+	private function resolve_public_file($absolute_path)
+	{
+		return strip_root(get_accessible_file($absolute_path));
 	}
 }
